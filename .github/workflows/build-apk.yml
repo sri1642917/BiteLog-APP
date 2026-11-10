@@ -25,6 +25,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Setup Android SDK Platform 36
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
+
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
@@ -47,16 +52,13 @@ jobs:
           cp -r dist/* android/app/src/main/assets/public/
           npx cap copy android || true
 
-      - name: Accept Android SDK Licenses
-        run: yes | sdkmanager --licenses || true
-
       - name: Grant Execute Permission to Gradlew
         working-directory: Frontend/android
         run: chmod +x gradlew
 
       - name: Build Android Debug APK
         working-directory: Frontend/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Prepare APK Asset
         run: |
