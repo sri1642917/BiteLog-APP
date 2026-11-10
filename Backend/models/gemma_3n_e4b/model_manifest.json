@@ -1,0 +1,14 @@
+{
+  "model_id": "google/gemma-3n-e4b",
+  "model_name": "Google Gemma 3n E4B (Pre-bundled High Precision)",
+  "architecture": "gemma3n_multimodal",
+  "parameters": "4.2B",
+  "quantization": "int4",
+  "vision_tower": "siglip",
+  "prebundled_offline": true,
+  "bundle_path": "models/gemma_3n_e4b",
+  "status": "ready",
+  "verified_offline": true,
+  "description": "Pre-bundled high precision multimodal vision model for offline food plate portion estimation."
+}
+

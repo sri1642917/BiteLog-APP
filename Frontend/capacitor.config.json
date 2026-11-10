@@ -1,0 +1,10 @@
+{
+  "appId": "com.bitelog.app",
+  "appName": "BiteLog",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
+

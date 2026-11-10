@@ -1,0 +1,14 @@
+{
+  "model_id": "google/gemma-3n-e2b",
+  "model_name": "Google Gemma 3n E2B (Pre-bundled)",
+  "architecture": "gemma3n_multimodal",
+  "parameters": "2.1B",
+  "quantization": "int4",
+  "vision_tower": "siglip",
+  "prebundled_offline": true,
+  "bundle_path": "models/gemma_3n_e2b",
+  "status": "ready",
+  "verified_offline": true,
+  "description": "Pre-bundled local multimodal vision model for offline meal plate and macro estimation."
+}
+
