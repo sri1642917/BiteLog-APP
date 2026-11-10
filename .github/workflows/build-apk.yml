@@ -61,9 +61,8 @@ jobs:
         run: |
           set -o pipefail
           ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee ../../gradle-build.log || {
-            ERR_MSG=$(grep -m 1 -E "FAILURE|What went wrong|error" ../../gradle-build.log || echo "Gradle build failed")
+            ERR_MSG=$(grep -A 5 "What went wrong:" ../../gradle-build.log | tr '\n' ' ' || echo "Gradle build failed")
             echo "::error title=GradleBuildFailure::$ERR_MSG"
-            echo "========== GRADLE BUILD TAIL =========="
             tail -n 60 ../../gradle-build.log
             exit 1
           }
