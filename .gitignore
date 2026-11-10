@@ -25,6 +25,16 @@ Backend/data/*.sqlite
 Backend/data/*.sqlite3
 !Backend/data/.gitkeep
 
+# Android
+.gradle/
+**/build/
+Frontend/android/.gradle/
+Frontend/android/app/build/
+Frontend/android/local.properties
+*.apk
+*.aab
+build-output/
+
 # OS & IDE
 .DS_Store
 Thumbs.db
@@ -32,3 +42,4 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
