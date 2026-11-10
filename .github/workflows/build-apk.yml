@@ -75,23 +75,31 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ github.ref_type == 'tag' && github.ref_name || 'v1.2.1' }}"
+          TAG="${GITHUB_REF_NAME}"
+          if [ "${GITHUB_REF_TYPE}" != "tag" ]; then
+            TAG="v1.2.1"
+          fi
           echo "Publishing GitHub Release for tag: $TAG"
+          
+          cat << 'EOF' > release_notes.md
+          ### 📱 BiteLog Android App - 100% Offline Calorie & Nutrition Tracker
+
+          Download **BiteLog-v1.2.apk** below to install directly on your Android smartphone!
+
+          #### 🌟 Features:
+          - **100% Offline & Private**: Zero cloud dependencies, zero telemetry, 0 bytes of food photos saved to disk (processed in RAM).
+          - **Google Gemma 3n Offline Food Vision**: Instant plate analysis with portion scaling and cooking style compensation.
+          - **6 Meal Categories**: Breakfast, Morning Snacks, Lunch, Evening Snacks, Dinner, Midnight Craving.
+          - **Interactive Reports & Export**: 6 selectable intervals, CSV download, and Print/PDF modal with ✔ Achieved badges.
+          - **Meet the Creator Screen**: Learn about Sri Harsha Juttu and the privacy-first principles of BiteLog.
+
+          #### 📲 Installation Instructions:
+          1. Download **BiteLog-v1.2.apk** on your Android smartphone.
+          2. Tap the downloaded file. When prompted, allow *'Install from unknown sources'* for your browser/file manager.
+          3. Tap **Install** and launch **BiteLog**!
+          EOF
+
           gh release create "$TAG" build-output/BiteLog-v1.2.apk \
             --title "BiteLog Android App $TAG" \
-            --notes "### 📱 BiteLog $TAG - 100% Offline Calorie & Nutrition Tracker
-
-Download **BiteLog-v1.2.apk** below to install directly on your Android smartphone!
-
-#### 🌟 Features:
-- **100% Offline & Private**: Zero cloud dependencies, zero telemetry, 0 bytes of food photos saved to disk (processed strictly in RAM).
-- **Google Gemma 3n Offline Food Vision**: Instant plate analysis with portion scaling and cooking style compensation.
-- **6 Meal Categories**: Breakfast, Morning Snacks, Lunch, Evening Snacks, Dinner, Midnight Craving.
-- **Interactive Reports & Export**: 6 selectable intervals, CSV download, and Print/PDF modal with ✔ Achieved badges.
-- **Meet the Creator Screen**: Learn about Sri Harsha Juttu and the privacy-first principles of BiteLog.
-
-#### 📲 Installation Instructions:
-1. Download **BiteLog-v1.2.apk** on your Android smartphone.
-2. Tap the downloaded file. When prompted, allow *'Install from unknown sources'* for your browser/file manager.
-3. Tap **Install** and launch **BiteLog**!" \
+            --notes-file release_notes.md \
             --clobber
