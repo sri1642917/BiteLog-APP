@@ -60,7 +60,13 @@ jobs:
         working-directory: Frontend/android
         run: |
           set -o pipefail
-          ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee ../../gradle-build.log
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee ../../gradle-build.log || {
+            ERR_MSG=$(grep -m 1 -E "FAILURE|What went wrong|error" ../../gradle-build.log || echo "Gradle build failed")
+            echo "::error title=GradleBuildFailure::$ERR_MSG"
+            echo "========== GRADLE BUILD TAIL =========="
+            tail -n 60 ../../gradle-build.log
+            exit 1
+          }
 
       - name: Upload Build Log
         if: always()
