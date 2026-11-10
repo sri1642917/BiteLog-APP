@@ -40,9 +40,15 @@ jobs:
         working-directory: Frontend
         run: npm run build
 
-      - name: Sync Capacitor Android Project
+      - name: Copy Web Assets to Android
         working-directory: Frontend
-        run: npx cap sync android
+        run: |
+          mkdir -p android/app/src/main/assets/public
+          cp -r dist/* android/app/src/main/assets/public/
+          npx cap copy android || true
+
+      - name: Accept Android SDK Licenses
+        run: yes | sdkmanager --licenses || true
 
       - name: Grant Execute Permission to Gradlew
         working-directory: Frontend/android
@@ -65,30 +71,27 @@ jobs:
           path: build-output/BiteLog-v1.2.apk
           retention-days: 90
 
-      - name: Create GitHub Release & Upload APK
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
-        with:
-          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'v1.2.1' }}
-          name: "BiteLog Android App ${{ github.ref_type == 'tag' && github.ref_name || 'v1.2.1' }}"
-          body: |
-            ### 📱 BiteLog ${{ github.ref_name }} - 100% Offline Calorie & Nutrition Tracker
-            
-            **Direct Download**: Download `BiteLog-v1.2.apk` below and install directly on your Android phone!
-            
-            #### 🌟 Features:
-            - **100% Offline & Private**: Zero cloud dependencies, zero telemetry, 0 bytes of food photos saved to disk (processed strictly in RAM).
-            - **Google Gemma 3n Offline Food Vision**: Instant plate analysis with portion scaling and cooking style compensation.
-            - **6 Meal Categories**: Breakfast, Morning Snacks, Lunch, Evening Snacks, Dinner, Midnight Craving.
-            - **Interactive Reports & Export**: 6 selectable intervals, CSV download, and Print/PDF modal with `✔ Achieved` badges.
-            - **Meet the Creator Screen**: Learn about Sri Harsha Juttu and the privacy-first principles of BiteLog.
-            
-            #### 📲 Installation Instructions:
-            1. Download `BiteLog-v1.2.apk` on your Android smartphone.
-            2. Tap the downloaded file. When prompted, allow *"Install from unknown sources"* for your browser/file manager.
-            3. Tap **Install** and launch **BiteLog**!
-          draft: false
-          prerelease: false
-          files: build-output/BiteLog-v1.2.apk
+      - name: Publish GitHub Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.ref_type == 'tag' && github.ref_name || 'v1.2.1' }}"
+          echo "Publishing GitHub Release for tag: $TAG"
+          gh release create "$TAG" build-output/BiteLog-v1.2.apk \
+            --title "BiteLog Android App $TAG" \
+            --notes "### 📱 BiteLog $TAG - 100% Offline Calorie & Nutrition Tracker
+
+Download **BiteLog-v1.2.apk** below to install directly on your Android smartphone!
+
+#### 🌟 Features:
+- **100% Offline & Private**: Zero cloud dependencies, zero telemetry, 0 bytes of food photos saved to disk (processed strictly in RAM).
+- **Google Gemma 3n Offline Food Vision**: Instant plate analysis with portion scaling and cooking style compensation.
+- **6 Meal Categories**: Breakfast, Morning Snacks, Lunch, Evening Snacks, Dinner, Midnight Craving.
+- **Interactive Reports & Export**: 6 selectable intervals, CSV download, and Print/PDF modal with ✔ Achieved badges.
+- **Meet the Creator Screen**: Learn about Sri Harsha Juttu and the privacy-first principles of BiteLog.
+
+#### 📲 Installation Instructions:
+1. Download **BiteLog-v1.2.apk** on your Android smartphone.
+2. Tap the downloaded file. When prompted, allow *'Install from unknown sources'* for your browser/file manager.
+3. Tap **Install** and launch **BiteLog**!" \
+            --clobber
