@@ -21,6 +21,7 @@ export const MobileTopHeader: React.FC<MobileTopHeaderProps> = ({ onOpenMenu }) 
     if (location.pathname.startsWith('/history')) return 'History';
     if (location.pathname.startsWith('/backup')) return 'Backup & Restore';
     if (location.pathname.startsWith('/settings')) return 'Settings';
+    if (location.pathname.startsWith('/about')) return 'About the Creator';
     return 'BiteLog';
   };
 

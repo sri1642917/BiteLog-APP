@@ -11,7 +11,8 @@ import { WeightGoals } from './pages/WeightGoals';
 import { History } from './pages/History';
 import { BackupRestore } from './pages/BackupRestore';
 import { Settings } from './pages/Settings';
-import { Scale, History as HistoryIcon, Database, Settings as SettingsIcon, X } from 'lucide-react';
+import { AboutCreator } from './pages/AboutCreator';
+import { Scale, History as HistoryIcon, Database, Settings as SettingsIcon, User, X } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [moreDrawerOpen, setMoreDrawerOpen] = useState(false);
@@ -40,6 +41,7 @@ export const App: React.FC = () => {
               <Route path="/history" element={<History />} />
               <Route path="/backup" element={<BackupRestore />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/about" element={<AboutCreator />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
@@ -102,6 +104,15 @@ export const App: React.FC = () => {
                   >
                     <SettingsIcon className="w-4 h-4 text-slate-600" />
                     <span>Settings</span>
+                  </Link>
+
+                  <Link
+                    to="/about"
+                    onClick={() => setMoreDrawerOpen(false)}
+                    className="p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100 flex items-center gap-2.5 text-emerald-900 text-xs font-semibold hover:bg-emerald-100/80 col-span-2"
+                  >
+                    <User className="w-4 h-4 text-emerald-600" />
+                    <span>About the Creator</span>
                   </Link>
                 </div>
               </div>

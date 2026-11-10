@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Settings as SettingsIcon,
   ShieldCheck,
   CheckCircle2,
   HardDrive,
   Cpu,
-  Info
+  Info,
+  User,
+  ArrowRight
 } from 'lucide-react';
 import { api } from '../services/api';
 import { UserSettings } from '../types';
 
 export const Settings: React.FC = () => {
+  const navigate = useNavigate();
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [savedMsg, setSavedMsg] = useState(false);
@@ -147,6 +151,30 @@ export const Settings: React.FC = () => {
             Save Changes
           </button>
         </form>
+
+        {/* About the Creator Link */}
+        <div className="pt-4 border-t border-slate-100">
+          <button
+            type="button"
+            onClick={() => navigate('/about')}
+            className="w-full p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-emerald-300 flex items-center justify-between text-left transition-all shadow-2xs hover:shadow-xs group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100/80 text-emerald-700 flex items-center justify-center">
+                <User className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                  Meet the Creator
+                </h4>
+                <p className="text-[11px] text-slate-500">
+                  Sri Harsha Juttu • Machine Learning Engineer
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+          </button>
+        </div>
 
         {/* Offline & Architecture Info Card */}
         <div className="pt-6 border-t border-slate-100">

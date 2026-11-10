@@ -12,7 +12,7 @@
 ### 📲 Quick Install: Download Android APK
 Anyone can install and run **BiteLog** directly on Android without building from source:
 
-1. 📥 **Download APK**: [**Click here to download `BiteLog-v1.2.apk`**](https://github.com/sri1642917/BiteLog-APP/releases/latest) from the latest GitHub Release.
+1. 📥 **Download APK**: [**Click here to download `BiteLog-v1.2.apk`**](https://github.com/sri1642917/BiteLog-APP/releases) from the GitHub Releases page.
 2. 📱 **Install on Android**: Open the downloaded `.apk` file on your device.
    * *If prompted*: Allow **"Install unknown apps"** for your browser or file manager.
 3. 🚀 **Launch BiteLog**: Enjoy 100% private, offline nutrition tracking with zero subscriptions!
