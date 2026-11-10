@@ -1,9 +1,9 @@
 # BiteLog — Log every bite. Stay on track. Achieve your goal.
 
 > **A premium, modern, fully offline nutrition analytics application designed for complete data privacy.**  
-> Exactly reproducing the visual design and workflows specified in `Designs/ui-designs/ui-design-1.png`, `Designs/ui-designs/report-export-ui-design-2.png`, and `Designs/ui-designs/report-export-ui-design-3.png`.
+> Exactly reproducing the visual design and workflows specified in `Designs/ui-designs/ui-design-1.png`, `Designs/ui-designs/report-export-ui-design-2.png`, `Designs/ui-designs/report-export-ui-design-3.png`, and `Designs/ui-designs/about-the-creator-ui-design-4.png`.
 
-[![Download Android APK](https://img.shields.io/badge/Direct%20Download-Android%20APK%20(v1.2)-059669?style=for-the-badge&logo=android&logoColor=white)](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk)
+[![Download Android APK](https://img.shields.io/badge/Direct%20Download-Android%20APK%20(v1.3)-059669?style=for-the-badge&logo=android&logoColor=white)](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.3.0/BiteLog-v1.3.apk)
 [![Releases Page](https://img.shields.io/badge/GitHub-Releases-181717?style=for-the-badge&logo=github)](https://github.com/sri1642917/BiteLog-APP/releases)
 [![Build & Release Status](https://img.shields.io/github/actions/workflow/status/sri1642917/BiteLog-APP/build-apk.yml?branch=main&style=for-the-badge&logo=github&label=APK%20Build)](https://github.com/sri1642917/BiteLog-APP/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3b82f6?style=for-the-badge)](LICENSE)
@@ -13,8 +13,9 @@
 ### 📲 Quick Install: Download Android APK
 Anyone can install and run **BiteLog** directly on Android without building from source:
 
-1. 📥 **Direct APK Download**: [**👉 Tap Here to Download `BiteLog-v1.2.apk` directly (4.9 MB)**](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk)
-   * *(Or view the release notes on the [GitHub Releases page](https://github.com/sri1642917/BiteLog-APP/releases/tag/v1.2.1))*
+1. 📥 **Direct APK Download**: [**👉 Tap Here to Download `BiteLog-v1.3.apk` directly (4.9 MB)**](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.3.0/BiteLog-v1.3.apk)
+   * *(Previous stable release: [Download `BiteLog-v1.2.apk`](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk))*
+   * *(Or explore all releases on the [GitHub Releases page](https://github.com/sri1642917/BiteLog-APP/releases))*
 2. 📱 **Install on Android**: Open the downloaded `.apk` file from your Android notification bar or `Downloads` folder.
    * *If prompted*: Allow **"Install unknown apps"** for Chrome/your mobile browser or Files manager.
 3. 🚀 **Launch BiteLog**: Enjoy 100% private, offline nutrition tracking with zero subscriptions!
@@ -26,14 +27,15 @@ Anyone can install and run **BiteLog** directly on Android without building from
 - [1. Executive Overview](#1-executive-overview)
 - [2. Strict Scope & Core Principles](#2-strict-scope--core-principles)
 - [3. Complete Feature Breakdown](#3-complete-feature-breakdown)
-  - [3.1 Input & Extraction Engine (100% Offline)](#31-input--extraction-engine-100-offline)
+  - [3.1 Pure Food Photo Logging Engine (100% Offline)](#31-pure-food-photo-logging-engine-100-offline)
   - [3.2 6 Meal Categories & Instant Post-Save Workflow](#32-6-meal-categories--instant-post-save-workflow)
   - [3.3 Comprehensive Reports & Export Engine](#33-comprehensive-reports--export-engine)
   - [3.4 Data Privacy & Storage Policy](#34-data-privacy--storage-policy)
   - [3.5 Weight & Clinical Metabolic Projections](#35-weight--clinical-metabolic-projections)
   - [3.6 Calendar & Intake Overview](#36-calendar--intake-overview)
   - [3.7 Backup, Restore & Selective Cleanup](#37-backup-restore--selective-cleanup)
-- [4. UI & UX Architecture (Design Specifications 1, 2, & 3)](#4-ui--ux-architecture-design-specifications-1-2--3)
+  - [3.8 Meet the Creator Screen (Design Specification 4)](#38-meet-the-creator-screen-design-specification-4)
+- [4. UI & UX Architecture (Design Specifications 1, 2, 3 & 4)](#4-ui--ux-architecture-design-specifications-1-2-3--4)
   - [Mobile Smartphone Viewport (`max-w-[420px]`)](#mobile-smartphone-viewport-max-w-420px)
   - [Desktop Dashboard Viewport](#desktop-dashboard-viewport)
 - [5. Calculation & Nutrition Analytics](#5-calculation--nutrition-analytics)
@@ -42,6 +44,7 @@ Anyone can install and run **BiteLog** directly on Android without building from
 - [8. Quick Start & Run Instructions](#8-quick-start--run-instructions)
 - [9. Testing & Verification](#9-testing--verification)
 - [10. Project Directory Layout](#10-project-directory-layout)
+- [11. Version History & Changelog](#11-version-history--changelog)
 
 ---
 
@@ -189,7 +192,18 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-## 4. UI & UX Architecture (Design Specifications 1, 2, & 3)
+### 3.8 Meet the Creator Screen (Design Specification 4)
+
+BiteLog includes a dedicated **About the Creator** screen exactly reproducing `Designs/ui-designs/about-the-creator-ui-design-4.png`:
+
+* **Creator Profile**: Featuring **Sri Harsha Juttu**, Machine Learning Engineer.
+* **The Mission & Motivation**: Built out of the personal conviction that calorie tracking should be effortless, respectful of user privacy, and free from invasive subscriptions or surveillance.
+* **BiteLog Privacy Manifesto**: Reaffirms that nutrition logs and food photos belong strictly to the user—processed in RAM and never transmitted over the internet.
+* **Seamless Accessibility**: Navigable from both the **Settings** menu and the mobile bottom navigation drawer.
+
+---
+
+## 4. UI & UX Architecture (Design Specifications 1, 2, 3 & 4)
 
 ### Mobile Smartphone Viewport (`max-w-[420px]`)
 * Engineered specifically for modern smartphone frames (`390px` to `420px` width) with iOS-style status bar and rounded device chassis.
@@ -355,6 +369,9 @@ Food-calories-tracker-app-detailed-analysis/
 │   └── test_food_vision.py        # Gemma 3n food vision integration test suite
 │
 ├── Frontend/
+│   ├── android/                   # Capacitor native Android app project (SDK 36, Java 21)
+│   ├── public/
+│   │   └── creator-pic.png        # Official creator profile avatar
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── MobileTopHeader.tsx# Mobile top bar with BiteLog brand & tagline
@@ -363,12 +380,13 @@ Food-calories-tracker-app-detailed-analysis/
 │   │   │   └── MobileBottomNav.tsx# Sticky mobile bottom navigation
 │   │   ├── pages/
 │   │   │   ├── Dashboard.tsx      # Desktop & Mobile Dashboard (cards, charts, rings)
-│   │   │   ├── AddEntry.tsx       # Photo analysis, OCR & 6 meal categories
+│   │   │   ├── AddEntry.tsx       # Dedicated food photo analysis & 6 meal categories
 │   │   │   ├── CalendarView.tsx   # Interactive monthly calendar with badges
 │   │   │   ├── Reports.tsx        # 6 periods, dual-area spline chart & print/PDF modal
 │   │   │   ├── WeightGoals.tsx    # Weight tracking, area chart, and BMR calculator
 │   │   │   ├── History.tsx        # Tabular log of all entries with date filter
 │   │   │   ├── BackupRestore.tsx  # Export, restore, and selective range cleanup
+│   │   │   ├── AboutCreator.tsx   # Meet the Creator screen matching Design 4
 │   │   │   └── Settings.tsx       # Personal profile & target configurations
 │   │   ├── services/
 │   │   │   └── api.ts             # Typed REST client
@@ -387,8 +405,34 @@ Food-calories-tracker-app-detailed-analysis/
 │   └── ui-designs/
 │       ├── ui-design-1.png        # Primary dashboard & mobile reference specification
 │       ├── report-export-ui-design-2.png # In-app reports UI reference specification
-│       └── report-export-ui-design-3.png # Print & PDF report reference specification
+│       ├── report-export-ui-design-3.png # Print & PDF report reference specification
+│       └── about-the-creator-ui-design-4.png # Meet the Creator reference specification
+│
+├── .github/
+│   └── workflows/
+│       └── build-apk.yml          # GitHub Actions CI/CD automated APK build & release
 │
 ├── start.sh                       # One-click startup script
 └── README.md                      # Comprehensive high-level documentation
 ```
+
+---
+
+## 11. Version History & Changelog
+
+### 🚀 Version 1.3 (Current)
+* **Dedicated Food Photo AI Tracking**: Streamlined the `AddEntry` screen exclusively for food photos; removed redundant screenshot OCR and text paste tabs for a simpler, zero-friction logging experience.
+* **Meet the Creator Screen (Design Specification 4)**: Added `AboutCreator.tsx` featuring Sri Harsha Juttu (Machine Learning Engineer), the BiteLog mission, and the privacy manifesto.
+* **Direct 1-Tap APK Download**: Replaced repository release links with direct binary download URLs for immediate installation on Android phones without navigating GitHub asset pages.
+* **Optimized CI/CD Release Pipeline**: Updated GitHub Actions automated build workflow to package and publish `BiteLog-v1.3.apk` on demand with Java JDK 21 and Android SDK 36.
+
+### 📦 Version 1.2
+* **Automated Android APK CI/CD Pipeline**: GitHub Actions workflow automatically compiles `BiteLog-v1.2.apk` using Gradle and publishes directly to GitHub Releases.
+* **Capacitor Android Native Shell**: Embedded lightweight offline web client into native Android APK wrapper (`com.bitelog.app`).
+
+### 🎨 Version 1.1
+* **Rebranding to BiteLog**: Official transition to "BiteLog" with the motto: *Log every bite. Stay on track. Achieve your goal.*
+* **Reports & Export Engine (Designs 2 & 3)**: Added 6 selectable intervals, dual-area spline chart, target indicator line, CSV download, and print-ready PDF preview modal.
+
+### 🌱 Version 1.0
+* **Core Offline Engine**: Google Gemma 3n offline visual food calorie estimation, Mifflin-St Jeor metabolic calculator, on-device SQLite database, and monthly calendar drill-down.
