@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  UploadCloud,
-  FileText,
   Calendar,
   Clock,
   CheckCircle2,
   AlertCircle,
-  ArrowLeft,
   Loader2,
   RefreshCw,
   Camera,
@@ -15,7 +12,6 @@ import {
   Info,
   Edit3,
   Trash2,
-  Plus,
   X,
   Check
 } from 'lucide-react';
@@ -52,12 +48,9 @@ const getAutoMealCategory = (): MealCategory => {
 export const AddEntry: React.FC = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const foodPhotoInputRef = useRef<HTMLInputElement>(null);
 
-  const [activeTab, setActiveTab] = useState<'Screenshot' | 'Food Photo' | 'Paste Text'>('Screenshot');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [pastedText, setPastedText] = useState<string>('');
 
   // Food Photo AI options (Google Gemma 3n + 90% Calibrated Accuracy Engine)
   const [modelTier, setModelTier] = useState<'e2b' | 'e4b'>('e2b');
@@ -99,40 +92,6 @@ export const AddEntry: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-  // Handle Screenshot OCR upload
-  const handleScreenshotChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setSelectedFile(file);
-    setImagePreview(URL.createObjectURL(file));
-    setErrorMsg(null);
-    setNote(null);
-    setAiDisclaimer(null);
-    setIsProcessing(true);
-
-    try {
-      const res = await api.parseImage(file);
-      setSource('Image');
-      if (res.calories_kcal !== null && res.calories_kcal !== undefined) {
-        setCalories(res.calories_kcal.toString());
-      }
-      if (res.protein_g !== null && res.protein_g !== undefined) {
-        setProtein(res.protein_g.toString());
-      }
-      if (res.confidence_note) {
-        setNote(res.confidence_note);
-      }
-      if (res.calories_kcal === null && res.protein_g === null) {
-        setErrorMsg('Could not detect nutrition totals automatically. Please type the values manually.');
-      }
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to process screenshot locally. Please enter values manually.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
   // Handle Food Photo AI analysis (Google Gemma 3n E2B / E4B + 90% Calibration Engine)
   const runFoodPhotoAnalysis = async (
     file: File,
@@ -164,7 +123,7 @@ export const AddEntry: React.FC = () => {
     }
   };
 
-  const handleFoodPhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -173,52 +132,13 @@ export const AddEntry: React.FC = () => {
     await runFoodPhotoAnalysis(file, modelTier, portionSize, cookingStyle, plateSize);
   };
 
-  // Handle Drag & Drop for Screenshot
+  // Handle Drag & Drop for Food Photo
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      if (activeTab === 'Food Photo') {
-        if (foodPhotoInputRef.current) foodPhotoInputRef.current.files = e.dataTransfer.files;
-        handleFoodPhotoChange({ target: { files: e.dataTransfer.files } } as any);
-      } else {
-        if (fileInputRef.current) fileInputRef.current.files = e.dataTransfer.files;
-        handleScreenshotChange({ target: { files: e.dataTransfer.files } } as any);
-      }
-    }
-  };
-
-  // Handle pasted text parsing
-  const handleParseText = async () => {
-    if (!pastedText.trim()) {
-      setErrorMsg('Please paste some text first.');
-      return;
-    }
-
-    setErrorMsg(null);
-    setIsProcessing(true);
-    setNote(null);
-    setAiDisclaimer(null);
-
-    try {
-      const res = await api.parseText(pastedText);
-      setSource('Text');
-      if (res.calories_kcal !== null && res.calories_kcal !== undefined) {
-        setCalories(res.calories_kcal.toString());
-      }
-      if (res.protein_g !== null && res.protein_g !== undefined) {
-        setProtein(res.protein_g.toString());
-      }
-      if (res.confidence_note) {
-        setNote(res.confidence_note);
-      }
-      if (res.calories_kcal === null && res.protein_g === null) {
-        setErrorMsg('No calorie or protein values detected. Please enter them manually.');
-      }
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to parse text.');
-    } finally {
-      setIsProcessing(false);
+      if (fileInputRef.current) fileInputRef.current.files = e.dataTransfer.files;
+      handlePhotoChange({ target: { files: e.dataTransfer.files } } as any);
     }
   };
 
@@ -331,10 +251,7 @@ export const AddEntry: React.FC = () => {
     setAiDisclaimer(null);
 
     setTimeout(() => {
-      if (activeTab === 'Food Photo' && foodPhotoInputRef.current) {
-        foodPhotoInputRef.current.value = '';
-        foodPhotoInputRef.current.click();
-      } else if (fileInputRef.current) {
+      if (fileInputRef.current) {
         fileInputRef.current.value = '';
         fileInputRef.current.click();
       }
@@ -343,304 +260,169 @@ export const AddEntry: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto pb-16 space-y-4">
-      <div className="dashboard-card p-5 md:p-6 space-y-5">
-        {/* Input Methods Tabs */}
-        <div className="flex border-b border-slate-100 text-xs font-semibold">
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('Screenshot');
-              setImagePreview(null);
-            }}
-            className={`flex-1 py-2.5 transition-all text-center relative ${
-              activeTab === 'Screenshot' ? 'text-emerald-600 font-bold' : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            Screenshot
-            {activeTab === 'Screenshot' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-t-full"></span>
-            )}
-          </button>
+      <div className="dashboard-card p-5 md:p-6 space-y-4">
+        {/* Dedicated Food Photo Dropzone */}
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handlePhotoChange}
+          accept="image/png,image/jpeg,image/webp,image/jpg"
+          className="hidden"
+        />
 
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('Food Photo');
-              setImagePreview(null);
-            }}
-            className={`flex-1 py-2.5 transition-all text-center relative flex items-center justify-center gap-1 ${
-              activeTab === 'Food Photo' ? 'text-emerald-600 font-bold' : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            <Sparkles className="w-3 h-3 text-emerald-500" />
-            <span>Food Photo</span>
-            {activeTab === 'Food Photo' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-t-full"></span>
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab('Paste Text')}
-            className={`flex-1 py-2.5 transition-all text-center relative ${
-              activeTab === 'Paste Text' ? 'text-emerald-600 font-bold' : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            Paste Text
-            {activeTab === 'Paste Text' && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 rounded-t-full"></span>
-            )}
-          </button>
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
+          className="border-2 border-dashed border-emerald-300/80 hover:border-emerald-500 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-emerald-50/25 hover:bg-emerald-50/50 group"
+        >
+          {isProcessing ? (
+            <div className="py-5 flex flex-col items-center gap-2.5">
+              <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+              <p className="text-xs font-semibold text-slate-800">
+                Analyzing Food Photo with Google Gemma 3n ({modelTier.toUpperCase()})...
+              </p>
+              <p className="text-[10px] text-slate-400">Estimating calories, protein, and dietary fiber</p>
+            </div>
+          ) : imagePreview ? (
+            <div className="flex flex-col items-center gap-2.5">
+              <img
+                src={imagePreview}
+                alt="Uploaded meal"
+                className="max-h-44 rounded-xl object-contain shadow-xs border border-slate-200"
+              />
+              <p className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
+                <RefreshCw className="w-3.5 h-3.5" /> Tap to analyze a different food photo
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="w-14 h-14 rounded-full bg-white shadow-2xs border border-emerald-100 flex items-center justify-center text-emerald-600 mb-2 group-hover:scale-105 transition-transform">
+                <Camera className="w-7 h-7 stroke-[2]" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-800">Tap to upload or snap food photo</h4>
+              <p className="text-xs text-slate-400 mt-0.5">Instant offline calorie & macro estimation</p>
+              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mt-2.5 px-2.5 py-0.5 rounded-full bg-emerald-100/80">
+                JPG, PNG, WEBP • 100% Offline
+              </span>
+            </>
+          )}
         </div>
 
-        {/* Tab 1: Screenshot OCR Dropzone */}
-        {activeTab === 'Screenshot' && (
+        {/* 90%+ Calibrated Accuracy Controls (Plate size & Cooking style fine-tuning) */}
+        <div className="space-y-3 bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="text-xs font-bold text-slate-900">Fine-Tune Portion Calibration</span>
+            </div>
+            {/* Offline Model Tier */}
+            <div className="flex items-center gap-1 bg-white border border-slate-200 p-0.5 rounded-lg">
+              <button
+                type="button"
+                onClick={() => {
+                  setModelTier('e2b');
+                  if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e2b', portionSize, cookingStyle, plateSize);
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                  modelTier === 'e2b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                E2B (Fast)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setModelTier('e4b');
+                  if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e4b', portionSize, cookingStyle, plateSize);
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                  modelTier === 'e4b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                E4B (High Precision)
+              </button>
+            </div>
+          </div>
+
+          {/* 1. Plate Size (3 Intuitive Options: Small, Medium, Large) */}
           <div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleScreenshotChange}
-              accept="image/png,image/jpeg,image/webp,image/jpg"
-              className="hidden"
-            />
-
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleDrop}
-              className="border-2 border-dashed border-slate-200 hover:border-emerald-400 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-slate-50/50 hover:bg-emerald-50/20 group"
-            >
-              {isProcessing ? (
-                <div className="py-5 flex flex-col items-center gap-2.5">
-                  <Loader2 className="w-7 h-7 text-emerald-500 animate-spin" />
-                  <p className="text-xs font-semibold text-slate-600">
-                    Running Offline OCR with Tesseract...
-                  </p>
-                </div>
-              ) : imagePreview ? (
-                <div className="flex flex-col items-center gap-2.5">
-                  <img
-                    src={imagePreview}
-                    alt="Uploaded preview"
-                    className="max-h-36 rounded-xl object-contain shadow-xs border border-slate-200"
-                  />
-                  <p className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
-                    <RefreshCw className="w-3.5 h-3.5" /> Tap to upload a different screenshot
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div className="w-12 h-12 rounded-full bg-white shadow-2xs border border-slate-100 flex items-center justify-center text-emerald-600 mb-2 group-hover:scale-105 transition-transform">
-                    <UploadCloud className="w-6 h-6" />
+            <div className="flex items-center justify-between text-[11px] mb-1.5">
+              <span className="font-bold text-slate-700">1. Plate Size</span>
+              <span className="text-[10px] text-slate-400">Scale Reference</span>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+              {[
+                { id: 'small', label: 'Small', desc: 'Bowl / Salad Plate', icon: '🥣' },
+                { id: 'medium', label: 'Medium', desc: 'Standard Plate', icon: '🍽️' },
+                { id: 'large', label: 'Large', desc: 'Platter / Takeout', icon: '🍱' },
+              ].map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => {
+                    const newPlate = p.id as 'small' | 'medium' | 'large';
+                    setPlateSize(newPlate);
+                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, cookingStyle, newPlate);
+                  }}
+                  className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
+                    plateSize === p.id
+                      ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
+                      : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
+                  }`}
+                >
+                  <div className="text-sm leading-none mb-1">{p.icon}</div>
+                  <div className={`text-[11px] font-bold ${plateSize === p.id ? 'text-emerald-700' : 'text-slate-800'}`}>
+                    {p.label}
                   </div>
-                  <h4 className="text-xs font-bold text-slate-800">Tap to upload ChatGPT / Gemini screenshot</h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">or drag and drop</p>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-2.5 px-2 py-0.5 rounded bg-slate-100">
-                    JPG, PNG, WEBP
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Tab 2: Food Photo AI Analysis (Google Gemma 3n) */}
-        {activeTab === 'Food Photo' && (
-          <div className="space-y-3.5">
-            {/* 90%+ Calibrated Accuracy Controls */}
-            <div className="space-y-3 bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3.5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-xs font-bold text-slate-900">90%+ Calibrated Accuracy</span>
-                </div>
-                {/* Offline Model Tier */}
-                <div className="flex items-center gap-1 bg-white border border-slate-200 p-0.5 rounded-lg">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setModelTier('e2b');
-                      if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e2b', portionSize, cookingStyle, plateSize);
-                    }}
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                      modelTier === 'e2b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                  >
-                    E2B (Default)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setModelTier('e4b');
-                      if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e4b', portionSize, cookingStyle, plateSize);
-                    }}
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                      modelTier === 'e4b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                  >
-                    E4B
-                  </button>
-                </div>
-              </div>
-
-              {/* 1. Plate Size (3 Intuitive Options: Small, Medium, Large) */}
-              <div>
-                <div className="flex items-center justify-between text-[11px] mb-1.5">
-                  <span className="font-bold text-slate-700">1. Plate Size</span>
-                  <span className="text-[10px] text-slate-400">Scale Reference</span>
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {[
-                    { id: 'small', label: 'Small', desc: 'Bowl / Salad Plate', icon: '🥣' },
-                    { id: 'medium', label: 'Medium', desc: 'Standard Dinner Plate', icon: '🍽️' },
-                    { id: 'large', label: 'Large', desc: 'Big Platter / Takeout', icon: '🍱' },
-                  ].map((p) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => {
-                        const newPlate = p.id as 'small' | 'medium' | 'large';
-                        setPlateSize(newPlate);
-                        if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, cookingStyle, newPlate);
-                      }}
-                      className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
-                        plateSize === p.id
-                          ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
-                          : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
-                      }`}
-                    >
-                      <div className="text-sm leading-none mb-1">{p.icon}</div>
-                      <div className={`text-[11px] font-bold ${plateSize === p.id ? 'text-emerald-700' : 'text-slate-800'}`}>
-                        {p.label}
-                      </div>
-                      <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
-                        {p.desc}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* 2. Cooking Style (Hidden Oil & Fat Compensation) */}
-              <div>
-                <div className="flex items-center justify-between text-[11px] mb-1.5">
-                  <span className="font-bold text-slate-700">2. Cooking Style</span>
-                  <span className="text-[10px] text-slate-400">Hidden Oil & Fat</span>
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {[
-                    { id: 'lean', label: 'Lean / Steamed', desc: '0g added oil', icon: '🥗' },
-                    { id: 'home', label: 'Home Style', desc: '~1 tbsp oil/butter', icon: '🍳' },
-                    { id: 'restaurant', label: 'Restaurant / Rich', desc: '~2.5 tbsp oil/curry', icon: '🍟' },
-                  ].map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onClick={() => {
-                        const newStyle = s.id as 'lean' | 'home' | 'restaurant';
-                        setCookingStyle(newStyle);
-                        if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, newStyle, plateSize);
-                      }}
-                      className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
-                        cookingStyle === s.id
-                          ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
-                          : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
-                      }`}
-                    >
-                      <div className="text-sm leading-none mb-1">{s.icon}</div>
-                      <div className={`text-[11px] font-bold ${cookingStyle === s.id ? 'text-emerald-700' : 'text-slate-800'}`}>
-                        {s.label}
-                      </div>
-                      <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
-                        {s.desc}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <input
-              type="file"
-              ref={foodPhotoInputRef}
-              onChange={handleFoodPhotoChange}
-              accept="image/png,image/jpeg,image/webp,image/jpg"
-              className="hidden"
-            />
-
-            <div
-              onClick={() => foodPhotoInputRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleDrop}
-              className="border-2 border-dashed border-emerald-300/80 hover:border-emerald-500 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-emerald-50/30 hover:bg-emerald-50/50 group"
-            >
-              {isProcessing ? (
-                <div className="py-5 flex flex-col items-center gap-2.5">
-                  <Loader2 className="w-7 h-7 text-emerald-500 animate-spin" />
-                  <p className="text-xs font-semibold text-slate-700">
-                    Analyzing Plate with Google Gemma 3n ({modelTier.toUpperCase()})...
-                  </p>
-                  <p className="text-[10px] text-slate-400">Estimating visible portion & nutritional density</p>
-                </div>
-              ) : imagePreview ? (
-                <div className="flex flex-col items-center gap-2.5">
-                  <img
-                    src={imagePreview}
-                    alt="Uploaded meal plate"
-                    className="max-h-40 rounded-xl object-contain shadow-xs border border-slate-200"
-                  />
-                  <p className="text-xs text-emerald-600 font-semibold flex items-center gap-1">
-                    <RefreshCw className="w-3.5 h-3.5" /> Tap to analyze a different meal photo
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div className="w-12 h-12 rounded-full bg-white shadow-2xs border border-emerald-100 flex items-center justify-center text-emerald-600 mb-2 group-hover:scale-105 transition-transform">
-                    <Camera className="w-6 h-6 stroke-[2]" />
+                  <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
+                    {p.desc}
                   </div>
-                  <h4 className="text-xs font-bold text-slate-800">Tap to upload or snap photo of food plate</h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5">Offline portion & macro estimation</p>
-                  <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mt-2.5 px-2 py-0.5 rounded bg-emerald-100/80">
-                    JPG, PNG, WEBP
-                  </span>
-                </>
-              )}
+                </button>
+              ))}
             </div>
           </div>
-        )}
 
-        {/* Tab 3: Paste Text */}
-        {activeTab === 'Paste Text' && (
-          <div className="space-y-3">
-            <textarea
-              rows={3}
-              value={pastedText}
-              onChange={(e) => setPastedText(e.target.value)}
-              placeholder="Paste ChatGPT or Gemini response here...&#10;e.g.&#10;Total Calories: 650 kcal&#10;Total Protein: 42 g"
-              className="w-full p-3 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
-            />
-            <button
-              type="button"
-              onClick={handleParseText}
-              disabled={isProcessing || !pastedText.trim()}
-              className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 text-white text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-colors"
-            >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  <span>Extracting...</span>
-                </>
-              ) : (
-                <>
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Extract Values</span>
-                </>
-              )}
-            </button>
+          {/* 2. Cooking Style (Hidden Oil & Fat Compensation) */}
+          <div>
+            <div className="flex items-center justify-between text-[11px] mb-1.5">
+              <span className="font-bold text-slate-700">2. Cooking Style</span>
+              <span className="text-[10px] text-slate-400">Hidden Oil & Fat</span>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+              {[
+                { id: 'lean', label: 'Lean / Steamed', desc: '0g added oil', icon: '🥗' },
+                { id: 'home', label: 'Home Style', desc: '~1 tbsp oil', icon: '🍳' },
+                { id: 'restaurant', label: 'Restaurant / Rich', desc: '~2.5 tbsp oil', icon: '🍟' },
+              ].map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => {
+                    const newStyle = s.id as 'lean' | 'home' | 'restaurant';
+                    setCookingStyle(newStyle);
+                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, newStyle, plateSize);
+                  }}
+                  className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
+                    cookingStyle === s.id
+                      ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
+                      : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
+                  }`}
+                >
+                  <div className="text-sm leading-none mb-1">{s.icon}</div>
+                  <div className={`text-[11px] font-bold ${cookingStyle === s.id ? 'text-emerald-700' : 'text-slate-800'}`}>
+                    {s.label}
+                  </div>
+                  <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
+                    {s.desc}
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-        )}
+        </div>
 
-        {/* Note / Honest Disclaimer Banner */}
+        {/* Note / Disclaimer Banner */}
         {aiDisclaimer && (
           <div className="p-3 bg-amber-50/80 border border-amber-200/60 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
             <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />

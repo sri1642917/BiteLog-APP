@@ -69,12 +69,13 @@ BiteLog operates strictly within the following boundaries:
 
 ## 3. Complete Feature Breakdown
 
-### 3.1 Input & Extraction Engine (100% Offline)
+### 3.1 Pure Food Photo Logging Engine (100% Offline)
 
-BiteLog offers three ultra-fast offline input pathways:
+BiteLog provides a single, streamlined **Food Photo** logging workflow — eliminating confusing tabs or text-pasting steps so you can track calories and macros effortlessly:
 
-1. **Food Plate Vision Analysis (Google Gemma 3n E2B / E4B)**:
-   * **Local Pre-bundled AI**: Uses Google's Gemma 3n vision-language model running directly on your CPU/GPU with zero internet required.
+1. **Instant Food Photo Upload (Google Gemma 3n E2B / E4B)**:
+   * **Single Focused Interface**: Snap or upload any meal photo (breakfast, snacks, lunch, dinner, midnight treats).
+   * **Local Pre-bundled AI**: Uses Google's Gemma 3n on-device vision model running directly on your device with zero internet connectivity.
    * **Scale & Portion Calibration**: Solves 2D photo scale ambiguity with interactive portion presets:
      * *Small Plate / Bowl*: `0.75x`
      * *Medium Standard Plate*: `1.00x` (Default)
@@ -85,16 +86,7 @@ BiteLog offers three ultra-fast offline input pathways:
      * *Restaurant / Rich*: Gravies, curries, deep-fried (`~2.5 tbsp oil / +260 kcal`)
    * **Live Dynamic Recalculation**: Tapping plate size or cooking style updates macros instantaneously without re-analyzing the image.
 
-2. **Screenshot Upload & Nutrition Label OCR (Tesseract + OpenCV)**:
-   * **Local Preprocessing**: Grayscale conversion, Contrast Limited Adaptive Histogram Equalization (CLAHE), and bilateral noise filtration.
-   * **Local OCR**: Preprocessed bitmap is passed to the bundled Tesseract OCR engine (PSM 6 and PSM 3 segmentation).
-   * **Ambiguity Heuristics**: Custom post-processing resolves OCR edge cases (e.g., distinguishing lowercase `g` from digit `9` in small fonts).
-
-3. **Paste Text (ChatGPT / Gemini / Macro Log)**:
-   * Direct paste input accepting markdown tables, bulleted meal summaries, or free-form text from any AI or notes app.
-   * Deterministic regex parser extracts `calories` (`kcal`), `protein` (`g`), and `fiber` (`g`).
-
-4. **Duplicate Submission Shield**:
+2. **Duplicate Submission Shield**:
    * Automatically detects and rejects duplicate submissions within 15 seconds to prevent accidental double-taps.
 
 ---
