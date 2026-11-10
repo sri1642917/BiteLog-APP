@@ -3,7 +3,8 @@
 > **A premium, modern, fully offline nutrition analytics application designed for complete data privacy.**  
 > Exactly reproducing the visual design and workflows specified in `Designs/ui-designs/ui-design-1.png`, `Designs/ui-designs/report-export-ui-design-2.png`, and `Designs/ui-designs/report-export-ui-design-3.png`.
 
-[![Download Android APK](https://img.shields.io/badge/Download-Android%20APK%20(v1.2)-059669?style=for-the-badge&logo=android&logoColor=white)](https://github.com/sri1642917/BiteLog-APP/releases/latest)
+[![Download Android APK](https://img.shields.io/badge/Direct%20Download-Android%20APK%20(v1.2)-059669?style=for-the-badge&logo=android&logoColor=white)](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk)
+[![Releases Page](https://img.shields.io/badge/GitHub-Releases-181717?style=for-the-badge&logo=github)](https://github.com/sri1642917/BiteLog-APP/releases)
 [![Build & Release Status](https://img.shields.io/github/actions/workflow/status/sri1642917/BiteLog-APP/build-apk.yml?branch=main&style=for-the-badge&logo=github&label=APK%20Build)](https://github.com/sri1642917/BiteLog-APP/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3b82f6?style=for-the-badge)](LICENSE)
 
@@ -12,9 +13,10 @@
 ### 📲 Quick Install: Download Android APK
 Anyone can install and run **BiteLog** directly on Android without building from source:
 
-1. 📥 **Download APK**: [**Click here to download `BiteLog-v1.2.apk`**](https://github.com/sri1642917/BiteLog-APP/releases) from the GitHub Releases page.
-2. 📱 **Install on Android**: Open the downloaded `.apk` file on your device.
-   * *If prompted*: Allow **"Install unknown apps"** for your browser or file manager.
+1. 📥 **Direct APK Download**: [**👉 Tap Here to Download `BiteLog-v1.2.apk` directly (4.9 MB)**](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk)
+   * *(Or view the release notes on the [GitHub Releases page](https://github.com/sri1642917/BiteLog-APP/releases/tag/v1.2.1))*
+2. 📱 **Install on Android**: Open the downloaded `.apk` file from your Android notification bar or `Downloads` folder.
+   * *If prompted*: Allow **"Install unknown apps"** for Chrome/your mobile browser or Files manager.
 3. 🚀 **Launch BiteLog**: Enjoy 100% private, offline nutrition tracking with zero subscriptions!
 
 ---
