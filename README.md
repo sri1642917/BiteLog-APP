@@ -14,8 +14,7 @@
 Anyone can install and run **BiteLog** directly on Android without building from source:
 
 1. 📥 **Direct APK Download**: [**👉 Tap Here to Download `BiteLog-v1.3.apk` directly (4.9 MB)**](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.3.1/BiteLog-v1.3.apk)
-   * *(Previous stable release: [Download `BiteLog-v1.2.apk`](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.2.1/BiteLog-v1.2.apk))*
-   * *(Or explore all releases on the [GitHub Releases page](https://github.com/sri1642917/BiteLog-APP/releases))*
+   * *(Single official Android APK release on GitHub Releases)*
 2. 📱 **Install on Android**: Open the downloaded `.apk` file from your Android notification bar or `Downloads` folder.
    * *If prompted*: Allow **"Install unknown apps"** for Chrome/your mobile browser or Files manager.
 3. 🚀 **Launch BiteLog**: Enjoy 100% private, offline nutrition tracking with zero subscriptions!
@@ -585,19 +584,26 @@ Food-calories-tracker-app-detailed-analysis/
 
 ## 11. Version History & Changelog
 
-### 🚀 Version 1.3.2 (Current)
-* **Dynamic Calorie Range Estimation & Average-Based Logging**:
-  * Displays intuitive visual calorie range with cooking variance: e.g. `~420 – 500 kcal`.
-  * Automatically auto-populates the editable intake inputs with the mathematical balanced average (`460 kcal`) and logs it to SQLite.
-* **Full 5-Metric Macronutrient Suite**:
-  * Expanded from Calories, Protein, and Fiber to include **Carbohydrates (`carbs_g`)** and **Fats (`fats_g`)**.
-  * Backed by Atwater physiological balancing ($\text{kcal} \approx 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$).
-  * Auto-migrated SQLite `entries` table (`carbs_g`, `fats_g`) with zero downtime.
-* **Interactive Dynamic Hints for Plate Size & Cooking Style**:
-  * Contextual recommendation cards below Plate Size buttons guiding users with realistic meal examples (e.g. 2–3 Idlis/Dosa for Small ~150–250g, Thali for Medium ~350–450g, Biryani Feast for Large ~550–750g+).
-  * Cooking style tips detailing added fat offsets (Lean 0g, Home ~10–12g, Restaurant ~24g).
-* **Enhanced Multi-Macro Visuals**:
-  * Quick-edit modal and recent meal cards display `Protein`, `Carbs`, `Fats`, and `Fiber` badges.
+### 🚀 Version 1.3.1 (Current Stable)
+* **Offline Protein Bar & Whey Powder Packet Scanner with Quantity Scaling**:
+  - Dedicated **[📦 Protein Bar / Packet]** mode alongside **[🍲 Food Plate]** mode in `AddEntry.tsx`.
+  - Offline extraction of printed nutrition facts (Serving Size, Calories, Protein, Carbs, Fats, Fiber) and primary ingredients.
+  - Interactive **Quantity Stepper** (`[-] 1.0 [+]`) with quick preset pills (`0.5x`, `1.0x`, `1.5x`, `2.0x`) that dynamically scales all 5 macros in real time.
+  - Strict Atwater formula alignment: $\text{kcal} = 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$.
+* **Robust Mobile Camera & Image Byte Verification**:
+  - Upgraded `/api/parse/food-photo` and `/api/parse/packet-label` endpoints to directly inspect image headers via PIL.
+  - Safely handles mobile camera uploads, temporary `blob` filenames, and compound browser MIME types without format errors.
+* **Profile Weight Input & History Sync Fix**:
+  - Added Current Weight field directly inside the Profile & Nutrition Goals modal.
+  - Applied numeric sanitization removing leading zeroes during keystrokes (`070` -> `70`).
+  - Automatically synchronizes current weight changes to SQLite `weight_history` alongside `user_settings`.
+* **Dynamic Calorie & 5-Macro Range Derivation**:
+  - Displays intuitive visual ranges for all 5 macros (Calories, Protein, Carbs, Fats, Fiber) accounting for cooking and packaging variance.
+  - Automatically populates the editable intake inputs with the exact mathematical midpoint average for one-tap logging.
+* **High-Resolution Print & PDF View**:
+  - Streamlined Reports view with one-tap, high-resolution Print / PDF Document generation featuring clean achievement badges.
+* **Automated CI/CD APK Release**:
+  - GitHub Actions automated pipeline compiling native Android APK (`BiteLog-v1.3.apk`) published as the single official release asset on GitHub.
 
 ### 📦 Version 1.3.1
 * **Live Food Vision E2E Testing & Verification (`Test-data/outcomes/test-1/`)**:
@@ -627,7 +633,7 @@ Food-calories-tracker-app-detailed-analysis/
 * **Direct 1-Tap APK Download**: Direct binary download URLs for immediate installation on Android phones without navigating GitHub asset pages.
 
 ### 📦 Version 1.2
-* **Automated Android APK CI/CD Pipeline**: GitHub Actions workflow automatically compiles `BiteLog-v1.2.apk` using Gradle and publishes directly to GitHub Releases.
+* **Automated Android APK CI/CD Pipeline**: GitHub Actions workflow automatically compiles `BiteLog-v1.3.apk` using Gradle and publishes directly to GitHub Releases.
 * **Capacitor Android Native Shell**: Embedded lightweight offline web client into native Android APK wrapper (`com.bitelog.app`).
 
 ### 🎨 Version 1.1

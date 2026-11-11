@@ -100,19 +100,22 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v1.3.0' }}
-          name: "BiteLog Android App v1.3"
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v1.3.1' }}
+          name: "BiteLog Android App v1.3.1"
           body: |
-            ### 📱 BiteLog v1.3 - 100% Offline Calorie & Nutrition Tracker
+            ### 📱 BiteLog v1.3.1 - 100% Offline Calorie & Nutrition Tracker
 
             Download **BiteLog-v1.3.apk** below to install directly on your Android smartphone!
 
-            #### 🌟 Features in v1.3:
+            #### 🌟 Features in v1.3.1:
             - **100% Offline & Private**: Zero cloud dependencies, zero telemetry, 0 bytes of food photos saved to disk (processed in RAM).
-            - **Single-Focused Food Photo AI Tracking**: Streamlined UI dedicated exclusively to food photo logging; OCR and paste text tabs removed.
+            - **Single-Focused Food Photo AI Tracking**: Streamlined UI dedicated exclusively to food photo logging with dual capture (Camera & Gallery).
+            - **Protein Bar & Whey Powder Packet Scanner**: Printed nutrition facts & ingredients extraction with dynamic quantity scaling (`0.5x`, `1.0x`, `1.5x`, `2.0x`).
+            - **Strict Atwater Energy Formula**: Guaranteed mathematical integrity across all 5 macros (Calories, Protein, Carbs, Fats, Fiber).
             - **Google Gemma 3n Offline Food Vision**: Instant plate analysis with portion scaling and cooking style compensation.
             - **6 Meal Categories**: Breakfast, Morning Snacks, Lunch, Evening Snacks, Dinner, Midnight Craving.
-            - **Interactive Reports & Export**: 6 selectable intervals, CSV download, and Print/PDF modal with ✔ Achieved badges.
+            - **Interactive Reports & Export**: 6 selectable intervals, high-resolution Print / PDF view with ✔ Achieved badges.
+            - **Encrypted Authentication & Session Persistence**: PBKDF2-HMAC-SHA256 encrypted authentication and offline security question recovery.
             - **Meet the Creator Screen**: Learn about Sri Harsha Juttu and the privacy-first principles of BiteLog.
 
             #### 📲 Installation Instructions:
