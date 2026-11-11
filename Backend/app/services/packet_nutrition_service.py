@@ -296,3 +296,4 @@ class PacketNutritionService:
         """Runs offline OCR on packet image and parses nutrition facts scaled by quantity."""
         raw_text = cls.ocr_extract_text(image_bytes)
         return cls.parse_packet_text(raw_text, quantity=quantity)
+
