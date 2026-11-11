@@ -163,7 +163,7 @@ export const ForgotPassword: React.FC = () => {
             <div className="flex items-center justify-between mb-1">
               <label className="block text-xs font-semibold text-slate-700">Your Answer</label>
               <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-sm">
-                Case-sensitive
+                Not case-sensitive
               </span>
             </div>
             <div className="relative">
@@ -183,7 +183,7 @@ export const ForgotPassword: React.FC = () => {
               </button>
             </div>
             <p className="text-[10px] text-slate-400 mt-1">
-              Must match the exact capitalization entered during registration (e.g. 'Batman' ≠ 'batman').
+              Not case-sensitive ('Batman', 'batman', and 'BATMAN' are all accepted).
             </p>
           </div>
 

@@ -48,8 +48,9 @@ def verify_secret(secret: str, stored_hash: str) -> bool:
 
 def normalize_security_answer(answer: str) -> str:
     """
-    Normalizes security answer by trimming leading and trailing whitespace.
-    Strictly preserves case-sensitivity (e.g. 'Batman' != 'batman').
+    Normalizes security answer by trimming whitespace and converting to lowercase
+    so password recovery is case-insensitive (e.g. 'Batman', 'batman', and 'BATMAN' all match),
+    while preserving 100% zero-knowledge PBKDF2-HMAC-SHA256 encryption in SQLite.
     """
-    return answer.strip()
+    return " ".join(answer.strip().lower().split())
 

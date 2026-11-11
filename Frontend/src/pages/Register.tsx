@@ -212,7 +212,7 @@ export const Register: React.FC = () => {
           <div className="flex items-center justify-between mb-1">
             <label className="block text-xs font-semibold text-slate-700">Your Answer</label>
             <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-sm">
-              Case-sensitive
+              Not case-sensitive
             </span>
           </div>
           <div className="relative">
@@ -232,7 +232,7 @@ export const Register: React.FC = () => {
             </button>
           </div>
           <p className="text-[10px] text-slate-400 mt-1">
-            Note: Answer is strictly case-sensitive (e.g. 'Batman' ≠ 'batman'). Remember your exact capitalization!
+            Note: Answer is not case-sensitive ('Batman', 'batman', and 'BATMAN' are all accepted).
           </p>
         </div>
 

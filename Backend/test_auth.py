@@ -71,7 +71,7 @@ def test_auth_workflow():
     assert sq_res.json()["security_question"] == "What is your favorite hero?"
     print("✓ Security question retrieval verified!")
 
-    # 6. Password Reset with Security Answer
+    # 6. Password Reset with Security Answer (Case-Insensitive Verification)
     # Wrong answer
     wrong_reset = client.post("/api/auth/reset-password", json={
         "username": "test_harsha",
@@ -81,31 +81,32 @@ def test_auth_workflow():
     assert wrong_reset.status_code == 400
     print("✓ Incorrect security answer correctly rejected!")
 
-    # Wrong case test (Strict Case-Sensitivity Verification)
-    wrong_case_reset = client.post("/api/auth/reset-password", json={
+    # Case-Insensitivity Verification: lowercase 'batman' matches registered 'Batman'
+    lower_reset = client.post("/api/auth/reset-password", json={
         "username": "test_harsha",
         "security_answer": "batman",  # Registered as 'Batman'
         "new_password": "NewSecretPassword456!"
     })
-    assert wrong_case_reset.status_code == 400
-    print("✓ Case-sensitivity verified: lowercase 'batman' rejected when registered as 'Batman'!")
+    assert lower_reset.status_code == 200
+    print("✓ Case-insensitivity verified: lowercase 'batman' successfully matches registered 'Batman'!")
 
-    wrong_upper_reset = client.post("/api/auth/reset-password", json={
+    # Uppercase 'BATMAN' also matches
+    upper_reset = client.post("/api/auth/reset-password", json={
         "username": "test_harsha",
         "security_answer": "BATMAN",
-        "new_password": "NewSecretPassword456!"
+        "new_password": "FinalSecretPassword789!"
     })
-    assert wrong_upper_reset.status_code == 400
-    print("✓ Case-sensitivity verified: uppercase 'BATMAN' rejected!")
+    assert upper_reset.status_code == 200
+    print("✓ Case-insensitivity verified: uppercase 'BATMAN' successfully matches!")
 
-    # Correct answer with exact case ('Batman')
+    # Exact case 'Batman' also matches
     good_reset = client.post("/api/auth/reset-password", json={
         "username": "test_harsha",
         "security_answer": "Batman",
-        "new_password": "NewSecretPassword456!"
+        "new_password": "FinalSecretPassword789!"
     })
     assert good_reset.status_code == 200
-    print("✓ Exact case match 'Batman' successfully verified & password reset!")
+    print("✓ Exact case 'Batman' successfully verified & password reset!")
 
     # 7. Sign in with Old Password (Must Fail)
     old_login = client.post("/api/auth/login", json={"username": "test_harsha", "password": "SecretPassword123!"})
@@ -113,7 +114,7 @@ def test_auth_workflow():
     print("✓ Old password successfully invalidated!")
 
     # 8. Sign in with New Password (Must Succeed)
-    new_login = client.post("/api/auth/login", json={"username": "test_harsha", "password": "NewSecretPassword456!"})
+    new_login = client.post("/api/auth/login", json={"username": "test_harsha", "password": "FinalSecretPassword789!"})
     assert new_login.status_code == 200
     print("✓ Sign in with new reset password successful!")
 
