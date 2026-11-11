@@ -31,10 +31,7 @@ export const App: React.FC = () => {
       {/* Background canvas styling: on mobile fills 100% screen edge-to-edge; on desktop centers a phone frame */}
       <div className="w-full h-[100dvh] min-h-screen bg-[#f8fafc] sm:bg-slate-100 flex items-center justify-center sm:p-4 overflow-hidden">
         {/* ================= RESPONSIVE MOBILE APP VIEWPORT ================= */}
-        <div className="w-full h-full sm:h-[92vh] sm:max-w-[440px] bg-[#f8fafc] sm:rounded-[40px] sm:shadow-[0_25px_70px_rgba(0,0,0,0.18)] sm:border-[8px] sm:border-slate-900 flex flex-col relative overflow-hidden">
-          {/* Top Mobile Status Bar (Rendered only on desktop preview, hidden on native mobile/Android) */}
-          <MobileStatusBar />
-
+        <div className="w-full h-full sm:h-[92vh] sm:max-w-[440px] bg-[#f8fafc] sm:rounded-3xl sm:shadow-xl sm:border border-slate-200/80 flex flex-col relative overflow-hidden">
           {/* Top Mobile App Header */}
           <MobileTopHeader onOpenMenu={() => setMoreDrawerOpen(true)} />
 
