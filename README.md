@@ -1,7 +1,7 @@
 # BiteLog — Log every bite. Stay on track. Achieve your goal.
 
 > **A premium, modern, fully offline nutrition analytics application designed for complete data privacy.**  
-> Exactly reproducing the visual design and workflows specified in `Designs/ui-designs/ui-design-1.png`, `Designs/ui-designs/report-export-ui-design-2.png`, `Designs/ui-designs/report-export-ui-design-3.png`, and `Designs/ui-designs/about-the-creator-ui-design-4.png`.
+> Exactly reproducing the visual design and workflows specified in `Designs/ui-designs/ui-design-1.png`, `Designs/ui-designs/report-export-ui-design-2.png`, `Designs/ui-designs/report-export-ui-design-3.png`, `Designs/ui-designs/about-the-creator-ui-design-4.png`, `Designs/ui-designs/username-register-or-forgert-password-ui-design-4.png`, and `Designs/ui-designs/signin-feature-icon-ui-design-5.png`.
 
 [![Download Android APK](https://img.shields.io/badge/Direct%20Download-Android%20APK%20(v1.3.1)-059669?style=for-the-badge&logo=android&logoColor=white)](https://github.com/sri1642917/BiteLog-APP/releases/download/v1.3.1/BiteLog-v1.3.apk)
 [![Releases Page](https://img.shields.io/badge/GitHub-Releases-181717?style=for-the-badge&logo=github)](https://github.com/sri1642917/BiteLog-APP/releases)
@@ -35,10 +35,9 @@ Anyone can install and run **BiteLog** directly on Android without building from
   - [3.6 Calendar & Intake Overview](#36-calendar--intake-overview)
   - [3.7 Backup, Restore & Selective Cleanup](#37-backup-restore--selective-cleanup)
   - [3.8 Meet the Creator Screen (Design Specification 4)](#38-meet-the-creator-screen-design-specification-4)
-  - [3.9 Encrypted Offline Authentication & Password Recovery (Designs 4 & 5)](#39-encrypted-offline-authentication--password-recovery-designs-4--5)
+  - [3.9 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)](#39-zero-knowledge-encrypted-authentication--password-recovery-designs-4--5)
+  - [3.10 Edge-to-Edge Responsive Mobile Display Engine](#310-edge-to-edge-responsive-mobile-display-engine)
 - [4. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)](#4-ui--ux-architecture-design-specifications-1-2-3-4--5)
-  - [Mobile Smartphone Viewport (`max-w-[420px]`)](#mobile-smartphone-viewport-max-w-420px)
-  - [Desktop Dashboard Viewport](#desktop-dashboard-viewport)
 - [5. Calculation & Nutrition Analytics](#5-calculation--nutrition-analytics)
 - [6. Ultra-Lightweight Mobile Architecture (< 25 MB APK)](#6-ultra-lightweight-mobile-architecture--25-mb-apk)
 - [7. Technology Stack](#7-technology-stack)
@@ -204,7 +203,7 @@ BiteLog includes a dedicated **About the Creator** screen exactly reproducing `D
 
 ---
 
-### 3.9 Encrypted Offline Authentication & Password Recovery (Designs 4 & 5)
+### 3.9 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)
 
 BiteLog integrates a 100% offline authentication and local identity protection system exactly reproducing `Designs/ui-designs/signin-feature-icon-ui-design-5.png` and `Designs/ui-designs/username-register-or-forgert-password-ui-design-4.png`:
 
@@ -224,15 +223,36 @@ BiteLog integrates a 100% offline authentication and local identity protection s
 
 ---
 
-## 4. UI & UX Architecture (Design Specifications 1, 2, 3 & 4)
+### 3.10 Edge-to-Edge Responsive Mobile Display Engine
 
-### Mobile Smartphone Viewport (`max-w-[420px]`)
-* Engineered specifically for modern smartphone frames (`390px` to `420px` width) with iOS-style status bar and rounded device chassis.
-* **Top App Bar**: BiteLog brand title + Tagline: `Log every bite. Stay on track. Achieve your goal.`
-* **Bottom Navigation**: Quick one-thumb access to *Dashboard*, *Add Entry*, *Calendar*, *Reports*, and *More* drawer.
+BiteLog dynamically adapts to any smartphone form factor without clipping, letterboxing, or awkward margins:
 
-### Desktop Dashboard Viewport
-* Responsive two-column layout featuring a left sidebar with quick links, daily progress rings, intake bar charts, and tabular entry logs.
+* **Fluid Full-Width & Dynamic Viewport Height (`w-full h-[100dvh]`)**:
+  * Completely removes hardcoded 420px max-width constraints on mobile devices.
+  * Expands to 100% edge-to-edge on compact 320px screens, standard 390px/412px displays, and large 480px+ phablets and tablets.
+* **Native Android Status Bar Support**:
+  * Automatically detects mobile environments and hides the fake iPhone status bar so the native Android system bar cleanly displays time, battery, and notifications without duplication.
+* **Hardware Notch & Gesture Navigation Bar Insets**:
+  * Configured with `viewport-fit=cover`.
+  * Protects top header with `pt-[env(safe-area-inset-top,0px)]` against camera punch-holes.
+  * Protects bottom navigation with `pb-[max(env(safe-area-inset-bottom,0px),0.5rem)]` against Android system gesture bars.
+* **Locked Header & Footer with Momentum Body Scrolling**:
+  * Top header and bottom bar remain firmly anchored while content scrolls smoothly with native touch momentum (`overscroll-contain`).
+
+---
+
+## 4. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)
+
+BiteLog faithfully implements all 5 official design specifications:
+
+1. **Design Specification 1 (`ui-design-1.png`)**: Primary mobile dashboard, daily progress rings, calorie & protein summary cards, and quick action buttons.
+2. **Design Specification 2 (`report-export-ui-design-2.png`)**: In-app reports engine with 6 custom periods, dual-area spline progress chart, target indicators, and tabular day log.
+3. **Design Specification 3 (`report-export-ui-design-3.png`)**: Official high-resolution printable report modal with branded letterhead and one-click PDF export.
+4. **Design Specification 4 (`about-the-creator-ui-design-4.png` & `username-register-or-forgert-password-ui-design-4.png`)**:
+   * "Meet the Creator" profile honoring Sri Harsha Juttu, Machine Learning Engineer.
+   * "Register" screen with security question configuration.
+   * "Forgot Password?" identity verification and recovery screen.
+5. **Design Specification 5 (`signin-feature-icon-ui-design-5.png`)**: Top header authentication pill button (`[ 👤 Sign In ]`), notifications bell, and user session status.
 
 ---
 
@@ -324,11 +344,14 @@ Open **`http://localhost:5173`** in your browser.
 Automated offline test suites validate all features without network access:
 
 ```bash
-# 1. Run Core E2E Tests (Health, CRUD, Reports, CSV, Weight, Cleanup)
+# 1. Run Encrypted Offline Authentication & Password Recovery Tests
 cd Backend
+venv/bin/python3 test_auth.py
+
+# 2. Run Core E2E Tests (Health, CRUD, Reports, CSV, Weight, Cleanup)
 venv/bin/python3 test_e2e.py
 
-# 2. Run Offline Food Vision Tests (Gemma 3n E2B/E4B, Portion Scaling, Hidden Oil)
+# 3. Run Offline Food Vision Tests (Gemma 3n E2B/E4B, Portion Scaling, Hidden Oil)
 venv/bin/python3 test_food_vision.py
 ```
 
@@ -336,17 +359,18 @@ venv/bin/python3 test_food_vision.py
 * `✓ Health Check Passed: 100% Offline Mode confirmed`
 * `✓ Dashboard Summary: Today's calories, protein, and targets calculated`
 * `✓ Intake Overview: 7-day Monday through Sunday breakdown verified`
-* `✓ ChatGPT Text Parsing: Exact extraction of kcal, protein, and fiber`
-* `✓ Screenshot Offline OCR: Tesseract extraction from synthetic test images`
-* `✓ Add Entry: Creation, meal categorization, and timestamp recording`
-* `✓ Duplicate Submission Prevention: HTTP 409 Conflict blocked duplicate double-clicks`
-* `✓ Calendar Month Summary: Monthly aggregation without fake zeros`
+* `✓ Pure Food Photo Gemma 3n Vision: Calibrated plate scaling and oil compensation verified`
+* `✓ Instant Post-Save Workflow: Instant edit and delete verified`
 * `✓ All 6 Report Periods (Day, Week, Month, Quarter, 6M, Year) & CSV Download Export verified`
 * `✓ Weight & Goals: Mifflin-St Jeor BMR, TDEE, BMI, and target date verified`
 * `✓ Backup Export & Restore: JSON database export and schema validation`
 * `✓ Clean Range Execution: Selective date range purging verified`
-* `✓ Gemma 3n E2B & E4B Vision: Calibrated plate scaling and oil compensation verified`
-* `✓ Instant Post-Save Workflow: Instant edit and delete verified`
+* `✓ Offline User Registration: Account creation with unique identifier verified`
+* `✓ Zero-Knowledge DB Encryption: Passwords & security answers verified NEVER saved in plain text`
+* `✓ 200,000-Round PBKDF2-HMAC-SHA256: Cryptographic hashes in nutritrack.db verified`
+* `✓ Authentication & Constant-Time Validation: Timing attack protection verified`
+* `✓ Offline Security Question Identity Verification: Answer verification without external networks`
+* `✓ Instant Password Reset: Security question reset workflow verified`
 
 ---
 
@@ -357,6 +381,7 @@ Food-calories-tracker-app-detailed-analysis/
 ├── Backend/
 │   ├── app/
 │   │   ├── api/
+│   │   │   ├── auth.py            # Encrypted registration, sign-in & password recovery
 │   │   │   ├── entries.py         # Entry CRUD, duplicate prevention & clean range
 │   │   │   ├── calendar.py        # Calendar month aggregations & day drill-down
 │   │   │   ├── reports.py         # 6 reporting periods analytics & CSV export
@@ -368,11 +393,15 @@ Food-calories-tracker-app-detailed-analysis/
 │   │   │   ├── connection.py      # SQLite connection & sessionmaker
 │   │   │   └── init_db.py         # Database table creation & migrations
 │   │   ├── models/
+│   │   │   ├── user.py            # User account model with encrypted PBKDF2 hashes
 │   │   │   ├── entry.py           # Entry table model (meal_type, calories, protein, fiber)
 │   │   │   ├── weight.py          # WeightHistory table model
 │   │   │   └── user_settings.py   # UserSettings table model
-│   │   ├── schemas/               # Pydantic schemas for all endpoints
+│   │   ├── schemas/
+│   │   │   ├── auth.py            # Registration, login & password recovery schemas
+│   │   │   └── ...                # Pydantic schemas for all endpoints
 │   │   ├── services/
+│   │   │   ├── auth_service.py    # PBKDF2-HMAC-SHA256 200k rounds hashing & verification
 │   │   │   ├── food_vision_service.py # Gemma 3n E2B/E4B offline inference & scaling
 │   │   │   ├── ocr_service.py     # OpenCV image preprocessing & Tesseract OCR
 │   │   │   ├── text_parser.py     # Regex/heuristic parser for ChatGPT & Gemini
@@ -386,6 +415,7 @@ Food-calories-tracker-app-detailed-analysis/
 │   │   └── gemma_3n_e4b/          # Pre-bundled offline Gemma 3n E4B model files
 │   ├── pyinstaller_build.spec     # Standalone desktop packaging spec
 │   ├── requirements.txt           # Python backend dependencies
+│   ├── test_auth.py               # Automated offline encryption & password recovery test suite
 │   ├── test_e2e.py                # Automated offline integration test suite
 │   └── test_food_vision.py        # Gemma 3n food vision integration test suite
 │
@@ -395,10 +425,10 @@ Food-calories-tracker-app-detailed-analysis/
 │   │   └── creator-pic.png        # Official creator profile avatar
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── MobileTopHeader.tsx# Mobile top bar with BiteLog brand & tagline
+│   │   │   ├── MobileTopHeader.tsx# Mobile top bar with Sign In pill & notification bell
 │   │   │   ├── Sidebar.tsx        # Desktop navigation & privacy lock card
 │   │   │   ├── TopNav.tsx         # Top bar with offline status badge
-│   │   │   └── MobileBottomNav.tsx# Sticky mobile bottom navigation
+│   │   │   └── MobileBottomNav.tsx# Safe-area padded sticky mobile bottom navigation
 │   │   ├── pages/
 │   │   │   ├── Dashboard.tsx      # Desktop & Mobile Dashboard (cards, charts, rings)
 │   │   │   ├── AddEntry.tsx       # Dedicated food photo analysis & 6 meal categories
@@ -408,13 +438,17 @@ Food-calories-tracker-app-detailed-analysis/
 │   │   │   ├── History.tsx        # Tabular log of all entries with date filter
 │   │   │   ├── BackupRestore.tsx  # Export, restore, and selective range cleanup
 │   │   │   ├── AboutCreator.tsx   # Meet the Creator screen matching Design 4
-│   │   │   └── Settings.tsx       # Personal profile & target configurations
+│   │   │   ├── Register.tsx       # User registration with security question (Design 4)
+│   │   │   ├── ForgotPassword.tsx # Offline identity verification & reset (Design 4)
+│   │   │   ├── Login.tsx          # Sign In screen
+│   │   │   └── Settings.tsx       # Account security profile & nutrition targets
 │   │   ├── services/
+│   │   │   ├── authService.ts     # Local authentication client & session manager
 │   │   │   └── api.ts             # Typed REST client
 │   │   ├── types/
 │   │   │   └── index.ts           # Full TypeScript data contracts
-│   │   ├── App.tsx                # Routing and mobile drawer layout
-│   │   ├── index.css              # Custom styling & scrollbars
+│   │   ├── App.tsx                # Responsive full-viewport layout & routing
+│   │   ├── index.css              # Custom styling, safe areas & touch momentum
 │   │   └── main.tsx
 │   ├── capacitor.config.json      # Ultra-lightweight mobile APK config (com.bitelog.app)
 │   ├── package.json               # Frontend dependencies & scripts
@@ -427,7 +461,9 @@ Food-calories-tracker-app-detailed-analysis/
 │       ├── ui-design-1.png        # Primary dashboard & mobile reference specification
 │       ├── report-export-ui-design-2.png # In-app reports UI reference specification
 │       ├── report-export-ui-design-3.png # Print & PDF report reference specification
-│       └── about-the-creator-ui-design-4.png # Meet the Creator reference specification
+│       ├── about-the-creator-ui-design-4.png # Meet the Creator reference specification
+│       ├── username-register-or-forgert-password-ui-design-4.png # Register & Forgot Password reference
+│       └── signin-feature-icon-ui-design-5.png # Top header Sign In pill button reference
 │
 ├── .github/
 │   └── workflows/
@@ -441,11 +477,23 @@ Food-calories-tracker-app-detailed-analysis/
 
 ## 11. Version History & Changelog
 
-### 🚀 Version 1.3 (Current)
-* **Dedicated Food Photo AI Tracking**: Streamlined the `AddEntry` screen exclusively for food photos; removed redundant screenshot OCR and text paste tabs for a simpler, zero-friction logging experience.
+### 🚀 Version 1.3.1 (Current)
+* **Zero-Knowledge Encrypted Authentication (Designs 4 & 5)**:
+  * Full offline user registration ([`Register.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Register.tsx)) and sign-in ([`Login.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Login.tsx)).
+  * Passwords and security recovery answers are hashed with **200,000-Round PBKDF2-HMAC-SHA256** and random salt. Plaintext is never stored in `nutritrack.db`.
+* **Offline Password Recovery via Security Question**:
+  * Identity verification and password reset screen ([`ForgotPassword.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/ForgotPassword.tsx)) allowing instant recovery without internet or email.
+* **Top Header Sign In Pill Button**:
+  * Added `[ 👤 Sign In ]` pill button and dynamic user profile status in [`MobileTopHeader.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/components/MobileTopHeader.tsx) matching `signin-feature-icon-ui-design-5.png`.
+* **Edge-to-Edge Responsive Mobile Display**:
+  * Full 100% viewport width (`w-full`) and dynamic height (`h-[100dvh]`) fitting any mobile screen size (320px to 480px+).
+  * Removed fake iPhone status bar on mobile so Android's native system bar renders cleanly.
+  * Added `viewport-fit=cover` and safe-area insets (`env(safe-area-inset-top)` & `env(safe-area-inset-bottom)`) for camera punch-holes and gesture bars.
+
+### 📦 Version 1.3.0
+* **Dedicated Food Photo AI Tracking**: Streamlined `AddEntry` screen exclusively for food photos; removed redundant OCR and text paste tabs.
 * **Meet the Creator Screen (Design Specification 4)**: Added `AboutCreator.tsx` featuring Sri Harsha Juttu (Machine Learning Engineer), the BiteLog mission, and the privacy manifesto.
-* **Direct 1-Tap APK Download**: Replaced repository release links with direct binary download URLs for immediate installation on Android phones without navigating GitHub asset pages.
-* **Optimized CI/CD Release Pipeline**: Updated GitHub Actions automated build workflow to package and publish `BiteLog-v1.3.apk` on demand with Java JDK 21 and Android SDK 36.
+* **Direct 1-Tap APK Download**: Direct binary download URLs for immediate installation on Android phones without navigating GitHub asset pages.
 
 ### 📦 Version 1.2
 * **Automated Android APK CI/CD Pipeline**: GitHub Actions workflow automatically compiles `BiteLog-v1.2.apk` using Gradle and publishes directly to GitHub Releases.
