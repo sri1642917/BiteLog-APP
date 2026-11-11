@@ -220,17 +220,42 @@ class FoodVisionService:
             confidence_pct = "91%"
 
         # Compute macros based on calibrated portion weight & dish recipe density
-        total_protein = round((base_weight_grams / 100.0) * densities["protein"], 1)
-        total_carbs = round((base_weight_grams / 100.0) * densities["carbs"], 1)
-        total_fats = round((base_weight_grams / 100.0) * densities["base_fat"] + added_fat_g, 1)
-        total_fiber = round((base_weight_grams / 100.0) * densities["fiber"], 1)
+        base_protein = (base_weight_grams / 100.0) * densities["protein"]
+        base_carbs = (base_weight_grams / 100.0) * densities["carbs"]
+        base_fats = (base_weight_grams / 100.0) * densities["base_fat"] + added_fat_g
+        base_fiber = (base_weight_grams / 100.0) * densities["fiber"]
 
-        # Enforce Atwater Physiological Energy Equation: 4*(Protein + Carbs) + 9*Fats
+        # 1. Protein Range (±10% cooking variance) & Balanced Midpoint Average
+        min_protein = round(max(3.0, base_protein * 0.90), 1)
+        max_protein = round(base_protein * 1.10, 1)
+        total_protein = round((min_protein + max_protein) / 2.0, 1)
+        protein_range_str = f"~{min_protein:g} – {max_protein:g} g"
+
+        # 2. Carbs Range (±10% cooking variance) & Balanced Midpoint Average
+        min_carbs = round(max(5.0, base_carbs * 0.90), 1)
+        max_carbs = round(base_carbs * 1.10, 1)
+        total_carbs = round((min_carbs + max_carbs) / 2.0, 1)
+        carbs_range_str = f"~{min_carbs:g} – {max_carbs:g} g"
+
+        # 3. Fats Range (±12% cooking oil variance) & Balanced Midpoint Average
+        min_fats = round(max(2.0, base_fats * 0.88), 1)
+        max_fats = round(base_fats * 1.12, 1)
+        total_fats = round((min_fats + max_fats) / 2.0, 1)
+        fats_range_str = f"~{min_fats:g} – {max_fats:g} g"
+
+        # 4. Fiber Range (±10% cooking variance) & Balanced Midpoint Average
+        min_fiber = round(max(0.5, base_fiber * 0.90), 1)
+        max_fiber = round(base_fiber * 1.10, 1)
+        total_fiber = round((min_fiber + max_fiber) / 2.0, 1)
+        fiber_range_str = f"~{min_fiber:g} – {max_fiber:g} g"
+
+        # 5. Derive Total Calories Range directly from the Macro Ranges via Atwater:
+        # Min kcal = 4*(min_P + min_C) + 9*min_F
+        # Max kcal = 4*(max_P + max_C) + 9*max_F
+        # Total kcal = 4*(avg_P + avg_C) + 9*avg_F
+        min_cal = round((4.0 * (min_protein + min_carbs) + 9.0 * min_fats) / 10.0) * 10.0
+        max_cal = round((4.0 * (max_protein + max_carbs) + 9.0 * max_fats) / 10.0) * 10.0
         calculated_cal = round(4.0 * (total_protein + total_carbs) + 9.0 * total_fats)
-
-        # Dynamic ±8% to 10% realistic cooking variance range
-        min_cal = round((calculated_cal * 0.91) / 10.0) * 10.0
-        max_cal = round((calculated_cal * 1.09) / 10.0) * 10.0
         total_calories = round((min_cal + max_cal) / 2.0) # Balanced average
 
         # Boundaries
@@ -260,9 +285,21 @@ class FoodVisionService:
             "average_calories_kcal": float(total_calories),
             "calorie_range_str": calorie_range_str,
             "protein_g": float(total_protein),
+            "min_protein_g": float(min_protein),
+            "max_protein_g": float(max_protein),
+            "protein_range_str": protein_range_str,
             "carbs_g": float(total_carbs),
+            "min_carbs_g": float(min_carbs),
+            "max_carbs_g": float(max_carbs),
+            "carbs_range_str": carbs_range_str,
             "fats_g": float(total_fats),
+            "min_fats_g": float(min_fats),
+            "max_fats_g": float(max_fats),
+            "fats_range_str": fats_range_str,
             "fiber_g": float(total_fiber),
+            "min_fiber_g": float(min_fiber),
+            "max_fiber_g": float(max_fiber),
+            "fiber_range_str": fiber_range_str,
             "confidence_level": f"High • {confidence_pct} Calibrated Accuracy ({detected_dish})",
             "portion_notes": f"Calibrated ~{int(base_weight_grams)}g portion ({plate_name} • {style_label})",
             "detected_dish": detected_dish,

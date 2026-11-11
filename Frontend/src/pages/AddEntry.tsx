@@ -81,6 +81,10 @@ export const AddEntry: React.FC = () => {
   const [fats, setFats] = useState<string>('');
   const [fiber, setFiber] = useState<string>('0');
   const [calorieRange, setCalorieRange] = useState<string | null>(null);
+  const [proteinRange, setProteinRange] = useState<string | null>(null);
+  const [carbsRange, setCarbsRange] = useState<string | null>(null);
+  const [fatsRange, setFatsRange] = useState<string | null>(null);
+  const [fiberRange, setFiberRange] = useState<string | null>(null);
   const [avgCalories, setAvgCalories] = useState<number | null>(null);
   const [source, setSource] = useState<'Image' | 'Text' | 'Manual'>('Image');
   const [note, setNote] = useState<string | null>(null);
@@ -147,6 +151,14 @@ export const AddEntry: React.FC = () => {
         setCalorieRange(res.calorie_range_str);
         setAvgCalories(res.calories_kcal);
       }
+      const pNum = res.protein_g;
+      const cNum = res.carbs_g;
+      const fNum = res.fats_g;
+      const fibNum = res.fiber_g;
+      setProteinRange(res.protein_range_str || `~${Math.round(pNum * 0.9)} – ${Math.round(pNum * 1.1)} g`);
+      setCarbsRange(res.carbs_range_str || `~${Math.round(cNum * 0.9)} – ${Math.round(cNum * 1.1)} g`);
+      setFatsRange(res.fats_range_str || `~${Math.round(fNum * 0.88)} – ${Math.round(fNum * 1.12)} g`);
+      setFiberRange(res.fiber_range_str || `~${Math.round(fibNum * 0.9)} – ${Math.round(fibNum * 1.1)} g`);
       setNote(`${res.confidence_level} • ${res.portion_notes}`);
       setAiDisclaimer(res.disclaimer);
       setAiModelUsed(res.model_used);
@@ -837,6 +849,11 @@ export const AddEntry: React.FC = () => {
                     required
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
                   />
+                  {calorieRange && (
+                    <div className="text-[9px] font-semibold text-orange-700 bg-orange-50/90 border border-orange-200/60 px-1 py-0.5 rounded-md mt-1 truncate text-center" title={`Range: ${calorieRange}`}>
+                      {calorieRange}
+                    </div>
+                  )}
                 </div>
 
                 {/* Protein */}
@@ -853,6 +870,11 @@ export const AddEntry: React.FC = () => {
                     required
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
                   />
+                  {proteinRange && (
+                    <div className="text-[9px] font-semibold text-emerald-700 bg-emerald-50/90 border border-emerald-200/60 px-1 py-0.5 rounded-md mt-1 truncate text-center" title={`Range: ${proteinRange}`}>
+                      {proteinRange}
+                    </div>
+                  )}
                 </div>
 
                 {/* Carbs */}
@@ -868,6 +890,11 @@ export const AddEntry: React.FC = () => {
                     placeholder="e.g. 60"
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
+                  {carbsRange && (
+                    <div className="text-[9px] font-semibold text-blue-700 bg-blue-50/90 border border-blue-200/60 px-1 py-0.5 rounded-md mt-1 truncate text-center" title={`Range: ${carbsRange}`}>
+                      {carbsRange}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -886,6 +913,11 @@ export const AddEntry: React.FC = () => {
                     placeholder="e.g. 20"
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
+                  {fatsRange && (
+                    <div className="text-[9px] font-semibold text-amber-700 bg-amber-50/90 border border-amber-200/60 px-1 py-0.5 rounded-md mt-1 truncate text-center" title={`Range: ${fatsRange}`}>
+                      {fatsRange}
+                    </div>
+                  )}
                 </div>
 
                 {/* Fiber */}
@@ -901,6 +933,11 @@ export const AddEntry: React.FC = () => {
                     placeholder="e.g. 3"
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500"
                   />
+                  {fiberRange && (
+                    <div className="text-[9px] font-semibold text-purple-700 bg-purple-50/90 border border-purple-200/60 px-1 py-0.5 rounded-md mt-1 truncate text-center" title={`Range: ${fiberRange}`}>
+                      {fiberRange}
+                    </div>
+                  )}
                 </div>
               </div>
 
