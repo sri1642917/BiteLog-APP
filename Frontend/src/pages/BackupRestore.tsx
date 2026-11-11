@@ -12,6 +12,7 @@ import {
   Filter
 } from 'lucide-react';
 import { api } from '../services/api';
+import { getLocalDateString } from '../utils/dateUtils';
 
 export const BackupRestore: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,8 +24,8 @@ export const BackupRestore: React.FC = () => {
   const pastWeek = new Date(today);
   pastWeek.setDate(today.getDate() - 7);
 
-  const [cleanFromDate, setCleanFromDate] = useState<string>(pastWeek.toISOString().split('T')[0]);
-  const [cleanToDate, setCleanToDate] = useState<string>(today.toISOString().split('T')[0]);
+  const [cleanFromDate, setCleanFromDate] = useState<string>(getLocalDateString(pastWeek));
+  const [cleanToDate, setCleanToDate] = useState<string>(getLocalDateString(today));
   const [cleanEntries, setCleanEntries] = useState<boolean>(true);
   const [cleanWeights, setCleanWeights] = useState<boolean>(true);
 

@@ -12,12 +12,13 @@ import {
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import { CalendarMonthData, CalendarDayInfo, DayDetailData } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 export const CalendarView: React.FC = () => {
   const today = new Date();
   const [currentYear, setCurrentYear] = useState<number>(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState<number>(today.getMonth() + 1); // 1-12
-  const [selectedDate, setSelectedDate] = useState<string>(today.toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState<string>(getLocalDateString(today));
 
   const [calendarData, setCalendarData] = useState<CalendarMonthData | null>(null);
   const [dayDetails, setDayDetails] = useState<DayDetailData | null>(null);
@@ -136,7 +137,7 @@ export const CalendarView: React.FC = () => {
           {/* Active Days */}
           {calendarData?.days.map((d: CalendarDayInfo) => {
             const isSelected = selectedDate === d.date;
-            const isToday = today.toISOString().split('T')[0] === d.date;
+            const isToday = getLocalDateString(today) === d.date;
 
             return (
               <div

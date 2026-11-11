@@ -21,6 +21,7 @@ import {
 } from 'recharts';
 import { api } from '../services/api';
 import { WeightStats, WeightPoint, UserSettings } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 export const WeightGoals: React.FC = () => {
   const [stats, setStats] = useState<WeightStats | null>(null);
@@ -30,7 +31,7 @@ export const WeightGoals: React.FC = () => {
   // Update Weight Modal
   const [showLogModal, setShowLogModal] = useState(false);
   const [logWeightVal, setLogWeightVal] = useState<string>('');
-  const [logDateVal, setLogDateVal] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [logDateVal, setLogDateVal] = useState<string>(getLocalDateString());
 
   // Edit Goals / Profile Modal
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -116,7 +117,7 @@ export const WeightGoals: React.FC = () => {
       });
 
       // 2. Also log to weight history for today so chart and stats immediately reflect the new weight!
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = getLocalDateString();
       await api.logWeight(todayStr, curW);
 
       setShowProfileModal(false);

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { Entry } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 export type MealCategory =
   | 'Breakfast'
@@ -118,7 +119,7 @@ export const AddEntry: React.FC = () => {
 
   // Date and Time
   const now = new Date();
-  const todayStr = now.toISOString().split('T')[0];
+  const todayStr = getLocalDateString(now);
   const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
   const [entryDate, setEntryDate] = useState<string>(todayStr);

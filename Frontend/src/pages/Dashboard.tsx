@@ -17,10 +17,11 @@ import {
 } from 'lucide-react';
 import { api } from '../services/api';
 import { DashboardSummary } from '../types';
+import { getLocalDateString } from '../utils/dateUtils';
 
 // Zero initial state: completely clean, no mock or random data
 const ZERO_SUMMARY: DashboardSummary = {
-  date: new Date().toISOString().split('T')[0],
+  date: getLocalDateString(),
   today_calories: {
     total: 0,
     target: 2200,
@@ -54,7 +55,8 @@ export const Dashboard: React.FC = () => {
 
   const loadData = async () => {
     try {
-      const sumRes = await api.getDashboardSummary();
+      const todayDate = getLocalDateString();
+      const sumRes = await api.getDashboardSummary(todayDate);
       if (sumRes) {
         setSummary(sumRes);
       }
@@ -72,7 +74,7 @@ export const Dashboard: React.FC = () => {
   const protPercent = Math.min(100, Math.round(summary.today_protein.percentage));
 
   // Filter only today's entries from recent entries list if present
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = getLocalDateString();
   const todayEntries = summary.recent_entries.filter(e => e.date === todayStr || e.date === 'Today');
 
   return (
