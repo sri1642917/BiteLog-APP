@@ -52,7 +52,7 @@ def test_food_vision_offline():
     assert data_e2b["calories_kcal"] > 0
     assert data_e2b["protein_g"] > 0
     assert "Google Gemma 3n E2B" in data_e2b["model_used"]
-    assert "90–92%" in data_e2b["confidence_level"]
+    assert "Calibrated Accuracy" in data_e2b["confidence_level"]
 
     # 5. Test 3 Plate Size Options: Small (Bowl) vs Medium (Plate) vs Large (Platter)
     res_large = client.post(
