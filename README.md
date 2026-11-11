@@ -353,6 +353,9 @@ venv/bin/python3 test_e2e.py
 
 # 3. Run Offline Food Vision Tests (Gemma 3n E2B/E4B, Portion Scaling, Hidden Oil)
 venv/bin/python3 test_food_vision.py
+
+# 4. Run Live Food Items End-to-End Suite (Real Photos, Logging, 409 Shield & Reports)
+venv/bin/python3 test_live_food_items.py
 ```
 
 ### Verified Test Cases:
@@ -360,6 +363,11 @@ venv/bin/python3 test_food_vision.py
 * `✓ Dashboard Summary: Today's calories, protein, and targets calculated`
 * `✓ Intake Overview: 7-day Monday through Sunday breakdown verified`
 * `✓ Pure Food Photo Gemma 3n Vision: Calibrated plate scaling and oil compensation verified`
+* `✓ Real Food Items E2E Pipeline: Verified with 3 real food images in Test-data/Food-items/`
+  * `food_item_1.png`: Samosas & Chai (Morning Snacks) → 980 kcal, 52g protein, 6g fiber (Medium plate • Restaurant oil)
+  * `food_item_2.png`: Indian Thali (Lunch) → 830 kcal, 50g protein, 6g fiber (Medium plate • Home cooked)
+  * `food_item_3.png`: Naan, Paneer & Desserts (Dinner) → 1,524 kcal, 88g protein, 10.5g fiber (Large platter • Restaurant oil)
+* `✓ Duplicate Submission Prevention: HTTP 409 Conflict blocked immediate duplicate meals`
 * `✓ Instant Post-Save Workflow: Instant edit and delete verified`
 * `✓ All 6 Report Periods (Day, Week, Month, Quarter, 6M, Year) & CSV Download Export verified`
 * `✓ Weight & Goals: Mifflin-St Jeor BMR, TDEE, BMI, and target date verified`
@@ -368,9 +376,30 @@ venv/bin/python3 test_food_vision.py
 * `✓ Offline User Registration: Account creation with unique identifier verified`
 * `✓ Zero-Knowledge DB Encryption: Passwords & security answers verified NEVER saved in plain text`
 * `✓ 200,000-Round PBKDF2-HMAC-SHA256: Cryptographic hashes in nutritrack.db verified`
+* `✓ Case-Insensitive Security Questions: 'Batman', 'batman', and 'BATMAN' all verified successfully`
+* `✓ Permanent Session Persistence: Survives mobile background kills, app closes, and device reboots`
 * `✓ Authentication & Constant-Time Validation: Timing attack protection verified`
 * `✓ Offline Security Question Identity Verification: Answer verification without external networks`
 * `✓ Instant Password Reset: Security question reset workflow verified`
+
+### 📸 Test-1 Feature Outcomes & Analysis Screenshots (`Test-data/outcomes/test-1/`)
+
+All major features were validated with live data and captured as Android mobile viewport screenshots (412x915):
+
+| File | Feature Captured & Analysis Verified |
+| :--- | :--- |
+| `01_dashboard_live_tracking.png` | Real-time calorie (5,688 kcal) & protein (328g) progress bars, remaining budget, and meal cards |
+| `02_add_entry_screen.png` | Offline photo dropzone, plate size calibration, cooking oil styles, and 6-meal selector |
+| `03_calendar_view.png` | Interactive monthly calendar with daily badges, streak tracking, and day drill-down list |
+| `04_reports_weekly_trends.png` | Dual-area spline progress trend chart, target achievement (105.8%), and daily logs table |
+| `05_reports_monthly_trends.png` | Monthly aggregated analytics, multi-day trends, and consistency percentage |
+| `06_weight_and_goals.png` | Body weight history, Mifflin-St Jeor BMR/TDEE calculations, and target weight projections |
+| `07_meal_history_logs.png` | Chronological meal history records with category tags, timestamps, and macros |
+| `08_signin_screen.png` | 100% offline sign-in with show/hide password toggle and cryptographic verification |
+| `09_register_security_questions.png` | Account registration with security question selector & case-insensitive indicator |
+| `10_password_recovery_screen.png` | Offline identity verification & instant password reset flow |
+| `11_settings_and_security.png` | Account preferences, daily nutritional goals, and zero-knowledge PBKDF2 badge |
+| `12_meet_the_creator.png` | Profile of Sri Harsha Juttu (Machine Learning Engineer) & BiteLog offline manifesto |
 
 ---
 
@@ -417,7 +446,13 @@ Food-calories-tracker-app-detailed-analysis/
 │   ├── requirements.txt           # Python backend dependencies
 │   ├── test_auth.py               # Automated offline encryption & password recovery test suite
 │   ├── test_e2e.py                # Automated offline integration test suite
-│   └── test_food_vision.py        # Gemma 3n food vision integration test suite
+│   ├── test_food_vision.py        # Gemma 3n food vision integration test suite
+│   └── test_live_food_items.py    # End-to-end test suite for real food photos & analytics
+│
+├── Test-data/
+│   ├── Food-items/                # Real food test images (Samosas, Indian Thali, Dinner Platter)
+│   └── outcomes/
+│       └── test-1/                # 12 validated mobile feature screenshots & analysis outcomes
 │
 ├── Frontend/
 │   ├── android/                   # Capacitor native Android app project (SDK 36, Java 21)
@@ -478,9 +513,18 @@ Food-calories-tracker-app-detailed-analysis/
 ## 11. Version History & Changelog
 
 ### 🚀 Version 1.3.1 (Current)
+* **Live Food Vision E2E Testing & Verification (`Test-data/outcomes/test-1/`)**:
+  * Tested 3 real food item photos with Gemma 3n offline visual engine, portion calibration, and cooking oil compensation.
+  * Verified meal category logging, duplicate submission shield (`HTTP 409 Conflict`), real-time dashboard tracking, calendar day drill-downs, and all 6 reporting intervals with CSV export.
+  * Captured and archived 12 comprehensive mobile feature screenshots in `Test-data/outcomes/test-1/`.
 * **Zero-Knowledge Encrypted Authentication (Designs 4 & 5)**:
   * Full offline user registration ([`Register.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Register.tsx)) and sign-in ([`Login.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Login.tsx)).
   * Passwords and security recovery answers are hashed with **200,000-Round PBKDF2-HMAC-SHA256** and random salt. Plaintext is never stored in `nutritrack.db`.
+* **Case-Insensitive Security Question Answers**:
+  * Normalized answers prior to PBKDF2 hashing so user answers match regardless of capitalization (`'Batman'`, `'batman'`, `'BATMAN'`).
+* **Permanent "Stay Signed In" Session Persistence**:
+  * Dual-layer storage (IndexedDB `bitelog_permanent_store` + `localStorage`) with automatic session restoration on app startup.
+  * Session persists across Android background kills, app closes, and phone restarts until the user explicitly taps "Sign Out".
 * **Offline Password Recovery via Security Question**:
   * Identity verification and password reset screen ([`ForgotPassword.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/ForgotPassword.tsx)) allowing instant recovery without internet or email.
 * **Top Header Sign In Pill Button**:
