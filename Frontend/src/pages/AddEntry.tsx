@@ -89,6 +89,21 @@ export const AddEntry: React.FC = () => {
   const [source, setSource] = useState<'Image' | 'Text' | 'Manual'>('Image');
   const [note, setNote] = useState<string | null>(null);
 
+  // Scan Mode: 'plate' (Cooked Food / Dishes) vs 'packet' (Protein Bars / Powders / Nutrition Facts)
+  const [scanMode, setScanMode] = useState<'plate' | 'packet'>('plate');
+  const [packetQuantity, setPacketQuantity] = useState<number>(1.0);
+  const [packetProductName, setPacketProductName] = useState<string | null>(null);
+  const [packetServingSize, setPacketServingSize] = useState<string | null>(null);
+  const [packetServingUnit, setPacketServingUnit] = useState<string>('serving');
+  const [packetIngredients, setPacketIngredients] = useState<string | null>(null);
+  const [basePerServing, setBasePerServing] = useState<{
+    calories_kcal: number;
+    protein_g: number;
+    carbs_g: number;
+    fats_g: number;
+    fiber_g: number;
+  } | null>(null);
+
   // Post-log action states
   const [lastSavedEntry, setLastSavedEntry] = useState<Entry | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -170,13 +185,94 @@ export const AddEntry: React.FC = () => {
     }
   };
 
+  // Handle Protein Bar & Powder Packet OCR + Quantity Scaling
+  const runPacketAnalysis = async (file: File, qty: number = packetQuantity) => {
+    setErrorMsg(null);
+    setNote(null);
+    setIsProcessing(true);
+
+    try {
+      const res = await api.parsePacketLabel(file, qty);
+      setSource('Image');
+      setPacketProductName(res.product_name);
+      setPacketServingSize(res.serving_size);
+      setPacketServingUnit(res.serving_unit);
+      setPacketIngredients(res.ingredients);
+      setBasePerServing(res.base_per_serving);
+
+      setCalories(res.calories_kcal.toString());
+      setProtein(res.protein_g.toString());
+      setCarbs(res.carbs_g.toString());
+      setFats(res.fats_g.toString());
+      setFiber(res.fiber_g.toString());
+
+      setCalorieRange(res.calorie_range_str);
+      setAvgCalories(res.calories_kcal);
+      setProteinRange(res.protein_range_str);
+      setCarbsRange(res.carbs_range_str);
+      setFatsRange(res.fats_range_str);
+      setFiberRange(res.fiber_range_str);
+
+      setNote(`${res.confidence_level} • ${res.portion_notes}`);
+      setAiDisclaimer(res.disclaimer);
+      setAiModelUsed(res.model_used);
+      setLastSavedEntry(null);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Failed to analyze packet nutrition label.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleQuantityChange = (newQty: number) => {
+    setPacketQuantity(newQty);
+    if (basePerServing) {
+      const p = Math.round(basePerServing.protein_g * newQty * 10) / 10;
+      const c = Math.round(basePerServing.carbs_g * newQty * 10) / 10;
+      const f = Math.round(basePerServing.fats_g * newQty * 10) / 10;
+      const fib = Math.round(basePerServing.fiber_g * newQty * 10) / 10;
+      const cal = Math.round(4.0 * (p + c) + 9.0 * f);
+
+      setProtein(p.toString());
+      setCarbs(c.toString());
+      setFats(f.toString());
+      setFiber(fib.toString());
+      setCalories(cal.toString());
+
+      const minCal = Math.round((cal * 0.93) / 10) * 10;
+      const maxCal = Math.round((cal * 1.07) / 10) * 10;
+      setCalorieRange(`~${minCal} – ${maxCal} kcal`);
+
+      const minP = Math.round(p * 0.94 * 10) / 10;
+      const maxP = Math.round(p * 1.06 * 10) / 10;
+      setProteinRange(`~${minP} – ${maxP} g`);
+
+      const minC = Math.round(c * 0.93 * 10) / 10;
+      const maxC = Math.round(c * 1.07 * 10) / 10;
+      setCarbsRange(`~${minC} – ${maxC} g`);
+
+      const minF = Math.round(f * 0.92 * 10) / 10;
+      const maxF = Math.round(f * 1.08 * 10) / 10;
+      setFatsRange(`~${minF} – ${maxF} g`);
+
+      const minFib = Math.round(fib * 0.93 * 10) / 10;
+      const maxFib = Math.round(fib * 1.07 * 10) / 10;
+      setFiberRange(`~${minFib} – ${maxFib} g`);
+      setNote(`Scaled for ${newQty} ${packetServingUnit}${newQty !== 1 ? 's' : ''} (${packetServingSize})`);
+    }
+  };
+
   const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setSelectedFile(file);
     setImagePreview(URL.createObjectURL(file));
-    await runFoodPhotoAnalysis(file, modelTier, portionSize, cookingStyle, plateSize);
+    if (scanMode === 'packet') {
+      await runPacketAnalysis(file, packetQuantity);
+    } else {
+      await runFoodPhotoAnalysis(file, modelTier, portionSize, cookingStyle, plateSize);
+    }
   };
 
   // Handle Drag & Drop for Food Photo
@@ -324,6 +420,40 @@ export const AddEntry: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto pb-16 space-y-4">
       <div className="dashboard-card p-5 md:p-6 space-y-4">
+        {/* Top Mode Selector: Food Plate vs. Protein Bar / Powder Packet */}
+        <div className="grid grid-cols-2 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80">
+          <button
+            type="button"
+            onClick={() => {
+              setScanMode('plate');
+              if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, cookingStyle, plateSize);
+            }}
+            className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              scanMode === 'plate'
+                ? 'bg-white text-emerald-700 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <span>🍲</span>
+            <span>Food Plate</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setScanMode('packet');
+              if (selectedFile) runPacketAnalysis(selectedFile, packetQuantity);
+            }}
+            className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              scanMode === 'packet'
+                ? 'bg-white text-blue-700 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <span>📦</span>
+            <span>Protein Bar / Packet</span>
+          </button>
+        </div>
+
         {/* Dedicated Food Photo Dropzone & Hidden Inputs */}
         <input
           type="file"
@@ -400,152 +530,231 @@ export const AddEntry: React.FC = () => {
           </button>
         </div>
 
+        {/* Protein Packet / Nutrition Label Controls */}
+        {scanMode === 'packet' && (
+          <div className="space-y-3 bg-blue-50/70 border border-blue-200/80 rounded-2xl p-3.5 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm">📦</span>
+                <span className="text-xs font-bold text-slate-900">
+                  {packetProductName || 'Protein Bar / Powder Packet'}
+                </span>
+              </div>
+              <span className="text-[10.5px] font-bold text-blue-800 bg-white px-2 py-0.5 rounded-md border border-blue-200 shadow-2xs">
+                Per {packetServingSize || '1 Serving'}
+              </span>
+            </div>
+
+            {/* Interactive Quantity Stepper */}
+            <div className="bg-white p-3 rounded-xl border border-blue-100 space-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold text-slate-800">Quantity / Servings Consumed:</span>
+                  <div className="text-[10px] text-slate-400">All 5 macros scale live with quantity</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleQuantityChange(Math.max(0.5, Math.round((packetQuantity - 0.5) * 10) / 10))}
+                    className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold flex items-center justify-center text-sm cursor-pointer"
+                  >
+                    -
+                  </button>
+                  <span className="text-xs font-black text-blue-900 w-12 text-center">
+                    {packetQuantity} {packetServingUnit}{packetQuantity !== 1 ? 's' : ''}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleQuantityChange(Math.min(10, Math.round((packetQuantity + 0.5) * 10) / 10))}
+                    className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold flex items-center justify-center text-sm cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Quantity Preset Pills */}
+              <div className="grid grid-cols-4 gap-1.5 pt-1">
+                {[0.5, 1.0, 1.5, 2.0].map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => handleQuantityChange(q)}
+                    className={`py-1 text-center rounded-lg text-[10.5px] font-bold transition-all cursor-pointer ${
+                      packetQuantity === q
+                        ? 'bg-blue-600 text-white shadow-2xs'
+                        : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+                    }`}
+                  >
+                    {q}x {packetServingUnit ? `${packetServingUnit}${q !== 1 ? 's' : ''}` : 'Qty'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Extracted Ingredients Chip */}
+            {packetIngredients && (
+              <div className="p-2.5 bg-white/95 border border-blue-100 rounded-xl space-y-1 text-[10.5px]">
+                <div className="font-extrabold text-blue-950 flex items-center gap-1">
+                  <span>🌿</span>
+                  <span>Extracted Packet Ingredients:</span>
+                </div>
+                <p className="text-slate-600 leading-snug line-clamp-3">
+                  {packetIngredients}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* 90%+ Calibrated Accuracy Controls (Plate size & Cooking style fine-tuning) */}
-        <div className="space-y-3 bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="text-xs font-bold text-slate-900">Fine-Tune Portion Calibration</span>
-            </div>
-            {/* Offline Model Tier */}
-            <div className="flex items-center gap-1 bg-white border border-slate-200 p-0.5 rounded-lg">
-              <button
-                type="button"
-                onClick={() => {
-                  setModelTier('e2b');
-                  if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e2b', portionSize, cookingStyle, plateSize);
-                }}
-                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                  modelTier === 'e2b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                E2B (Fast)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setModelTier('e4b');
-                  if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e4b', portionSize, cookingStyle, plateSize);
-                }}
-                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
-                  modelTier === 'e4b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
-                }`}
-              >
-                E4B (High Precision)
-              </button>
-            </div>
-          </div>
-
-          {/* 1. Plate Size (3 Intuitive Options: Small, Medium, Large) */}
-          <div>
-            <div className="flex items-center justify-between text-[11px] mb-1.5">
-              <span className="font-bold text-slate-700">1. Plate Size</span>
-              <span className="text-[10px] text-slate-400">Scale Reference</span>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5">
-              {[
-                { id: 'small', label: 'Small', desc: 'Bowl / Salad Plate', icon: '🥣' },
-                { id: 'medium', label: 'Medium', desc: 'Standard Plate', icon: '🍽️' },
-                { id: 'large', label: 'Large', desc: 'Platter / Takeout', icon: '🍱' },
-              ].map((p) => (
+        {scanMode === 'plate' && (
+          <div className="space-y-3 bg-slate-50/90 border border-slate-200/80 rounded-2xl p-3.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="text-xs font-bold text-slate-900">Fine-Tune Portion Calibration</span>
+              </div>
+              {/* Offline Model Tier */}
+              <div className="flex items-center gap-1 bg-white border border-slate-200 p-0.5 rounded-lg">
                 <button
-                  key={p.id}
                   type="button"
                   onClick={() => {
-                    const newPlate = p.id as 'small' | 'medium' | 'large';
-                    setPlateSize(newPlate);
-                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, cookingStyle, newPlate);
+                    setModelTier('e2b');
+                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e2b', portionSize, cookingStyle, plateSize);
                   }}
-                  className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
-                    plateSize === p.id
-                      ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
-                      : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
+                  className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                    modelTier === 'e2b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
-                  <div className="text-sm leading-none mb-1">{p.icon}</div>
-                  <div className={`text-[11px] font-bold ${plateSize === p.id ? 'text-emerald-700' : 'text-slate-800'}`}>
-                    {p.label}
-                  </div>
-                  <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
-                    {p.desc}
-                  </div>
+                  E2B (Fast)
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setModelTier('e4b');
+                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, 'e4b', portionSize, cookingStyle, plateSize);
+                  }}
+                  className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                    modelTier === 'e4b' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  E4B (High Precision)
+                </button>
+              </div>
             </div>
 
-            {/* Dynamic Plate Size Hint Banner */}
-            <div className="mt-2 p-2.5 bg-emerald-50/80 border border-emerald-200/80 rounded-xl text-[10.5px] text-emerald-950 flex items-start gap-1.5 shadow-2xs">
-              <span className="text-sm shrink-0 mt-0.5">💡</span>
-              <div className="leading-snug">
-                <span className="font-extrabold text-emerald-900">
-                  {plateSize === 'small' && 'Small Plate Hint (~150 – 250g):'}
-                  {plateSize === 'medium' && 'Medium Plate Hint (~350 – 450g):'}
-                  {plateSize === 'large' && 'Large Plate Hint (~550 – 750g+):'}
-                </span>{' '}
-                <span className="text-slate-700">
-                  {plateSize === 'small' && 'Best for light breakfast or snacks (e.g. 2–3 Idlis, 1 Dosa, 2 eggs with toast, a fruit bowl, or soup).'}
-                  {plateSize === 'medium' && 'Best for standard full meals (e.g. Standard Indian Thali, Rice with Dal & Curry, pasta bowl, or meat & veggies).'}
-                  {plateSize === 'large' && 'Best for buffets, large platters & heavy takeout (e.g. Full biryani box, feast platter, or double portions).'}
-                </span>
+            {/* 1. Plate Size (3 Intuitive Options: Small, Medium, Large) */}
+            <div>
+              <div className="flex items-center justify-between text-[11px] mb-1.5">
+                <span className="font-bold text-slate-700">1. Plate Size</span>
+                <span className="text-[10px] text-slate-400">Scale Reference</span>
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { id: 'small', label: 'Small', desc: 'Bowl / Salad Plate', icon: '🥣' },
+                  { id: 'medium', label: 'Medium', desc: 'Standard Plate', icon: '🍽️' },
+                  { id: 'large', label: 'Large', desc: 'Platter / Takeout', icon: '🍱' },
+                ].map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => {
+                      const newPlate = p.id as 'small' | 'medium' | 'large';
+                      setPlateSize(newPlate);
+                      if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, cookingStyle, newPlate);
+                    }}
+                    className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
+                      plateSize === p.id
+                        ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
+                        : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
+                    }`}
+                  >
+                    <div className="text-sm leading-none mb-1">{p.icon}</div>
+                    <div className={`text-[11px] font-bold ${plateSize === p.id ? 'text-emerald-700' : 'text-slate-800'}`}>
+                      {p.label}
+                    </div>
+                    <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
+                      {p.desc}
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Dynamic Plate Size Hint Banner */}
+              <div className="mt-2 p-2.5 bg-emerald-50/80 border border-emerald-200/80 rounded-xl text-[10.5px] text-emerald-950 flex items-start gap-1.5 shadow-2xs">
+                <span className="text-sm shrink-0 mt-0.5">💡</span>
+                <div className="leading-snug">
+                  <span className="font-extrabold text-emerald-900">
+                    {plateSize === 'small' && 'Small Plate Hint (~150 – 250g):'}
+                    {plateSize === 'medium' && 'Medium Plate Hint (~350 – 450g):'}
+                    {plateSize === 'large' && 'Large Plate Hint (~550 – 750g+):'}
+                  </span>{' '}
+                  <span className="text-slate-700">
+                    {plateSize === 'small' && 'Best for light breakfast or snacks (e.g. 2–3 Idlis, 1 Dosa, 2 eggs with toast, a fruit bowl, or soup).'}
+                    {plateSize === 'medium' && 'Best for standard full meals (e.g. Standard Indian Thali, Rice with Dal & Curry, pasta bowl, or meat & veggies).'}
+                    {plateSize === 'large' && 'Best for buffets, large platters & heavy takeout (e.g. Full biryani box, feast platter, or double portions).'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Cooking Style (Hidden Oil & Fat Compensation) */}
+            <div>
+              <div className="flex items-center justify-between text-[11px] mb-1.5">
+                <span className="font-bold text-slate-700">2. Cooking Style</span>
+                <span className="text-[10px] text-slate-400">Hidden Oil & Fat</span>
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {[
+                  { id: 'lean', label: 'Lean / Steamed', desc: '0g added oil', icon: '🥗' },
+                  { id: 'home', label: 'Home Style', desc: '~1 tbsp oil', icon: '🍳' },
+                  { id: 'restaurant', label: 'Restaurant / Rich', desc: '~2.5 tbsp oil', icon: '🍟' },
+                ].map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => {
+                      const newStyle = s.id as 'lean' | 'home' | 'restaurant';
+                      setCookingStyle(newStyle);
+                      if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, newStyle, plateSize);
+                    }}
+                    className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
+                      cookingStyle === s.id
+                        ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
+                        : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
+                    }`}
+                  >
+                    <div className="text-sm leading-none mb-1">{s.icon}</div>
+                    <div className={`text-[11px] font-bold ${cookingStyle === s.id ? 'text-emerald-700' : 'text-slate-800'}`}>
+                      {s.label}
+                    </div>
+                    <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
+                      {s.desc}
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Dynamic Cooking Style Hint Banner */}
+              <div className="mt-2 p-2.5 bg-amber-50/80 border border-amber-200/80 rounded-xl text-[10.5px] text-amber-950 flex items-start gap-1.5 shadow-2xs">
+                <span className="text-sm shrink-0 mt-0.5">💡</span>
+                <div className="leading-snug">
+                  <span className="font-extrabold text-amber-900">
+                    {cookingStyle === 'lean' && 'Lean / Steamed (0g added fat):'}
+                    {cookingStyle === 'home' && 'Home Style (~10–12g fat / ~1 tbsp oil):'}
+                    {cookingStyle === 'restaurant' && 'Restaurant / Rich (~24g fat / ~2.5 tbsp oil):'}
+                  </span>{' '}
+                  <span className="text-slate-700">
+                    {cookingStyle === 'lean' && 'Steamed idlis, boiled eggs, fresh raw fruits/salads, or oil-free grilled dishes.'}
+                    {cookingStyle === 'home' && 'Standard home cooking with light tadka, homemade roti/sabzi, or shallow pan sear.'}
+                    {cookingStyle === 'restaurant' && 'Deep-fried dishes (samosas, pakoras, vadas), restaurant curries with butter/cream.'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* 2. Cooking Style (Hidden Oil & Fat Compensation) */}
-          <div>
-            <div className="flex items-center justify-between text-[11px] mb-1.5">
-              <span className="font-bold text-slate-700">2. Cooking Style</span>
-              <span className="text-[10px] text-slate-400">Hidden Oil & Fat</span>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5">
-              {[
-                { id: 'lean', label: 'Lean / Steamed', desc: '0g added oil', icon: '🥗' },
-                { id: 'home', label: 'Home Style', desc: '~1 tbsp oil', icon: '🍳' },
-                { id: 'restaurant', label: 'Restaurant / Rich', desc: '~2.5 tbsp oil', icon: '🍟' },
-              ].map((s) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => {
-                    const newStyle = s.id as 'lean' | 'home' | 'restaurant';
-                    setCookingStyle(newStyle);
-                    if (selectedFile) runFoodPhotoAnalysis(selectedFile, modelTier, portionSize, newStyle, plateSize);
-                  }}
-                  className={`py-2 px-1.5 rounded-xl text-center border transition-all ${
-                    cookingStyle === s.id
-                      ? 'border-emerald-500 bg-white shadow-sm ring-1 ring-emerald-500/30'
-                      : 'border-slate-200/90 bg-white/70 hover:bg-white text-slate-600'
-                  }`}
-                >
-                  <div className="text-sm leading-none mb-1">{s.icon}</div>
-                  <div className={`text-[11px] font-bold ${cookingStyle === s.id ? 'text-emerald-700' : 'text-slate-800'}`}>
-                    {s.label}
-                  </div>
-                  <div className="text-[9px] text-slate-400 leading-tight truncate mt-0.5">
-                    {s.desc}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Dynamic Cooking Style Hint Banner */}
-            <div className="mt-2 p-2.5 bg-amber-50/80 border border-amber-200/80 rounded-xl text-[10.5px] text-amber-950 flex items-start gap-1.5 shadow-2xs">
-              <span className="text-sm shrink-0 mt-0.5">💡</span>
-              <div className="leading-snug">
-                <span className="font-extrabold text-amber-900">
-                  {cookingStyle === 'lean' && 'Lean / Steamed (0g added fat):'}
-                  {cookingStyle === 'home' && 'Home Style (~10–12g fat / ~1 tbsp oil):'}
-                  {cookingStyle === 'restaurant' && 'Restaurant / Rich (~24g fat / ~2.5 tbsp oil):'}
-                </span>{' '}
-                <span className="text-slate-700">
-                  {cookingStyle === 'lean' && 'Steamed idlis, boiled eggs, fresh raw fruits/salads, or oil-free grilled dishes.'}
-                  {cookingStyle === 'home' && 'Standard home cooking with light tadka, homemade roti/sabzi, or shallow pan sear.'}
-                  {cookingStyle === 'restaurant' && 'Deep-fried dishes (samosas, pakoras, vadas), restaurant curries with butter/cream.'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Note / Disclaimer Banner */}
         {aiDisclaimer && (

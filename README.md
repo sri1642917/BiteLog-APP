@@ -28,15 +28,16 @@ Anyone can install and run **BiteLog** directly on Android without building from
 - [2. Strict Scope & Core Principles](#2-strict-scope--core-principles)
 - [3. Complete Feature Breakdown](#3-complete-feature-breakdown)
   - [3.1 Pure Food Photo Logging Engine (100% Offline)](#31-pure-food-photo-logging-engine-100-offline)
-  - [3.2 6 Meal Categories & Instant Post-Save Workflow](#32-6-meal-categories--instant-post-save-workflow)
-  - [3.3 Comprehensive Reports & Export Engine](#33-comprehensive-reports--export-engine)
-  - [3.4 Data Privacy & Storage Policy](#34-data-privacy--storage-policy)
-  - [3.5 Weight & Clinical Metabolic Projections](#35-weight--clinical-metabolic-projections)
-  - [3.6 Calendar & Intake Overview](#36-calendar--intake-overview)
-  - [3.7 Backup, Restore & Selective Cleanup](#37-backup-restore--selective-cleanup)
-  - [3.8 Meet the Creator Screen (Design Specification 4)](#38-meet-the-creator-screen-design-specification-4)
-  - [3.9 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)](#39-zero-knowledge-encrypted-authentication--password-recovery-designs-4--5)
-  - [3.10 Edge-to-Edge Responsive Mobile Display Engine](#310-edge-to-edge-responsive-mobile-display-engine)
+  - [3.2 Offline Protein Bar & Whey Powder Packet Scanner with Quantity Scaling](#32-offline-protein-bar--whey-powder-packet-scanner-with-quantity-scaling)
+  - [3.3 6 Meal Categories & Instant Post-Save Workflow](#33-6-meal-categories--instant-post-save-workflow)
+  - [3.4 Comprehensive Reports & Export Engine](#34-comprehensive-reports--export-engine)
+  - [3.5 Data Privacy & Storage Policy](#35-data-privacy--storage-policy)
+  - [3.6 Weight & Clinical Metabolic Projections](#36-weight--clinical-metabolic-projections)
+  - [3.7 Calendar & Intake Overview](#37-calendar--intake-overview)
+  - [3.8 Backup, Restore & Selective Cleanup](#38-backup-restore--selective-cleanup)
+  - [3.9 Meet the Creator Screen (Design Specification 4)](#39-meet-the-creator-screen-design-specification-4)
+  - [3.10 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)](#310-zero-knowledge-encrypted-authentication--password-recovery-designs-4--5)
+  - [3.11 Edge-to-Edge Responsive Mobile Display Engine](#311-edge-to-edge-responsive-mobile-display-engine)
 - [4. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)](#4-ui--ux-architecture-design-specifications-1-2-3-4--5)
 - [5. Calculation & Nutrition Analytics](#5-calculation--nutrition-analytics)
 - [6. Ultra-Lightweight Mobile Architecture (< 25 MB APK)](#6-ultra-lightweight-mobile-architecture--25-mb-apk)
@@ -133,7 +134,26 @@ BiteLog provides a single, streamlined **Food Photo** logging workflow with dual
 
 ---
 
-### 3.2 6 Meal Categories & Instant Post-Save Workflow
+### 3.2 Offline Protein Bar & Whey Powder Packet Scanner with Quantity Scaling
+
+For packaged sports nutrition, supplements, and health snacks, BiteLog includes a dedicated **Packet & Nutrition Label Scanner**:
+
+1. **Printed Label & Ingredients Extraction (100% Offline)**:
+   * **Serving Size Identification**: Extracts stated per-serving basis (e.g., `1 Bar (60g)`, `1 Scoop (30.4g)`, or `1 Pack`).
+   * **Exact 5-Macro Intake**: Accurately parses printed Calories (`kcal`), Protein (`g`), Carbohydrates (`g`), Fats (`g`), and Dietary Fiber (`g`).
+   * **Ingredients Profiling**: Automatically detects and surfaces primary ingredients (e.g., *Whey Protein Isolate, Cocoa Butter, Almonds, Stevia*).
+   * **Tight Manufacturing Tolerance Range**: Formulates an accurate packaging tolerance range ($\pm 5–8\%$) and pre-populates the exact midpoint average.
+
+2. **Interactive Quantity Stepper & Dynamic Live Scaling**:
+   * **Quantity Multiplier**: Quick preset pills (`0.5x`, `1.0x`, `1.5x`, `2.0x`) and interactive increment/decrement stepper (`[-] 1.0 [+]`).
+   * **Live Dynamic Recalculation**: Adjusting quantity instantly recalculates all 5 macros using linear scaling:
+     $$\text{Macro Intake} = \text{Label Macro per Serving} \times \text{Selected Quantity}$$
+   * **Strict Atwater Energy Validation**: Ensures calories scale consistently with macros adhering to $\text{kcal} = 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$.
+   * **Direct SQLite Logging**: Save with one tap into your daily dashboard with full history tracking.
+
+---
+
+### 3.3 6 Meal Categories & Instant Post-Save Workflow
 
 * **6 Dedicated Meal Categories**:
   1. 🍳 `Breakfast`
@@ -151,7 +171,7 @@ BiteLog provides a single, streamlined **Food Photo** logging workflow with dual
 
 ---
 
-### 3.3 Comprehensive Reports & Export Engine
+### 3.4 Comprehensive Reports & Export Engine
 
 BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-export-ui-design-2.png` (in-app mobile view) and `Designs/ui-designs/report-export-ui-design-3.png` (export/print document view):
 
@@ -181,7 +201,7 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-### 3.4 Data Privacy & Storage Policy
+### 3.5 Data Privacy & Storage Policy
 
 | Aspect | Guarantee | Mechanism |
 | :--- | :--- | :--- |
@@ -192,7 +212,7 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-### 3.5 Weight & Clinical Metabolic Projections
+### 3.6 Weight & Clinical Metabolic Projections
 
 * **Mifflin-St Jeor Clinical BMR Engine**:
   * **Men**: $\text{BMR} = (10 \times \text{weight}_{\text{kg}}) + (6.25 \times \text{height}_{\text{cm}}) - (5 \times \text{age}_{\text{years}}) + 5$
@@ -209,7 +229,7 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-### 3.6 Calendar & Intake Overview
+### 3.7 Calendar & Intake Overview
 
 * **Monthly Calendar Grid**:
   * 7-column calendar grid showing date numbers and daily badges (`1,850 kcal / 95 g`).
@@ -219,7 +239,7 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-### 3.7 Backup, Restore & Selective Cleanup
+### 3.8 Backup, Restore & Selective Cleanup
 
 * **JSON Backup Export**: One-click download of a structured JSON snapshot containing all entries, weight history, and user settings.
 * **Integrity-Checked Restore**: Validates schema and data integrity before restoration to prevent accidental corruption.
@@ -228,7 +248,7 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 
 ---
 
-### 3.8 Meet the Creator Screen (Design Specification 4)
+### 3.9 Meet the Creator Screen (Design Specification 4)
 
 BiteLog includes a dedicated **About the Creator** screen exactly reproducing `Designs/ui-designs/about-the-creator-ui-design-4.png`:
 
@@ -239,7 +259,7 @@ BiteLog includes a dedicated **About the Creator** screen exactly reproducing `D
 
 ---
 
-### 3.9 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)
+### 3.10 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)
 
 BiteLog integrates a 100% offline authentication and local identity protection system exactly reproducing `Designs/ui-designs/signin-feature-icon-ui-design-5.png` and `Designs/ui-designs/username-register-or-forgert-password-ui-design-4.png`:
 
@@ -259,7 +279,7 @@ BiteLog integrates a 100% offline authentication and local identity protection s
 
 ---
 
-### 3.10 Edge-to-Edge Responsive Mobile Display Engine
+### 3.11 Edge-to-Edge Responsive Mobile Display Engine
 
 BiteLog dynamically adapts to any smartphone form factor without clipping, letterboxing, or awkward margins:
 

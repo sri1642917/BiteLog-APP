@@ -4,6 +4,7 @@ from app.schemas.parse import ParseResponse, ParseTextRequest
 from app.services.ocr_service import OCRService
 from app.services.text_parser import TextParser
 from app.services.food_vision_service import FoodVisionService
+from app.services.packet_nutrition_service import PacketNutritionService
 
 router = APIRouter(prefix="/parse", tags=["Parsing"])
 
@@ -54,6 +55,27 @@ async def parse_food_photo(
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Food photo analysis failed: {str(e)}")
+
+@router.post("/packet-label")
+async def parse_packet_label(
+    file: UploadFile = File(...),
+    quantity: float = Form(1.0)
+):
+    """
+    Offline Protein Bar / Powder Packet & Nutrition Label Scanner.
+    Extracts printed ingredients and Per-Serving nutrition facts, scaling all 5 macros by quantity.
+    """
+    allowed_types = ["image/jpeg", "image/png", "image/webp", "image/jpg"]
+    if file.content_type and file.content_type.lower() not in allowed_types:
+        ext = file.filename.split(".")[-1].lower() if "." in file.filename else ""
+        if ext not in ["jpg", "jpeg", "png", "webp"]:
+            raise HTTPException(status_code=400, detail="Unsupported image format. Please upload JPG, PNG, or WEBP.")
+
+    try:
+        image_bytes = await file.read()
+        return PacketNutritionService.analyze_packet_image(image_bytes=image_bytes, quantity=quantity)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Packet label analysis failed: {str(e)}")
 
 @router.post("/image", response_model=ParseResponse)
 async def parse_image(file: UploadFile = File(...)):

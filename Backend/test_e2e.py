@@ -119,11 +119,6 @@ def test_nutritrack_app():
     assert res.status_code == 200
     print("✓ Log New Weight: Saved 72.0 kg")
 
-    # 12. Delete entry
-    del_res = client.delete(f"/api/entries/{entry_id}")
-    assert del_res.status_code == 200
-    print(f"✓ Delete Entry: Entry {entry_id} deleted successfully")
-
     # 13. Backup Export
     res = client.get("/api/backup/export")
     assert res.status_code == 200
@@ -141,6 +136,11 @@ def test_nutritrack_app():
     )
     assert restore_res.status_code == 200
     print(f"✓ Backup Restore: {restore_res.json()['message']}")
+
+    # 15. Delete entry
+    del_res = client.delete(f"/api/entries/{entry_id}")
+    assert del_res.status_code == 200
+    print(f"✓ Delete Entry: Entry {entry_id} deleted successfully")
 
     # 15. Clean Data by Date Range (Preview & Cleanup)
     prev_res = client.get(f"/api/entries/clean-range/preview?from_date={today_str}&to_date={today_str}")

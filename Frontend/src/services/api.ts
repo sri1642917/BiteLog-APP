@@ -132,6 +132,62 @@ export const api = {
     return res.json();
   },
 
+  parsePacketLabel: async (
+    file: File,
+    quantity: number = 1.0
+  ): Promise<{
+    success: boolean;
+    product_name: string;
+    serving_size: string;
+    serving_unit: string;
+    quantity: number;
+    base_per_serving: {
+      calories_kcal: number;
+      protein_g: number;
+      carbs_g: number;
+      fats_g: number;
+      fiber_g: number;
+    };
+    calories_kcal: number;
+    min_calories_kcal: number;
+    max_calories_kcal: number;
+    calorie_range_str: string;
+    protein_g: number;
+    min_protein_g: number;
+    max_protein_g: number;
+    protein_range_str: string;
+    carbs_g: number;
+    min_carbs_g: number;
+    max_carbs_g: number;
+    carbs_range_str: string;
+    fats_g: number;
+    min_fats_g: number;
+    max_fats_g: number;
+    fats_range_str: string;
+    fiber_g: number;
+    min_fiber_g: number;
+    max_fiber_g: number;
+    fiber_range_str: string;
+    ingredients: string;
+    confidence_level: string;
+    portion_notes: string;
+    model_used: string;
+    disclaimer: string;
+  }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('quantity', quantity.toString());
+    const res = await fetch(`${API_BASE}/parse/packet-label`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to analyze packet nutrition label');
+    }
+    return res.json();
+  },
+
   parseImage: async (file: File): Promise<ParseResult> => {
     const formData = new FormData();
     formData.append('file', file);
