@@ -3,12 +3,12 @@ import { Wifi, Battery } from 'lucide-react';
 
 export const MobileStatusBar: React.FC = () => {
   return (
-    <div className="h-11 px-7 pt-2 flex items-center justify-between text-slate-900 select-none bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100/50">
+    <div className="hidden sm:flex h-11 px-7 pt-2 items-center justify-between text-slate-900 select-none bg-white/80 backdrop-blur-md border-b border-slate-100/50 shrink-0">
       {/* Left Time */}
       <span className="text-[14px] font-bold tracking-tight">9:41</span>
 
       {/* Center Dynamic Island pill */}
-      <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto hidden sm:block"></div>
+      <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto"></div>
 
       {/* Right Icons: Cellular, Wifi, Battery */}
       <div className="flex items-center gap-1.5 text-slate-800">

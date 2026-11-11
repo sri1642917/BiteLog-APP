@@ -27,7 +27,7 @@ export const MobileTopHeader: React.FC<MobileTopHeaderProps> = ({ onOpenMenu }) 
 
   if (isDashboard) {
     return (
-      <header className="h-16 px-5 bg-white border-b border-slate-100 flex items-center justify-between sticky top-11 z-30 select-none">
+      <header className="h-16 pt-[env(safe-area-inset-top,0px)] px-5 bg-white border-b border-slate-100 flex items-center justify-between sticky top-0 z-30 select-none shrink-0">
         <div className="flex items-center gap-2.5">
           <button
             type="button"
@@ -61,7 +61,7 @@ export const MobileTopHeader: React.FC<MobileTopHeaderProps> = ({ onOpenMenu }) 
   }
 
   return (
-    <header className="h-14 px-4 bg-white border-b border-slate-100 flex items-center justify-between sticky top-11 z-30 select-none">
+    <header className="h-14 pt-[env(safe-area-inset-top,0px)] px-4 bg-white border-b border-slate-100 flex items-center justify-between sticky top-0 z-30 select-none shrink-0">
       <button
         type="button"
         onClick={() => navigate('/')}

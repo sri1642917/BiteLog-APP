@@ -14,7 +14,7 @@ interface MobileBottomNavProps {
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMore }) => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200/80 px-2 py-1.5 flex justify-around items-center z-30 shadow-lg">
+    <nav className="fixed sm:absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 pt-1.5 pb-[max(env(safe-area-inset-bottom,0px),0.5rem)] flex justify-around items-center z-30 shadow-lg shrink-0">
       <NavLink
         to="/"
         className={({ isActive }) =>

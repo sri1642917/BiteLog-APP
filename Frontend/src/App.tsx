@@ -19,18 +19,18 @@ export const App: React.FC = () => {
 
   return (
     <Router>
-      {/* Background canvas styling simulating a real mobile testing environment or filling native mobile screen */}
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center sm:py-6 sm:px-4">
-        {/* ================= PURE MOBILE APP VIEWPORT (Max-w-[420px]) ================= */}
-        <div className="w-full max-w-[420px] min-h-screen sm:min-h-[860px] sm:max-h-[920px] bg-[#f8fafc] sm:rounded-[44px] sm:shadow-[0_25px_70px_rgba(0,0,0,0.18)] sm:border-[8px] sm:border-slate-900 flex flex-col relative overflow-hidden">
-          {/* Top Mobile Status Bar (9:41, Dynamic Island, Wifi, Battery) */}
+      {/* Background canvas styling: on mobile fills 100% screen edge-to-edge; on desktop centers a phone frame */}
+      <div className="w-full h-[100dvh] min-h-screen bg-[#f8fafc] sm:bg-slate-100 flex items-center justify-center sm:p-4 overflow-hidden">
+        {/* ================= RESPONSIVE MOBILE APP VIEWPORT ================= */}
+        <div className="w-full h-full sm:h-[92vh] sm:max-w-[440px] bg-[#f8fafc] sm:rounded-[40px] sm:shadow-[0_25px_70px_rgba(0,0,0,0.18)] sm:border-[8px] sm:border-slate-900 flex flex-col relative overflow-hidden">
+          {/* Top Mobile Status Bar (Rendered only on desktop preview, hidden on native mobile/Android) */}
           <MobileStatusBar />
 
           {/* Top Mobile App Header */}
           <MobileTopHeader onOpenMenu={() => setMoreDrawerOpen(true)} />
 
-          {/* Main Mobile Screen Viewport (Scrollable) */}
-          <main className="flex-1 overflow-y-auto px-4 pt-3 pb-24">
+          {/* Main Mobile Screen Viewport (Scrollable with touch momentum) */}
+          <main className="flex-1 overflow-y-auto px-4 pt-3 pb-24 overscroll-contain">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/add-entry" element={<AddEntry />} />
@@ -51,12 +51,12 @@ export const App: React.FC = () => {
 
           {/* Mobile "More" Drawer Modal */}
           {moreDrawerOpen && (
-            <div className="absolute inset-0 z-50 flex flex-col justify-end">
+            <div className="fixed sm:absolute inset-0 z-50 flex flex-col justify-end">
               <div
                 className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"
                 onClick={() => setMoreDrawerOpen(false)}
               />
-              <div className="relative bg-white rounded-t-3xl p-5 space-y-4 z-10 shadow-2xl pb-8 animate-in slide-in-from-bottom duration-200">
+              <div className="relative bg-white rounded-t-3xl p-5 space-y-4 z-10 shadow-2xl pb-[max(env(safe-area-inset-bottom,0px),2rem)] animate-in slide-in-from-bottom duration-200">
                 <div className="w-12 h-1 bg-slate-200 rounded-full mx-auto" />
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-slate-900">App Navigation</h3>
