@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Flame,
   Dumbbell,
@@ -10,7 +10,10 @@ import {
   ArrowRight,
   Sparkles,
   UtensilsCrossed,
-  Plus
+  Plus,
+  Camera,
+  Image as ImageIcon,
+  X
 } from 'lucide-react';
 import { api } from '../services/api';
 import { DashboardSummary } from '../types';
@@ -45,7 +48,9 @@ const ZERO_SUMMARY: DashboardSummary = {
 };
 
 export const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [summary, setSummary] = useState<DashboardSummary>(ZERO_SUMMARY);
+  const [showAddChoice, setShowAddChoice] = useState(false);
 
   const loadData = async () => {
     try {
@@ -86,13 +91,14 @@ export const Dashboard: React.FC = () => {
               <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                 Every goal begins with your first meal. Once you add your entries, this dashboard will visualize your daily calorie & protein progress.
               </p>
-              <Link
-                to="/add-entry"
+              <button
+                type="button"
+                onClick={() => setShowAddChoice(true)}
                 className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-[11px] font-bold rounded-xl shadow-xs transition-all"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Log Today's First Meal</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -171,15 +177,16 @@ export const Dashboard: React.FC = () => {
       {/* ================= 3. 2X2 QUICK ACTION SHORTCUTS (Matching ui-design-1.png Mobile Screen 1) ================= */}
       <div className="grid grid-cols-2 gap-3 pt-1">
         {/* Add Entry */}
-        <Link
-          to="/add-entry"
-          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform"
+        <button
+          type="button"
+          onClick={() => setShowAddChoice(true)}
+          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform text-left cursor-pointer"
         >
           <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-emerald-600 border border-slate-100 shadow-2xs">
             <PlusSquare className="w-5 h-5 stroke-[2]" />
           </div>
           <span className="text-xs font-semibold text-slate-800">Add Entry</span>
-        </Link>
+        </button>
 
         {/* Calendar */}
         <Link
@@ -271,6 +278,79 @@ export const Dashboard: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* ================= 2-OPTION ACTION SHEET FOR ADD ENTRY ================= */}
+      {showAddChoice && (
+        <div 
+          className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150"
+          onClick={() => setShowAddChoice(false)}
+        >
+          <div
+            className="w-full sm:max-w-sm bg-white rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl border border-slate-100 space-y-4 animate-in slide-in-from-bottom-6 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">Add Meal Entry</h3>
+                <p className="text-[11px] text-slate-400">Choose how you'd like to capture your food</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAddChoice(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-2.5 pt-1">
+              {/* Option 1: Open Camera */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddChoice(false);
+                  navigate('/add-entry?mode=camera');
+                }}
+                className="w-full p-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-2xl flex items-center gap-3.5 shadow-sm active:scale-95 transition-all text-left cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Camera className="w-5 h-5 text-white stroke-[2.2]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold leading-tight">1. Open Camera</div>
+                  <div className="text-[10.5px] text-emerald-100 leading-tight mt-0.5">Snap a live picture of your food plate</div>
+                </div>
+              </button>
+
+              {/* Option 2: Upload Image */}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddChoice(false);
+                  navigate('/add-entry?mode=upload');
+                }}
+                className="w-full p-3.5 bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 rounded-2xl flex items-center gap-3.5 shadow-2xs active:scale-95 transition-all text-left cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 text-slate-600">
+                  <ImageIcon className="w-5 h-5 stroke-[2.2]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold leading-tight">2. Upload Image</div>
+                  <div className="text-[10.5px] text-slate-500 leading-tight mt-0.5">Choose an existing photo from gallery or files</div>
+                </div>
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowAddChoice(false)}
+              className="w-full py-2.5 text-center text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

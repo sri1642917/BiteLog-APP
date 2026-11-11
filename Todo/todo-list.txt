@@ -1,0 +1,6 @@
+[x] check in home page 2 options need to show after clicking add entry
+    - 1st option: open camera (captures live photo via device camera)
+    - 2nd option: upload image (selects existing picture from gallery/files)
+
+[x] after clicking on reports and exports
+    - below export and download: removed download csv option (clean Print / PDF View retained)

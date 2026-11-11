@@ -340,22 +340,12 @@ export const Reports: React.FC = () => {
       <div className="space-y-2 pt-1">
         <h3 className="text-sm font-bold text-slate-900">Export & Download</h3>
 
-        <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] grid grid-cols-2 gap-3">
-          {/* Download CSV button */}
-          <button
-            type="button"
-            onClick={handleDownloadCsv}
-            className="w-full py-3 px-3 bg-white hover:bg-slate-50 active:scale-95 border border-slate-300 rounded-2xl text-xs font-bold text-slate-800 flex items-center justify-center gap-2 shadow-2xs transition-all"
-          >
-            <Download className="w-4 h-4 text-slate-600" />
-            <span>Download CSV</span>
-          </button>
-
+        <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
           {/* Print / PDF View button */}
           <button
             type="button"
             onClick={() => setShowPrintModal(true)}
-            className="w-full py-3 px-3 bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-all"
+            className="w-full py-3 px-4 bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-all"
           >
             <FileText className="w-4 h-4 text-white" />
             <span>Print / PDF View</span>

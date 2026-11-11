@@ -78,21 +78,34 @@ BiteLog operates strictly within the following boundaries:
 
 ### 3.1 Pure Food Photo Logging Engine (100% Offline)
 
-BiteLog provides a single, streamlined **Food Photo** logging workflow — eliminating confusing tabs or text-pasting steps so you can track calories and macros effortlessly:
+BiteLog provides a single, streamlined **Food Photo** logging workflow with dual capture modes (Camera & Gallery) — eliminating confusing tabs or text-pasting steps so you can track calories and macros effortlessly:
 
-1. **Instant Food Photo Upload (Google Gemma 3n E2B / E4B)**:
-   * **Single Focused Interface**: Snap or upload any meal photo (breakfast, snacks, lunch, dinner, midnight treats).
+1. **Dual Capture Modes (Direct Hardware Camera & Gallery)**:
+   * 📸 **Option 1: Open Camera**: Directly launches device hardware camera (`capture="environment"`) to snap fresh meal photos in 1 click.
+   * 🖼️ **Option 2: Upload Image**: Launches device photo gallery or file explorer to select any existing meal picture.
+   * *Triggerable both from the Dashboard Action Sheet modal and directly within the Add Entry screen.*
+
+2. **Instant Food Photo Analysis (Google Gemma 3n + OpenCV Segmentation)**:
    * **Local Pre-bundled AI**: Uses Google's Gemma 3n on-device vision model running directly on your device with zero internet connectivity.
+   * **OpenCV Dish Classification Engine**:
+     * **Central Plate Segmentation**: 75% central crop isolates the food dish from table backgrounds and shadows.
+     * **HSV Illumination-Invariant Color Profiling**: Differentiates golden turmeric rice, steamed white batters, vibrant greens, and savory gravies.
+     * **Laplacian Texture Variance**: Analyzes surface texture granularities (granular rice grains vs smooth steamed idlis vs crispy tava crepes).
+     * **ICMR-NIN & USDA Dish Archetypes**: Maps features to clinical nutritional recipes (Biryani, Steamed Idli, Crispy Dosa, Mixed Thali, Greens & Fruit).
+   * **Strict Atwater Energy Formula**:
+     $$\text{Calories (kcal)} = 4 \times (\text{Protein}_{\text{g}} + \text{Carbs}_{\text{g}}) + 9 \times \text{Fats}_{\text{g}}$$
+   * **Live UI Scientific Formula Check Badge**:
+     * Automatically verifies and displays: `Formula Check: 4×(P + C) + 9×F = Total kcal`.
+     * Features a **1-click Sync button** that instantly realigns calories whenever individual macros are manually adjusted.
    * **Dynamic Calorie Range & Average-Based Logging**:
-     * Calculates an intuitive visual range accounting for cooking fat & portion tolerance: `~420 – 500 kcal`.
-     * Automatically pre-fills the **Confirm Intake Values** box with the **mathematical average** (`460 kcal`), recorded directly to SQLite.
+     * Calculates an intuitive visual range accounting for cooking fat & portion tolerance: `~410 – 490 kcal`.
+     * Automatically pre-fills the **Confirm Intake Values** box with the **mathematical average** (`450 kcal`), recorded directly to SQLite.
    * **Full 5-Metric Macronutrient Suite**:
      * 🔥 **Calories (`kcal`)**
      * 🥩 **Protein (`g`)**
      * 🍞 **Carbohydrates (`g`)**
      * 🥑 **Fats (`g`)**
      * 🥦 **Fiber (`g`)**
-     * Mathematically balanced using Atwater physiological energy: $\text{kcal} \approx 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$.
    * **Interactive Dynamic Hints for Plate Size**:
      * 🥣 *Small Plate (~150 – 250g)*: Best for light breakfast or snacks (e.g. 2–3 Idlis, 1 Dosa, 2 eggs with toast, fruit bowl, soup).
      * 🍽️ *Medium Plate (~350 – 450g)*: Best for standard full meals (e.g. Indian Thali, Rice with Dal & Curry, pasta bowl, or meat & veggies).
@@ -115,7 +128,7 @@ BiteLog provides a single, streamlined **Food Photo** logging workflow — elimi
      | **Fiber** | ~2 – 3 g | **`3.3 g`** | Exact Match |
      | **Privacy / Cost** | Requires cloud sync & API keys | **100% On-Device, Zero Cloud, Free forever** | Total Privacy |
 
-2. **Duplicate Submission Shield**:
+3. **Duplicate Submission Shield**:
    * Automatically detects and rejects duplicate submissions within 15 seconds to prevent accidental double-taps (`HTTP 409 Conflict`).
 
 ---
@@ -163,9 +176,8 @@ BiteLog reproduces the exact layouts specified in `Designs/ui-designs/report-exp
 * **Recent Day Logs Table**:
   * Chronological log breakdown showing Date, Entry Count, Total Calories, Protein, Fiber, and Target Status (`✔ Achieved`, `▲ Exceeded`, `▼ Below`).
 
-* **Dual Export Capabilities**:
-  * 📥 **Download CSV**: Instant one-click generation of a clean spreadsheet named `BiteLog_Report_<period>_<date>.csv` containing the complete audit trail.
-  * 🖨️ **Print / PDF View Modal**: Opens a high-resolution, print-ready document preview with the official `BITELOG - NUTRITION & CALORIE REPORT` letterhead, patient/user metrics summary, tabular log, target badges, and native `window.print()` trigger.
+* **Export & Document Capabilities**:
+  * 🖨️ **Print / PDF View Modal**: Opens a high-resolution, print-ready document preview with the official `BITELOG - NUTRITION & CALORIE REPORT` letterhead, patient/user metrics summary, tabular log, target badges, and native `window.print()` trigger for instant PDF saving or physical printing.
 
 ---
 

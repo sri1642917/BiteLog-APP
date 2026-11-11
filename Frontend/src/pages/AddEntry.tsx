@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Calendar,
   Clock,
@@ -8,6 +8,7 @@ import {
   Loader2,
   RefreshCw,
   Camera,
+  Image as ImageIcon,
   Sparkles,
   Info,
   Edit3,
@@ -47,10 +48,22 @@ const getAutoMealCategory = (): MealCategory => {
 
 export const AddEntry: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // Auto-launch camera or file picker if launched via Dashboard 2-option sheet
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    if (mode === 'camera') {
+      setTimeout(() => cameraInputRef.current?.click(), 200);
+    } else if (mode === 'upload') {
+      setTimeout(() => fileInputRef.current?.click(), 200);
+    }
+  }, [searchParams]);
 
   // Food Photo AI options (Google Gemma 3n + 90% Calibrated Accuracy Engine)
   const [modelTier, setModelTier] = useState<'e2b' | 'e4b'>('e2b');
@@ -115,15 +128,21 @@ export const AddEntry: React.FC = () => {
       setSource('Image');
       setCalories(res.calories_kcal.toString());
       setProtein(res.protein_g.toString());
-      if (res.carbs_g !== undefined && res.carbs_g !== null) {
-        setCarbs(res.carbs_g.toString());
-      }
-      if (res.fats_g !== undefined && res.fats_g !== null) {
-        setFats(res.fats_g.toString());
-      }
-      if (res.fiber_g !== undefined && res.fiber_g !== null) {
-        setFiber(res.fiber_g.toString());
-      }
+      setCarbs(
+        res.carbs_g !== undefined && res.carbs_g !== null
+          ? res.carbs_g.toString()
+          : Math.max(0, Math.round((res.calories_kcal - (res.protein_g * 4 + 20 * 9)) / 4)).toString()
+      );
+      setFats(
+        res.fats_g !== undefined && res.fats_g !== null
+          ? res.fats_g.toString()
+          : '20'
+      );
+      setFiber(
+        res.fiber_g !== undefined && res.fiber_g !== null
+          ? res.fiber_g.toString()
+          : '4'
+      );
       if (res.calorie_range_str) {
         setCalorieRange(res.calorie_range_str);
         setAvgCalories(res.calories_kcal);
@@ -293,7 +312,15 @@ export const AddEntry: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto pb-16 space-y-4">
       <div className="dashboard-card p-5 md:p-6 space-y-4">
-        {/* Dedicated Food Photo Dropzone */}
+        {/* Dedicated Food Photo Dropzone & Hidden Inputs */}
+        <input
+          type="file"
+          ref={cameraInputRef}
+          onChange={handlePhotoChange}
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+        />
         <input
           type="file"
           ref={fileInputRef}
@@ -339,6 +366,26 @@ export const AddEntry: React.FC = () => {
               </span>
             </>
           )}
+        </div>
+
+        {/* 2 Quick Selection Buttons: Open Camera vs Upload Image */}
+        <div className="grid grid-cols-2 gap-2 pt-0.5">
+          <button
+            type="button"
+            onClick={() => cameraInputRef.current?.click()}
+            className="py-2.5 px-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 flex items-center justify-center gap-2 shadow-2xs active:scale-95 transition-all cursor-pointer"
+          >
+            <Camera className="w-4 h-4 text-emerald-600 stroke-[2.2]" />
+            <span>Open Camera</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="py-2.5 px-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 flex items-center justify-center gap-2 shadow-2xs active:scale-95 transition-all cursor-pointer"
+          >
+            <ImageIcon className="w-4 h-4 text-blue-600 stroke-[2.2]" />
+            <span>Upload Image</span>
+          </button>
         </div>
 
         {/* 90%+ Calibrated Accuracy Controls (Plate size & Cooking style fine-tuning) */}
@@ -856,6 +903,28 @@ export const AddEntry: React.FC = () => {
                   />
                 </div>
               </div>
+
+              {/* Live Scientific Atwater Formula Verification: 4*(P+C) + 9*F */}
+              {((parseFloat(protein) || 0) > 0 || (parseFloat(carbs) || 0) > 0 || (parseFloat(fats) || 0) > 0) && (
+                <div className="mt-2 p-2 bg-slate-50 border border-slate-200/90 rounded-xl flex items-center justify-between text-[10.5px]">
+                  <div className="text-slate-600">
+                    <span className="font-bold text-slate-700">Formula Check: </span>
+                    <span>4×({parseFloat(protein) || 0}P + {parseFloat(carbs) || 0}C) + 9×{parseFloat(fats) || 0}F = </span>
+                    <strong className="font-black text-slate-800">
+                      {Math.round(4 * ((parseFloat(protein) || 0) + (parseFloat(carbs) || 0)) + 9 * (parseFloat(fats) || 0))} kcal
+                    </strong>
+                  </div>
+                  {Math.abs(Math.round(4 * ((parseFloat(protein) || 0) + (parseFloat(carbs) || 0)) + 9 * (parseFloat(fats) || 0)) - (parseFloat(calories) || 0)) > 15 && (
+                    <button
+                      type="button"
+                      onClick={() => setCalories(Math.round(4 * ((parseFloat(protein) || 0) + (parseFloat(carbs) || 0)) + 9 * (parseFloat(fats) || 0)).toString())}
+                      className="px-2 py-0.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold rounded-md text-[10px] transition-colors shrink-0 ml-1.5"
+                    >
+                      Sync
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Green Auto-Log Save Button */}
