@@ -35,8 +35,9 @@ export const WeightGoals: React.FC = () => {
   // Edit Goals / Profile Modal
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [dob, setDob] = useState<string>('1995-01-01');
-  const [height, setHeight] = useState<number>(175);
-  const [targetWeight, setTargetWeight] = useState<number>(65);
+  const [heightStr, setHeightStr] = useState<string>('175');
+  const [currentWeightStr, setCurrentWeightStr] = useState<string>('72');
+  const [targetWeightStr, setTargetWeightStr] = useState<string>('65');
   const [gender, setGender] = useState<string>('male');
   const [activityLevel, setActivityLevel] = useState<string>('moderate');
 
@@ -51,11 +52,14 @@ export const WeightGoals: React.FC = () => {
       setHistory(hRes);
       if (setRes) {
         setDob(setRes.date_of_birth);
-        setHeight(setRes.height_cm);
-        setTargetWeight(setRes.target_weight_kg);
+        setHeightStr(setRes.height_cm.toString());
+        setTargetWeightStr(setRes.target_weight_kg.toString());
         setGender(setRes.gender);
         setActivityLevel(setRes.activity_level);
-        setLogWeightVal(setRes.current_weight_kg.toString());
+      }
+      if (sRes) {
+        setCurrentWeightStr(sRes.current_weight_kg.toString());
+        setLogWeightVal(sRes.current_weight_kg.toString());
       }
     } catch (err) {
       console.error('Error loading weight data:', err);
@@ -87,18 +91,38 @@ export const WeightGoals: React.FC = () => {
 
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const curW = parseFloat(currentWeightStr);
+    const tarW = parseFloat(targetWeightStr);
+    const h = parseFloat(heightStr);
+
+    if (isNaN(curW) || curW <= 0) {
+      alert('Please enter a valid current weight');
+      return;
+    }
+    if (isNaN(tarW) || tarW <= 0) {
+      alert('Please enter a valid target weight');
+      return;
+    }
+
     try {
+      // 1. Update user settings
       await api.updateSettings({
         date_of_birth: dob,
-        height_cm: height,
-        target_weight_kg: targetWeight,
+        height_cm: h || 175,
+        current_weight_kg: curW,
+        target_weight_kg: tarW,
         gender: gender,
         activity_level: activityLevel,
       });
+
+      // 2. Also log to weight history for today so chart and stats immediately reflect the new weight!
+      const todayStr = new Date().toISOString().split('T')[0];
+      await api.logWeight(todayStr, curW);
+
       setShowProfileModal(false);
-      loadAll();
+      await loadAll();
     } catch (err) {
-      alert('Failed to update profile');
+      alert('Failed to update weight & profile');
     }
   };
 
@@ -221,7 +245,13 @@ export const WeightGoals: React.FC = () => {
                   type="number"
                   step="0.1"
                   value={logWeightVal}
-                  onChange={(e) => setLogWeightVal(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                      ? val.replace(/^0+/, '')
+                      : val;
+                    setLogWeightVal(clean);
+                  }}
                   min={30}
                   max={300}
                   required
@@ -270,18 +300,86 @@ export const WeightGoals: React.FC = () => {
             <p className="text-xs text-slate-400 mb-4">Calculates BMR & TDEE using the Mifflin-St Jeor equation locally.</p>
 
             <form onSubmit={handleProfileSubmit} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-semibold text-slate-700 mb-1">Gender</label>
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+              {/* Weight Settings (Current Weight & Target Weight) */}
+              <div className="grid grid-cols-2 gap-3 p-3 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl">
+                <div>
+                  <label className="block font-bold text-emerald-950 mb-1">Current Weight (kg)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={currentWeightStr}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                        ? val.replace(/^0+/, '')
+                        : val;
+                      setCurrentWeightStr(clean);
+                    }}
+                    placeholder="e.g. 72"
+                    min={30}
+                    max={300}
+                    required
+                    className="w-full px-3 py-2 bg-white border border-emerald-300 rounded-xl font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-emerald-950 mb-1">Target Weight (kg)</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    value={targetWeightStr}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                        ? val.replace(/^0+/, '')
+                        : val;
+                      setTargetWeightStr(clean);
+                    }}
+                    placeholder="e.g. 65"
+                    min={30}
+                    max={300}
+                    required
+                    className="w-full px-3 py-2 bg-white border border-emerald-300 rounded-xl font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                </div>
               </div>
 
+              {/* Height & Gender */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Height (cm)</label>
+                  <input
+                    type="number"
+                    value={heightStr}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                        ? val.replace(/^0+/, '')
+                        : val;
+                      setHeightStr(clean);
+                    }}
+                    min={100}
+                    max={250}
+                    required
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Gender</label>
+                  <select
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Date of Birth */}
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">Date of Birth</label>
                 <input
@@ -291,31 +389,6 @@ export const WeightGoals: React.FC = () => {
                   required
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                 />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Height (cm)</label>
-                  <input
-                    type="number"
-                    value={height}
-                    onChange={(e) => setHeight(Number(e.target.value))}
-                    required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Target Weight (kg)</label>
-                  <input
-                    type="number"
-                    step="0.5"
-                    value={targetWeight}
-                    onChange={(e) => setTargetWeight(Number(e.target.value))}
-                    required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
-                  />
-                </div>
               </div>
 
               <div>

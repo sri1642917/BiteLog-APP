@@ -189,7 +189,13 @@ export const Settings: React.FC = () => {
                 <input
                   type="number"
                   value={height}
-                  onChange={(e) => setHeight(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                      ? val.replace(/^0+/, '')
+                      : val;
+                    setHeight(Number(clean));
+                  }}
                   required
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                 />
@@ -201,7 +207,13 @@ export const Settings: React.FC = () => {
                   type="number"
                   step="0.5"
                   value={targetWeight}
-                  onChange={(e) => setTargetWeight(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const clean = val.length > 1 && val.startsWith('0') && !val.startsWith('0.')
+                      ? val.replace(/^0+/, '')
+                      : val;
+                    setTargetWeight(Number(clean));
+                  }}
                   required
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
                 />
