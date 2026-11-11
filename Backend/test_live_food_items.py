@@ -48,8 +48,13 @@ def run_e2e_food_items_test():
         assert response.status_code == 200, f"Vision parse failed: {response.text}"
         data = response.json()
 
+        assert "carbs_g" in data, "carbs_g missing from response"
+        assert "fats_g" in data, "fats_g missing from response"
+        assert "calorie_range_str" in data, "calorie_range_str missing from response"
+
         print(f"   ✓ Vision Identified : {data.get('portion_notes', 'Meal Analysis')}")
-        print(f"   ✓ Macro Breakdown   : {data['calories_kcal']} kcal | {data['protein_g']}g Protein | {data['fiber_g']}g Fiber")
+        print(f"   ✓ Calorie Range     : {data.get('calorie_range_str')} (Average: {data['calories_kcal']} kcal)")
+        print(f"   ✓ Full 5-Macro Suite: {data['calories_kcal']} kcal | {data['protein_g']}g P | {data['carbs_g']}g C | {data['fats_g']}g F | {data['fiber_g']}g Fiber")
         print(f"   ✓ Plate & Style     : Plate={data['plate_size']}, Style={data['cooking_style']}")
         print(f"   ✓ AI Model Tier     : {data['model_used']} ({data['inference_time_ms']} ms)")
 
@@ -63,6 +68,8 @@ def run_e2e_food_items_test():
             "meal_type": meal_type,
             "calories_kcal": data["calories_kcal"],
             "protein_g": data["protein_g"],
+            "carbs_g": data["carbs_g"],
+            "fats_g": data["fats_g"],
             "fiber_g": data["fiber_g"],
             "source": "Image"
         }

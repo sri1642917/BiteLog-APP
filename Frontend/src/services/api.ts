@@ -89,7 +89,13 @@ export const api = {
   ): Promise<{
     success: boolean;
     calories_kcal: number;
+    min_calories_kcal?: number;
+    max_calories_kcal?: number;
+    average_calories_kcal?: number;
+    calorie_range_str?: string;
     protein_g: number;
+    carbs_g: number;
+    fats_g: number;
     fiber_g: number;
     confidence_level: string;
     portion_notes: string;

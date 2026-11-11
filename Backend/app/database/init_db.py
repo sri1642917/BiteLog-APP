@@ -14,6 +14,10 @@ def init_db():
             cursor = conn.exec_driver_sql("PRAGMA table_info(entries)")
             cols = [row[1] for row in cursor.fetchall()]
             if cols:
+                if "carbs_g" not in cols:
+                    conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN carbs_g FLOAT DEFAULT 0.0")
+                if "fats_g" not in cols:
+                    conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN fats_g FLOAT DEFAULT 0.0")
                 if "fiber_g" not in cols:
                     conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN fiber_g FLOAT DEFAULT 0.0")
                 if "meal_type" not in cols:

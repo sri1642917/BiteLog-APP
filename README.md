@@ -81,14 +81,24 @@ BiteLog provides a single, streamlined **Food Photo** logging workflow — elimi
 1. **Instant Food Photo Upload (Google Gemma 3n E2B / E4B)**:
    * **Single Focused Interface**: Snap or upload any meal photo (breakfast, snacks, lunch, dinner, midnight treats).
    * **Local Pre-bundled AI**: Uses Google's Gemma 3n on-device vision model running directly on your device with zero internet connectivity.
-   * **Scale & Portion Calibration**: Solves 2D photo scale ambiguity with interactive portion presets:
-     * *Small Plate / Bowl*: `0.75x`
-     * *Medium Standard Plate*: `1.00x` (Default)
-     * *Large Platter / Takeout Box*: `1.30x`
-   * **Hidden Oil & Cooking Style Compensation**: Corrects the #1 error in visual calorie estimation:
-     * *Lean / Steamed*: Boiled, grilled, air-fried (`0g added oil / +0 kcal`)
-     * *Home Style*: Normal home cooking (`~1 tbsp oil / +110 kcal` — Default)
-     * *Restaurant / Rich*: Gravies, curries, deep-fried (`~2.5 tbsp oil / +260 kcal`)
+   * **Dynamic Calorie Range & Average-Based Logging**:
+     * Calculates an intuitive visual range accounting for cooking fat & portion tolerance: `~420 – 500 kcal`.
+     * Automatically pre-fills the **Confirm Intake Values** box with the **mathematical average** (`460 kcal`), recorded directly to SQLite.
+   * **Full 5-Metric Macronutrient Suite**:
+     * 🔥 **Calories (`kcal`)**
+     * 🥩 **Protein (`g`)**
+     * 🍞 **Carbohydrates (`g`)**
+     * 🥑 **Fats (`g`)**
+     * 🥦 **Fiber (`g`)**
+     * Mathematically balanced using Atwater physiological energy: $\text{kcal} \approx 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$.
+   * **Interactive Dynamic Hints for Plate Size**:
+     * 🥣 *Small Plate (~150 – 250g)*: Best for light breakfast or snacks (e.g. 2–3 Idlis, 1 Dosa, 2 eggs with toast, fruit bowl, soup).
+     * 🍽️ *Medium Plate (~350 – 450g)*: Best for standard full meals (e.g. Indian Thali, Rice with Dal & Curry, pasta bowl, or meat & veggies).
+     * 🍱 *Large Plate (~550 – 750g+)*: Best for buffets, large platters & heavy takeout (e.g. Full biryani container, feast platter, double portions).
+   * **Interactive Dynamic Hints for Cooking Style**:
+     * 🥗 *Lean / Steamed*: `0g added fat` (Steamed idlis, boiled eggs, fresh raw fruits/salads, oil-free grilled dishes).
+     * 🍳 *Home Style*: `~10–12g fat / ~1 tbsp oil` (Standard home cooking with light tadka, homemade roti/sabzi, pan sear).
+     * 🍟 *Restaurant / Rich*: `~24g fat / ~2.5 tbsp oil` (Deep-fried samosas, pakoras, vadas, restaurant curries with butter/cream).
    * **Live Dynamic Recalculation**: Tapping plate size or cooking style updates macros instantaneously without re-analyzing the image.
 
 2. **Duplicate Submission Shield**:
@@ -512,7 +522,21 @@ Food-calories-tracker-app-detailed-analysis/
 
 ## 11. Version History & Changelog
 
-### 🚀 Version 1.3.1 (Current)
+### 🚀 Version 1.3.2 (Current)
+* **Dynamic Calorie Range Estimation & Average-Based Logging**:
+  * Displays intuitive visual calorie range with cooking variance: e.g. `~420 – 500 kcal`.
+  * Automatically auto-populates the editable intake inputs with the mathematical balanced average (`460 kcal`) and logs it to SQLite.
+* **Full 5-Metric Macronutrient Suite**:
+  * Expanded from Calories, Protein, and Fiber to include **Carbohydrates (`carbs_g`)** and **Fats (`fats_g`)**.
+  * Backed by Atwater physiological balancing ($\text{kcal} \approx 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$).
+  * Auto-migrated SQLite `entries` table (`carbs_g`, `fats_g`) with zero downtime.
+* **Interactive Dynamic Hints for Plate Size & Cooking Style**:
+  * Contextual recommendation cards below Plate Size buttons guiding users with realistic meal examples (e.g. 2–3 Idlis/Dosa for Small ~150–250g, Thali for Medium ~350–450g, Biryani Feast for Large ~550–750g+).
+  * Cooking style tips detailing added fat offsets (Lean 0g, Home ~10–12g, Restaurant ~24g).
+* **Enhanced Multi-Macro Visuals**:
+  * Quick-edit modal and recent meal cards display `Protein`, `Carbs`, `Fats`, and `Fiber` badges.
+
+### 📦 Version 1.3.1
 * **Live Food Vision E2E Testing & Verification (`Test-data/outcomes/test-1/`)**:
   * Tested 3 real food item photos with Gemma 3n offline visual engine, portion calibration, and cooking oil compensation.
   * Verified meal category logging, duplicate submission shield (`HTTP 409 Conflict`), real-time dashboard tracking, calendar day drill-downs, and all 6 reporting intervals with CSV export.

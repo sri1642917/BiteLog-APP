@@ -117,31 +117,36 @@ class FoodVisionService:
         # Verify pre-bundled model status
         is_prebundled, manifest, model_dir = cls.check_prebundled_model(model_tier)
 
-        # 1. Plate size physical scaling factor (Small / Medium / Large)
+        # 1. Plate size physical scaling factor & portion calibration
         plate_key = plate_size.lower().strip()
         if plate_key in ["small", "bowl"]:
-            plate_scale = 0.75
-            plate_name = "Small (Salad Plate / Bowl)"
+            plate_scale = 0.55  # ~220g portion (2-3 Idlis, 1 Dosa, Toast, Snack, Soup)
+            plate_name = "Small (Light Breakfast / Snack Plate)"
+            base_mass = 220.0
         elif plate_key in ["large", "platter"]:
-            plate_scale = 1.30
-            plate_name = "Large (Platter / Buffet Plate)"
+            plate_scale = 1.45  # ~580g portion (Large Platter, Biryani Container, Buffet Feast)
+            plate_name = "Large (Platter / Buffet Feast)"
+            base_mass = 580.0
         else: # medium / standard
-            plate_scale = 1.0
+            plate_scale = 1.0   # ~400g portion (Standard Lunch / Dinner Thali, Curry & Rice)
             plate_name = "Medium (Standard Dinner Plate)"
+            base_mass = 400.0
 
-        # 2. Cooking style hidden oil offset (resolves the #1 source of calorie error)
+        base_weight_grams = base_mass * portion_modifier
+
+        # 2. Cooking style hidden oil offset & fat compensation
         cooking_style_lower = cooking_style.lower().strip()
         if cooking_style_lower == "lean":
+            added_fat_g = 0.0
             cooking_cal_offset = 0.0
-            cooking_prot_offset = 0.0
             style_label = "Lean / Steamed (0g added oil)"
         elif cooking_style_lower == "restaurant":
-            cooking_cal_offset = 260.0
-            cooking_prot_offset = 4.0
+            added_fat_g = 24.0
+            cooking_cal_offset = 240.0
             style_label = "Restaurant / Rich (~2.5 tbsp oil/cream)"
         else: # home
+            added_fat_g = 12.0
             cooking_cal_offset = 110.0
-            cooking_prot_offset = 2.0
             style_label = "Home Cooked (~1 tbsp oil/butter)"
 
         # Load and analyze visual features locally
@@ -151,34 +156,72 @@ class FoodVisionService:
         
         r, g, b = avg_color[0], avg_color[1], avg_color[2]
         
-        # Base portion mass estimation for plate
-        base_weight_grams = 400.0 * portion_modifier * plate_scale
+        # Macronutrient density calculations tailored by portion scale & dish profile
+        if plate_key in ["small", "bowl"]:
+            # Breakfast / snacks (e.g. Idli, Dosa, Poha, Toast, Fruit, Chutney)
+            # Typically carb-dominant, moderate protein, fat depends on oil/ghee
+            protein_density = 0.045 # ~9.9g protein per 220g portion
+            carbs_density = 0.275   # ~60.5g carbs per 220g portion
+            base_fat_g = 7.0        # from batter/chutneys (coconut/peanut)
+            fiber_ratio = 0.015     # ~3.3g fiber
+            
+            if g > r and g > b: # Green herbs, salad, fruit
+                carbs_density -= 0.05
+                fiber_ratio += 0.015
+            elif r > g and r > b: # Podi / roasted spices / egg
+                protein_density += 0.01
+                carbs_density -= 0.01
 
-        # Caloric, protein, and fiber density heuristic calculation
-        energy_density = 1.55 # kcal / gram base
-        protein_ratio = 0.09 # protein grams per total gram
-        fiber_ratio = 0.022  # fiber grams per total gram (~9g per 400g plate)
+            total_protein = round(base_weight_grams * protein_density, 1)
+            total_carbs = round(base_weight_grams * carbs_density, 1)
+            total_fats = round(base_fat_g + added_fat_g, 1)
+            total_fiber = round(base_weight_grams * fiber_ratio, 1)
+            
+            # Atwater physiological energy calculation: 4*(P+C) + 9*F
+            calculated_cal = round(4.0 * (total_protein + total_carbs) + 9.0 * total_fats)
+            
+            # Dynamic ±8% to 10% realistic variance range based on cooking fat tolerance
+            min_cal = round(calculated_cal * 0.91 / 10) * 10
+            max_cal = round(calculated_cal * 1.09 / 10) * 10
+            total_calories = round((min_cal + max_cal) / 2) # Average of range
 
-        if r > g and r > b:
-            # Grilled meats, savory baked dishes, grains
-            energy_density += 0.25
-            protein_ratio += 0.03
-            fiber_ratio -= 0.007
-        elif g > r and g > b:
-            # Salads, greens, vegetables
-            energy_density -= 0.35
-            protein_ratio -= 0.01
-            fiber_ratio += 0.025
+        else:
+            # Medium & Large Meals (Thali, Curries, Rice, Meats, Mixed Platters)
+            protein_density = 0.11 # ~44g for 400g plate
+            carbs_density = 0.21   # ~84g for 400g plate
+            base_fat_g = 14.0      # ~14g base fat
+            fiber_ratio = 0.022    # ~8.8g fiber
 
-        # Calculate plate totals with cooking oil calibration
-        total_calories = round(base_weight_grams * energy_density + cooking_cal_offset)
-        total_protein = round(base_weight_grams * protein_ratio + cooking_prot_offset)
-        total_fiber = round(base_weight_grams * fiber_ratio, 1)
+            if r > g and r > b: # Savory gravies, meat, dal
+                protein_density += 0.02
+                base_fat_g += 4.0
+            elif g > r and g > b: # Greens, vegetable thali
+                protein_density -= 0.02
+                carbs_density -= 0.03
+                fiber_ratio += 0.015
+
+            total_protein = round(base_weight_grams * protein_density, 1)
+            total_carbs = round(base_weight_grams * carbs_density, 1)
+            total_fats = round(base_fat_g + added_fat_g, 1)
+            total_fiber = round(base_weight_grams * fiber_ratio, 1)
+
+            # Atwater physiological energy calculation: 4*(P+C) + 9*F
+            calculated_cal = round(4.0 * (total_protein + total_carbs) + 9.0 * total_fats)
+
+            min_cal = round(calculated_cal * 0.90 / 10) * 10
+            max_cal = round(calculated_cal * 1.10 / 10) * 10
+            total_calories = round((min_cal + max_cal) / 2) # Average of range
 
         # Boundaries
-        total_calories = max(150, min(2200, total_calories))
-        total_protein = max(6, min(150, total_protein))
-        total_fiber = max(1.0, min(45.0, total_fiber))
+        total_calories = max(120, min(2500, total_calories))
+        total_protein = max(4.0, min(160.0, total_protein))
+        total_carbs = max(10.0, min(250.0, total_carbs))
+        total_fats = max(2.0, min(140.0, total_fats))
+        total_fiber = max(1.0, min(50.0, total_fiber))
+        min_cal = max(100, min_cal)
+        max_cal = max(min_cal + 20, max_cal)
+
+        calorie_range_str = f"~{int(min_cal)} – {int(max_cal)} kcal"
 
         elapsed_ms = int((time.time() - start_time) * 1000)
 
@@ -191,7 +234,13 @@ class FoodVisionService:
         return {
             "success": True,
             "calories_kcal": float(total_calories),
+            "min_calories_kcal": float(min_cal),
+            "max_calories_kcal": float(max_cal),
+            "average_calories_kcal": float(total_calories),
+            "calorie_range_str": calorie_range_str,
             "protein_g": float(total_protein),
+            "carbs_g": float(total_carbs),
+            "fats_g": float(total_fats),
             "fiber_g": float(total_fiber),
             "confidence_level": "High • 90–92% Calibrated Accuracy (Scale & Oil Verified)",
             "portion_notes": f"Calibrated ~{int(base_weight_grams)}g portion ({plate_name} • {style_label})",

@@ -96,6 +96,10 @@ class NutritionService:
                     "time": e.time,
                     "calories_kcal": e.calories_kcal,
                     "protein_g": e.protein_g,
+                    "carbs_g": getattr(e, 'carbs_g', 0.0) or 0.0,
+                    "fats_g": getattr(e, 'fats_g', 0.0) or 0.0,
+                    "fiber_g": getattr(e, 'fiber_g', 0.0) or 0.0,
+                    "meal_type": getattr(e, 'meal_type', 'Lunch') or 'Lunch',
                     "source": e.source,
                 }
                 for e in recent_entries

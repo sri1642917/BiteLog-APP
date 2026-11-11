@@ -10,6 +10,8 @@ class Entry(Base):
     time = Column(String(8), nullable=False) # HH:MM or HH:MM:SS
     calories_kcal = Column(Float, nullable=False)
     protein_g = Column(Float, nullable=False)
+    carbs_g = Column(Float, default=0.0, nullable=True)
+    fats_g = Column(Float, default=0.0, nullable=True)
     fiber_g = Column(Float, default=0.0, nullable=True)
     meal_type = Column(String(30), default="Lunch", nullable=True) # "Breakfast", "Morning Snacks", "Lunch", "Evening Snacks", "Dinner", "Midnight Craving"
     source = Column(String(20), default="Manual") # "Image", "Text", "Manual"

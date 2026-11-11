@@ -64,7 +64,11 @@ export const AddEntry: React.FC = () => {
   const [mealCategory, setMealCategory] = useState<MealCategory>(getAutoMealCategory());
   const [calories, setCalories] = useState<string>('');
   const [protein, setProtein] = useState<string>('');
+  const [carbs, setCarbs] = useState<string>('');
+  const [fats, setFats] = useState<string>('');
   const [fiber, setFiber] = useState<string>('0');
+  const [calorieRange, setCalorieRange] = useState<string | null>(null);
+  const [avgCalories, setAvgCalories] = useState<number | null>(null);
   const [source, setSource] = useState<'Image' | 'Text' | 'Manual'>('Image');
   const [note, setNote] = useState<string | null>(null);
 
@@ -73,6 +77,8 @@ export const AddEntry: React.FC = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editCal, setEditCal] = useState('');
   const [editProt, setEditProt] = useState('');
+  const [editCarb, setEditCarb] = useState('');
+  const [editFat, setEditFat] = useState('');
   const [editFib, setEditFib] = useState('');
   const [editMeal, setEditMeal] = useState<MealCategory>('Lunch');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -109,8 +115,18 @@ export const AddEntry: React.FC = () => {
       setSource('Image');
       setCalories(res.calories_kcal.toString());
       setProtein(res.protein_g.toString());
+      if (res.carbs_g !== undefined && res.carbs_g !== null) {
+        setCarbs(res.carbs_g.toString());
+      }
+      if (res.fats_g !== undefined && res.fats_g !== null) {
+        setFats(res.fats_g.toString());
+      }
       if (res.fiber_g !== undefined && res.fiber_g !== null) {
         setFiber(res.fiber_g.toString());
+      }
+      if (res.calorie_range_str) {
+        setCalorieRange(res.calorie_range_str);
+        setAvgCalories(res.calories_kcal);
       }
       setNote(`${res.confidence_level} • ${res.portion_notes}`);
       setAiDisclaimer(res.disclaimer);
@@ -147,6 +163,8 @@ export const AddEntry: React.FC = () => {
     if (e) e.preventDefault();
     const calNum = parseFloat(calories);
     const protNum = parseFloat(protein);
+    const carbNum = parseFloat(carbs) || 0.0;
+    const fatNum = parseFloat(fats) || 0.0;
     const fibNum = parseFloat(fiber) || 0.0;
 
     if (isNaN(calNum) || calNum < 0) {
@@ -167,6 +185,8 @@ export const AddEntry: React.FC = () => {
         time: entryTime,
         calories_kcal: calNum,
         protein_g: protNum,
+        carbs_g: carbNum,
+        fats_g: fatNum,
         fiber_g: fibNum,
         meal_type: mealCategory,
         source: source,
@@ -175,6 +195,8 @@ export const AddEntry: React.FC = () => {
       setLastSavedEntry(saved);
       setEditCal(saved.calories_kcal.toString());
       setEditProt(saved.protein_g.toString());
+      setEditCarb((saved.carbs_g || 0).toString());
+      setEditFat((saved.fats_g || 0).toString());
       setEditFib((saved.fiber_g || 0).toString());
       setEditMeal((saved.meal_type as MealCategory) || mealCategory);
       setSuccessMsg(`✓ Successfully Logged to ${mealCategory}!`);
@@ -208,6 +230,8 @@ export const AddEntry: React.FC = () => {
 
     const c = parseFloat(editCal);
     const p = parseFloat(editProt);
+    const carb = parseFloat(editCarb) || 0.0;
+    const fat = parseFloat(editFat) || 0.0;
     const f = parseFloat(editFib) || 0.0;
     if (isNaN(c) || isNaN(p)) {
       setErrorMsg('Please enter valid numeric values.');
@@ -219,12 +243,16 @@ export const AddEntry: React.FC = () => {
       const updated = await api.updateEntry(lastSavedEntry.id, {
         calories_kcal: c,
         protein_g: p,
+        carbs_g: carb,
+        fats_g: fat,
         fiber_g: f,
         meal_type: editMeal,
       });
       setLastSavedEntry(updated);
       setCalories(updated.calories_kcal.toString());
       setProtein(updated.protein_g.toString());
+      setCarbs((updated.carbs_g || 0).toString());
+      setFats((updated.fats_g || 0).toString());
       setFiber((updated.fiber_g || 0).toString());
       setMealCategory((updated.meal_type as MealCategory) || editMeal);
       setShowEditModal(false);
@@ -242,7 +270,11 @@ export const AddEntry: React.FC = () => {
     setImagePreview(null);
     setCalories('');
     setProtein('');
+    setCarbs('');
+    setFats('');
     setFiber('0');
+    setCalorieRange(null);
+    setAvgCalories(null);
     setLastSavedEntry(null);
     setShowEditModal(false);
     setSuccessMsg(null);
@@ -381,6 +413,23 @@ export const AddEntry: React.FC = () => {
                 </button>
               ))}
             </div>
+
+            {/* Dynamic Plate Size Hint Banner */}
+            <div className="mt-2 p-2.5 bg-emerald-50/80 border border-emerald-200/80 rounded-xl text-[10.5px] text-emerald-950 flex items-start gap-1.5 shadow-2xs">
+              <span className="text-sm shrink-0 mt-0.5">💡</span>
+              <div className="leading-snug">
+                <span className="font-extrabold text-emerald-900">
+                  {plateSize === 'small' && 'Small Plate Hint (~150 – 250g):'}
+                  {plateSize === 'medium' && 'Medium Plate Hint (~350 – 450g):'}
+                  {plateSize === 'large' && 'Large Plate Hint (~550 – 750g+):'}
+                </span>{' '}
+                <span className="text-slate-700">
+                  {plateSize === 'small' && 'Best for light breakfast or snacks (e.g. 2–3 Idlis, 1 Dosa, 2 eggs with toast, a fruit bowl, or soup).'}
+                  {plateSize === 'medium' && 'Best for standard full meals (e.g. Standard Indian Thali, Rice with Dal & Curry, pasta bowl, or meat & veggies).'}
+                  {plateSize === 'large' && 'Best for buffets, large platters & heavy takeout (e.g. Full biryani box, feast platter, or double portions).'}
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* 2. Cooking Style (Hidden Oil & Fat Compensation) */}
@@ -418,6 +467,23 @@ export const AddEntry: React.FC = () => {
                   </div>
                 </button>
               ))}
+            </div>
+
+            {/* Dynamic Cooking Style Hint Banner */}
+            <div className="mt-2 p-2.5 bg-amber-50/80 border border-amber-200/80 rounded-xl text-[10.5px] text-amber-950 flex items-start gap-1.5 shadow-2xs">
+              <span className="text-sm shrink-0 mt-0.5">💡</span>
+              <div className="leading-snug">
+                <span className="font-extrabold text-amber-900">
+                  {cookingStyle === 'lean' && 'Lean / Steamed (0g added fat):'}
+                  {cookingStyle === 'home' && 'Home Style (~10–12g fat / ~1 tbsp oil):'}
+                  {cookingStyle === 'restaurant' && 'Restaurant / Rich (~24g fat / ~2.5 tbsp oil):'}
+                </span>{' '}
+                <span className="text-slate-700">
+                  {cookingStyle === 'lean' && 'Steamed idlis, boiled eggs, fresh raw fruits/salads, or oil-free grilled dishes.'}
+                  {cookingStyle === 'home' && 'Standard home cooking with light tadka, homemade roti/sabzi, or shallow pan sear.'}
+                  {cookingStyle === 'restaurant' && 'Deep-fried dishes (samosas, pakoras, vadas), restaurant curries with butter/cream.'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -465,11 +531,17 @@ export const AddEntry: React.FC = () => {
                 <h3 className="text-lg font-black text-slate-900 mt-1">
                   {lastSavedEntry.calories_kcal} <span className="text-xs font-normal text-slate-500">kcal</span>
                 </h3>
-                <div className="flex items-center gap-2 mt-0.5 text-xs font-semibold">
-                  <span className="text-emerald-700 bg-white/80 px-2 py-0.5 rounded-md border border-slate-200/80">
+                <div className="flex flex-wrap items-center gap-1.5 mt-1 text-[11px] font-bold">
+                  <span className="text-emerald-700 bg-white/90 px-2 py-0.5 rounded-md border border-slate-200/80">
                     {lastSavedEntry.protein_g}g Protein
                   </span>
-                  <span className="text-blue-700 bg-white/80 px-2 py-0.5 rounded-md border border-slate-200/80">
+                  <span className="text-blue-700 bg-white/90 px-2 py-0.5 rounded-md border border-slate-200/80">
+                    {lastSavedEntry.carbs_g || 0}g Carbs
+                  </span>
+                  <span className="text-amber-700 bg-white/90 px-2 py-0.5 rounded-md border border-slate-200/80">
+                    {lastSavedEntry.fats_g || 0}g Fats
+                  </span>
+                  <span className="text-purple-700 bg-white/90 px-2 py-0.5 rounded-md border border-slate-200/80">
                     {lastSavedEntry.fiber_g || 0}g Fiber
                   </span>
                 </div>
@@ -518,7 +590,7 @@ export const AddEntry: React.FC = () => {
           </div>
         )}
 
-        {/* ================= EDIT MODAL (Quick Tweak Calories, Protein, Fiber, Category) ================= */}
+        {/* ================= EDIT MODAL (Quick Tweak Calories, Protein, Carbs, Fats, Fiber, Category) ================= */}
         {showEditModal && lastSavedEntry && (
           <div className="p-4 bg-slate-50 border-2 border-blue-400/40 rounded-2xl space-y-3.5 shadow-md animate-in fade-in duration-200">
             <div className="flex items-center justify-between">
@@ -560,7 +632,7 @@ export const AddEntry: React.FC = () => {
                 </div>
               </div>
 
-              {/* Nutrients: Calories, Protein, Fiber */}
+              {/* Nutrients: Calories, Protein, Carbs, Fats, Fiber */}
               <div className="grid grid-cols-3 gap-2">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-600 mb-1">Total Kcal</label>
@@ -583,13 +655,36 @@ export const AddEntry: React.FC = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Carbs (g)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={editCarb}
+                    onChange={(e) => setEditCarb(e.target.value)}
+                    className="w-full px-2.5 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Fats (g)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={editFat}
+                    onChange={(e) => setEditFat(e.target.value)}
+                    className="w-full px-2.5 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
                   <label className="block text-[10px] font-bold text-slate-600 mb-1">Fiber (g)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFib}
                     onChange={(e) => setEditFib(e.target.value)}
-                    className="w-full px-2.5 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-2.5 py-1.5 text-xs font-bold bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
                 </div>
               </div>
@@ -618,6 +713,29 @@ export const AddEntry: React.FC = () => {
         {/* ================= PRIMARY LOGGING FORM ================= */}
         {!lastSavedEntry && (
           <form onSubmit={handleSaveEntry} className="space-y-4 pt-1">
+            {/* Calorie Range Estimation Card */}
+            {calorieRange && (
+              <div className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-2 border-emerald-300/80 rounded-2xl flex items-center justify-between shadow-2xs">
+                <div className="space-y-0.5">
+                  <div className="text-[10px] font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
+                    <span>🎯</span>
+                    <span>Estimated Calorie Range</span>
+                  </div>
+                  <div className="text-base font-black text-emerald-950">
+                    {calorieRange}
+                  </div>
+                  <div className="text-[10.5px] text-emerald-800">
+                    Logged with balanced average: <strong className="font-extrabold text-emerald-900">{calories || avgCalories} kcal</strong>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="px-2 py-1 bg-white/95 text-emerald-800 font-bold text-[10px] rounded-lg border border-emerald-200 shadow-2xs">
+                    ±8–10% Variance
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* 1. Meal Category Selection (6 Options) */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -647,7 +765,7 @@ export const AddEntry: React.FC = () => {
               </div>
             </div>
 
-            {/* 2. Intake Values (Calories, Protein, Fiber) */}
+            {/* 2. Intake Values (Calories, Protein, Carbs, Fats, Fiber) */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
@@ -656,7 +774,8 @@ export const AddEntry: React.FC = () => {
                 <span className="text-[10px] font-medium text-slate-400">Editable before save</span>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
+              {/* Row 1: Calories, Protein, Carbs */}
+              <div className="grid grid-cols-3 gap-2 mb-2">
                 {/* Calories */}
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-600 mb-1">
@@ -667,7 +786,7 @@ export const AddEntry: React.FC = () => {
                     step="any"
                     value={calories}
                     onChange={(e) => setCalories(e.target.value)}
-                    placeholder="e.g. 750"
+                    placeholder="e.g. 460"
                     required
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
                   />
@@ -683,9 +802,42 @@ export const AddEntry: React.FC = () => {
                     step="any"
                     value={protein}
                     onChange={(e) => setProtein(e.target.value)}
-                    placeholder="e.g. 45"
+                    placeholder="e.g. 10"
                     required
                     className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                  />
+                </div>
+
+                {/* Carbs */}
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Carbs (g)
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={carbs}
+                    onChange={(e) => setCarbs(e.target.value)}
+                    placeholder="e.g. 60"
+                    className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Row 2: Fats & Fiber */}
+              <div className="grid grid-cols-2 gap-2">
+                {/* Fats */}
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Fats (g)
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={fats}
+                    onChange={(e) => setFats(e.target.value)}
+                    placeholder="e.g. 20"
+                    className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
                 </div>
 
@@ -699,8 +851,8 @@ export const AddEntry: React.FC = () => {
                     step="any"
                     value={fiber}
                     onChange={(e) => setFiber(e.target.value)}
-                    placeholder="e.g. 8"
-                    className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    placeholder="e.g. 3"
+                    className="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500"
                   />
                 </div>
               </div>

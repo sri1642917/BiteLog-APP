@@ -4,6 +4,8 @@ export interface Entry {
   time: string;
   calories_kcal: number;
   protein_g: number;
+  carbs_g?: number;
+  fats_g?: number;
   fiber_g?: number;
   meal_type?: 'Breakfast' | 'Morning Snacks' | 'Lunch' | 'Evening Snacks' | 'Dinner' | 'Midnight Craving' | string;
   source: 'Image' | 'Text' | 'Manual';
