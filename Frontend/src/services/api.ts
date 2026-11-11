@@ -12,7 +12,19 @@ import {
   ParseResult
 } from '../types';
 
-const API_BASE = '/api';
+const getApiBase = (): string => {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      if (window.location.port && window.location.port !== '8001') {
+        return 'http://127.0.0.1:8001/api';
+      }
+    }
+  }
+  return '/api';
+};
+
+const API_BASE = getApiBase();
 
 export const api = {
   // Health
