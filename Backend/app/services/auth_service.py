@@ -48,8 +48,8 @@ def verify_secret(secret: str, stored_hash: str) -> bool:
 
 def normalize_security_answer(answer: str) -> str:
     """
-    Normalizes security answer (trimmed and lowercase) before hashing
-    so case differences do not lock the user out, while maintaining 100% encryption.
+    Normalizes security answer by trimming leading and trailing whitespace.
+    Strictly preserves case-sensitivity (e.g. 'Batman' != 'batman').
     """
-    return " ".join(answer.strip().lower().split())
+    return answer.strip()
 

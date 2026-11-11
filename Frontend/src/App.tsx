@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { MobileStatusBar } from './components/MobileStatusBar';
 import { MobileTopHeader } from './components/MobileTopHeader';
@@ -15,10 +15,16 @@ import { AboutCreator } from './pages/AboutCreator';
 import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { authService } from './services/authService';
 import { Scale, History as HistoryIcon, Database, Settings as SettingsIcon, User, X } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [moreDrawerOpen, setMoreDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    // Restore persistent session on app start across background kills or phone reboot
+    authService.initSession();
+  }, []);
 
   return (
     <Router>

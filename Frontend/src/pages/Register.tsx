@@ -25,6 +25,7 @@ export const Register: React.FC = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showSecurityAnswer, setShowSecurityAnswer] = useState(true);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -208,14 +209,31 @@ export const Register: React.FC = () => {
 
         {/* Your Answer */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">Your Answer</label>
-          <input
-            type="text"
-            value={securityAnswer}
-            onChange={(e) => setSecurityAnswer(e.target.value)}
-            placeholder="e.g., Blue, Chocolate, or Batman"
-            className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-hidden focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
-          />
+          <div className="flex items-center justify-between mb-1">
+            <label className="block text-xs font-semibold text-slate-700">Your Answer</label>
+            <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-sm">
+              Case-sensitive
+            </span>
+          </div>
+          <div className="relative">
+            <input
+              type={showSecurityAnswer ? 'text' : 'password'}
+              value={securityAnswer}
+              onChange={(e) => setSecurityAnswer(e.target.value)}
+              placeholder="e.g., Blue, Chocolate, or Batman"
+              className="w-full pl-3 pr-8 py-2.5 text-xs rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-hidden focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+            />
+            <button
+              type="button"
+              onClick={() => setShowSecurityAnswer(!showSecurityAnswer)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              {showSecurityAnswer ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+          <p className="text-[10px] text-slate-400 mt-1">
+            Note: Answer is strictly case-sensitive (e.g. 'Batman' ≠ 'batman'). Remember your exact capitalization!
+          </p>
         </div>
 
         {/* Privacy & Encryption Checkbox */}
