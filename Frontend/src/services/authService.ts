@@ -85,8 +85,9 @@ async function deletePermanentValue(key: string): Promise<void> {
 const getApiBase = (): string => {
   if (typeof window !== 'undefined') {
     const host = window.location.hostname;
+    // On localhost, 127.0.0.1, or Android WebView, connect to local backend on port 8001
     if (host === 'localhost' || host === '127.0.0.1') {
-      if (window.location.port && window.location.port !== '8001') {
+      if (window.location.port !== '8001') {
         return 'http://127.0.0.1:8001/api';
       }
     }

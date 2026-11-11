@@ -585,6 +585,15 @@ Food-calories-tracker-app-detailed-analysis/
 ## 11. Version History & Changelog
 
 ### 🚀 Version 1.3.1 (Current Stable)
+* **Resilient Encrypted Authentication & Sign-In**:
+  - Flexible login resolver accepting **Username / Email**, **Full Name**, or **Handle Prefix** (e.g., logging in with `harsha` matches `harsha@gmail.com`).
+  - Automatic email domain typo tolerance (e.g. `@gamail.com` ↔ `@gmail.com`).
+  - Zero-knowledge 200,000-Round PBKDF2-HMAC-SHA256 password & security answer hashing.
+  - Case-insensitive security question recovery and dual-layer permanent session persistence.
+* **Native Android Mobile Compatibility & Permissions**:
+  - Configured `android:usesCleartextTraffic="true"` in AndroidManifest to enable seamless WebView communication with local offline services.
+  - Integrated `android.permission.CAMERA` and `READ_MEDIA_IMAGES` for instant camera capture via `<input capture="environment">`.
+  - Added Capacitor `"cleartext": true` server configuration for reliable offline Android execution.
 * **Offline Protein Bar & Whey Powder Packet Scanner with Quantity Scaling**:
   - Dedicated **[📦 Protein Bar / Packet]** mode alongside **[🍲 Food Plate]** mode in `AddEntry.tsx`.
   - Offline extraction of printed nutrition facts (Serving Size, Calories, Protein, Carbs, Fats, Fiber) and primary ingredients.
@@ -602,22 +611,8 @@ Food-calories-tracker-app-detailed-analysis/
   - Automatically populates the editable intake inputs with the exact mathematical midpoint average for one-tap logging.
 * **High-Resolution Print & PDF View**:
   - Streamlined Reports view with one-tap, high-resolution Print / PDF Document generation featuring clean achievement badges.
-* **Automated CI/CD APK Release**:
+* **Consolidated Single APK Release**:
   - GitHub Actions automated pipeline compiling native Android APK (`BiteLog-v1.3.apk`) published as the single official release asset on GitHub.
-
-### 📦 Version 1.3.1
-* **Live Food Vision E2E Testing & Verification (`Test-data/outcomes/test-1/`)**:
-  * Tested 3 real food item photos with Gemma 3n offline visual engine, portion calibration, and cooking oil compensation.
-  * Verified meal category logging, duplicate submission shield (`HTTP 409 Conflict`), real-time dashboard tracking, calendar day drill-downs, and all 6 reporting intervals with CSV export.
-  * Captured and archived 12 comprehensive mobile feature screenshots in `Test-data/outcomes/test-1/`.
-* **Zero-Knowledge Encrypted Authentication (Designs 4 & 5)**:
-  * Full offline user registration ([`Register.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Register.tsx)) and sign-in ([`Login.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/Login.tsx)).
-  * Passwords and security recovery answers are hashed with **200,000-Round PBKDF2-HMAC-SHA256** and random salt. Plaintext is never stored in `nutritrack.db`.
-* **Case-Insensitive Security Question Answers**:
-  * Normalized answers prior to PBKDF2 hashing so user answers match regardless of capitalization (`'Batman'`, `'batman'`, `'BATMAN'`).
-* **Permanent "Stay Signed In" Session Persistence**:
-  * Dual-layer storage (IndexedDB `bitelog_permanent_store` + `localStorage`) with automatic session restoration on app startup.
-  * Session persists across Android background kills, app closes, and phone restarts until the user explicitly taps "Sign Out".
 * **Offline Password Recovery via Security Question**:
   * Identity verification and password reset screen ([`ForgotPassword.tsx`](file:///Users/sriharsha/Documents/Projects/Food-calories-tracker-app-detailed-analysis/Frontend/src/pages/ForgotPassword.tsx)) allowing instant recovery without internet or email.
 * **Top Header Sign In Pill Button**:
