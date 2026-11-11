@@ -35,7 +35,8 @@ Anyone can install and run **BiteLog** directly on Android without building from
   - [3.6 Calendar & Intake Overview](#36-calendar--intake-overview)
   - [3.7 Backup, Restore & Selective Cleanup](#37-backup-restore--selective-cleanup)
   - [3.8 Meet the Creator Screen (Design Specification 4)](#38-meet-the-creator-screen-design-specification-4)
-- [4. UI & UX Architecture (Design Specifications 1, 2, 3 & 4)](#4-ui--ux-architecture-design-specifications-1-2-3--4)
+  - [3.9 Encrypted Offline Authentication & Password Recovery (Designs 4 & 5)](#39-encrypted-offline-authentication--password-recovery-designs-4--5)
+- [4. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)](#4-ui--ux-architecture-design-specifications-1-2-3-4--5)
   - [Mobile Smartphone Viewport (`max-w-[420px]`)](#mobile-smartphone-viewport-max-w-420px)
   - [Desktop Dashboard Viewport](#desktop-dashboard-viewport)
 - [5. Calculation & Nutrition Analytics](#5-calculation--nutrition-analytics)
@@ -200,6 +201,26 @@ BiteLog includes a dedicated **About the Creator** screen exactly reproducing `D
 * **The Mission & Motivation**: Built out of the personal conviction that calorie tracking should be effortless, respectful of user privacy, and free from invasive subscriptions or surveillance.
 * **BiteLog Privacy Manifesto**: Reaffirms that nutrition logs and food photos belong strictly to the user—processed in RAM and never transmitted over the internet.
 * **Seamless Accessibility**: Navigable from both the **Settings** menu and the mobile bottom navigation drawer.
+
+---
+
+### 3.9 Encrypted Offline Authentication & Password Recovery (Designs 4 & 5)
+
+BiteLog integrates a 100% offline authentication and local identity protection system exactly reproducing `Designs/ui-designs/signin-feature-icon-ui-design-5.png` and `Designs/ui-designs/username-register-or-forgert-password-ui-design-4.png`:
+
+* **Top Header Sign In Pill Button (`signin-feature-icon-ui-design-5.png`)**:
+  * Unauthenticated state renders the `[ 👤 Sign In ]` pill button adjacent to the notifications bell.
+  * Authenticated state displays user's name pill (e.g. `[ 👤 Sri Harsha ]`) with profile dropdown and Sign Out action.
+* **User Registration Screen (`username-register-or-forgert-password-ui-design-4.png` Screen 1)**:
+  * Collects Full Name, Email/Username, Create Password, and Confirm Password with eye-toggle visibility.
+  * Configures a **Password Recovery Question** (e.g. *Favorite Hero?*, *Favorite Color?*, *Favorite Ice Cream?*, *First Pet?*).
+  * Stores responses using **200,000-Round PBKDF2-HMAC-SHA256 salted one-way hashing** (`hashlib.pbkdf2_hmac`).
+* **Zero-Knowledge Database Encryption Guarantee**:
+  * Passwords and security recovery answers are **never stored in plain text**.
+  * Opening the local SQLite `nutritrack.db` file reveals only irreversible cryptographic hash strings (`pbkdf2_sha256$200000$<salt>$<hash>`). Plaintext is hidden from all database inspection.
+* **Offline Password Recovery Screen (`username-register-or-forgert-password-ui-design-4.png` Screen 2)**:
+  * Looks up user's registered question and prompts for their answer.
+  * Verifies answer hash locally and unlocks instant password reset without any external internet connection or email delivery.
 
 ---
 

@@ -9,6 +9,7 @@ from app.api.weight import router as weight_router
 from app.api.settings import router as settings_router
 from app.api.backup import router as backup_router
 from app.api.parse import router as parse_router
+from app.api.auth import router as auth_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -40,6 +41,7 @@ app.include_router(weight_router, prefix="/api")
 app.include_router(settings_router, prefix="/api")
 app.include_router(backup_router, prefix="/api")
 app.include_router(parse_router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
 
 @app.get("/api/health")
 def health_check():

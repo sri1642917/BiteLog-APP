@@ -8,13 +8,18 @@ import {
   Cpu,
   Info,
   User,
-  ArrowRight
+  ArrowRight,
+  Lock,
+  LogOut,
+  KeyRound
 } from 'lucide-react';
 import { api } from '../services/api';
+import { authService, User as AuthUser } from '../services/authService';
 import { UserSettings } from '../types';
 
 export const Settings: React.FC = () => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(authService.getCurrentUser());
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [savedMsg, setSavedMsg] = useState(false);
@@ -27,6 +32,11 @@ export const Settings: React.FC = () => {
   const [targetWeight, setTargetWeight] = useState<number>(65);
 
   useEffect(() => {
+    const handleAuthChange = () => {
+      setCurrentUser(authService.getCurrentUser());
+    };
+    window.addEventListener('bitelog_auth_changed', handleAuthChange);
+
     api.getSettings().then((res) => {
       setSettings(res);
       setCalTarget(res.calorie_target);
@@ -36,6 +46,8 @@ export const Settings: React.FC = () => {
       setTargetWeight(res.target_weight_kg);
       setLoading(false);
     });
+
+    return () => window.removeEventListener('bitelog_auth_changed', handleAuthChange);
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -77,6 +89,59 @@ export const Settings: React.FC = () => {
             <span>Settings saved successfully!</span>
           </div>
         )}
+
+        {/* Account & Offline Encryption Profile Card */}
+        <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                {currentUser ? currentUser.full_name[0].toUpperCase() : <Lock className="w-4 h-4" />}
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-slate-900">
+                  {currentUser ? currentUser.full_name : 'Guest Offline Mode'}
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  {currentUser ? currentUser.username : 'Account not registered yet'}
+                </p>
+              </div>
+            </div>
+
+            {currentUser ? (
+              <button
+                type="button"
+                onClick={() => authService.logout()}
+                className="px-3 py-1.5 rounded-xl border border-red-200 text-red-600 text-xs font-semibold hover:bg-red-50 transition-colors flex items-center gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  className="px-3 py-1.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-white transition-colors"
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate('/register')}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-800 transition-colors shadow-2xs"
+                >
+                  Register
+                </button>
+              </div>
+            )}
+          </div>
+
+          <p className="text-[10.5px] text-slate-500 leading-relaxed">
+            {currentUser
+              ? 'Your password and security recovery answers are stored in local SQLite using 200,000-round PBKDF2-HMAC-SHA256 salted encryption.'
+              : 'Register a local profile to protect your nutrition data with a password and offline security recovery question.'}
+          </p>
+        </div>
 
         <form onSubmit={handleSave} className="space-y-6">
           {/* Daily Nutrition Targets */}

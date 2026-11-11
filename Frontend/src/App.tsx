@@ -12,6 +12,9 @@ import { History } from './pages/History';
 import { BackupRestore } from './pages/BackupRestore';
 import { Settings } from './pages/Settings';
 import { AboutCreator } from './pages/AboutCreator';
+import { Register } from './pages/Register';
+import { Login } from './pages/Login';
+import { ForgotPassword } from './pages/ForgotPassword';
 import { Scale, History as HistoryIcon, Database, Settings as SettingsIcon, User, X } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -42,6 +45,9 @@ export const App: React.FC = () => {
               <Route path="/backup" element={<BackupRestore />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/about" element={<AboutCreator />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

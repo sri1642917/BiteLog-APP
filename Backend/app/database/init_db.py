@@ -3,6 +3,7 @@ from app.database.connection import engine, Base, SessionLocal
 from app.models.entry import Entry
 from app.models.weight import WeightHistory
 from app.models.user_settings import UserSettings
+from app.models.user import User
 
 def init_db():
     Base.metadata.create_all(bind=engine)
