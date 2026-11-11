@@ -82,6 +82,20 @@ async function deletePermanentValue(key: string): Promise<void> {
   });
 }
 
+const getApiBase = (): string => {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      if (window.location.port && window.location.port !== '8001') {
+        return 'http://127.0.0.1:8001/api';
+      }
+    }
+  }
+  return '/api';
+};
+
+const API_BASE = getApiBase();
+
 export const authService = {
   // Synchronously get stored user from localStorage
   getCurrentUser(): User | null {
@@ -148,7 +162,7 @@ export const authService = {
     security_question: string;
     security_answer: string;
   }): Promise<AuthResponse> {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -164,7 +178,7 @@ export const authService = {
 
   // Login
   async login(username: string, password: string): Promise<AuthResponse> {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -180,7 +194,7 @@ export const authService = {
 
   // Fetch security question
   async getSecurityQuestion(username: string): Promise<string> {
-    const res = await fetch('/api/auth/security-question', {
+    const res = await fetch(`${API_BASE}/auth/security-question`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username }),
@@ -199,7 +213,7 @@ export const authService = {
     security_answer: string;
     new_password: string;
   }): Promise<{ message: string }> {
-    const res = await fetch('/api/auth/reset-password', {
+    const res = await fetch(`${API_BASE}/auth/reset-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
