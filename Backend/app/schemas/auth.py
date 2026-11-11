@@ -38,3 +38,4 @@ class AuthSuccessResponse(BaseModel):
     message: str
     user: UserResponse
     token: str
+

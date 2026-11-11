@@ -52,3 +52,4 @@ def normalize_security_answer(answer: str) -> str:
     so case differences do not lock the user out, while maintaining 100% encryption.
     """
     return " ".join(answer.strip().lower().split())
+
