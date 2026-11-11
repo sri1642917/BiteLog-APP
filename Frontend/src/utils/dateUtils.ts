@@ -10,3 +10,4 @@ export const getLocalDateString = (d: Date = new Date()): string => {
   const day = String(d.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
