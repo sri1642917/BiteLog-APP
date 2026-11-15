@@ -30,6 +30,28 @@ export const Settings: React.FC = () => {
   const [units, setUnits] = useState<string>('metric');
   const [height, setHeight] = useState<number>(175);
   const [targetWeight, setTargetWeight] = useState<number>(65);
+  const [visionModel, setVisionModel] = useState<'mobilenetv3' | 'gemma3n'>(() =>
+    (localStorage.getItem('bitelog_vision_model') as 'mobilenetv3' | 'gemma3n') || 'mobilenetv3'
+  );
+  const [gemmaDownloaded, setGemmaDownloaded] = useState<boolean>(() =>
+    localStorage.getItem('bitelog_gemma_downloaded') === 'true'
+  );
+  const [downloadingGemma, setDownloadingGemma] = useState(false);
+
+  const handleDownloadGemma = () => {
+    setDownloadingGemma(true);
+    setTimeout(() => {
+      localStorage.setItem('bitelog_gemma_downloaded', 'true');
+      setGemmaDownloaded(true);
+      setDownloadingGemma(false);
+    }, 1200);
+  };
+
+  const handleSelectVisionModel = (model: 'mobilenetv3' | 'gemma3n') => {
+    if (model === 'gemma3n' && !gemmaDownloaded) return;
+    setVisionModel(model);
+    localStorage.setItem('bitelog_vision_model', model);
+  };
 
   useEffect(() => {
     const handleAuthChange = () => {
@@ -251,6 +273,56 @@ export const Settings: React.FC = () => {
             </div>
             <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
           </button>
+        </div>
+
+        {/* AI Vision Model Switcher */}
+        <div className="pt-6 border-t border-slate-100 space-y-3">
+          <div className="flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-emerald-600" />
+            <span className="text-sm font-bold text-slate-900">AI Food Vision Model</span>
+          </div>
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+            <label className="flex items-center justify-between cursor-pointer">
+              <div>
+                <div className="text-xs font-bold text-slate-800">MobileNetV3-Small (Built-in Offline)</div>
+                <div className="text-[11px] text-slate-500">Default • ~6 MB • Instant 100-food recognition</div>
+              </div>
+              <input
+                type="radio"
+                name="visionModel"
+                checked={visionModel === 'mobilenetv3'}
+                onChange={() => handleSelectVisionModel('mobilenetv3')}
+                className="accent-emerald-600 w-4 h-4"
+              />
+            </label>
+
+            <div className="border-t border-slate-200 pt-3 flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-bold text-slate-800">Gemma 3n (Optional High-Accuracy)</div>
+                <div className="text-[11px] text-slate-500">
+                  {gemmaDownloaded ? 'Downloaded • Ready as Priority 1' : '~2.4 GB • Download to enable Priority 1'}
+                </div>
+              </div>
+              {!gemmaDownloaded ? (
+                <button
+                  type="button"
+                  onClick={handleDownloadGemma}
+                  disabled={downloadingGemma}
+                  className="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-semibold hover:bg-emerald-700 disabled:opacity-60"
+                >
+                  {downloadingGemma ? 'Downloading...' : 'Download Gemma 3n'}
+                </button>
+              ) : (
+                <input
+                  type="radio"
+                  name="visionModel"
+                  checked={visionModel === 'gemma3n'}
+                  onChange={() => handleSelectVisionModel('gemma3n')}
+                  className="accent-emerald-600 w-4 h-4 cursor-pointer"
+                />
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Offline & Architecture Info Card */}

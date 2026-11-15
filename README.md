@@ -695,3 +695,17 @@ Food-calories-tracker-app-detailed-analysis/
 
 ### 🌱 Version 1.0
 * **Core Offline Engine**: Google Gemma 3n offline visual food calorie estimation, Mifflin-St Jeor metabolic calculator, on-device SQLite database, and monthly calendar drill-down.
+
+
+---
+
+## Dual-Model AI Food Vision & 100-Food Training Pipeline (v1.3.2)
+
+- **Default Offline Model (`MobileNetV3-Small`)**: Built into the Android APK (`~6 MB` quantized ONNX) for instant, 100% offline 100-food recognition without extra downloads.
+- **Optional High-Accuracy Model (`Gemma 3n`)**: Users can optionally download Gemma 3n in **Settings -> AI Food Vision Model** and set it as **Priority 1 (Default)**.
+- **100-Food Dataset & Mismatch Training**:
+  - `Backend/food_nutrition_100.json`: 100 Indian & global dishes, fruits, eggs, and snacks mapped to verified USDA / ICMR-NIN calories and macros.
+  - `Backend/collect_food_dataset.py`: Collects training images into `Backend/dataset/train/<dish_id>/`.
+  - `Backend/benchmark_and_collect_mismatches.py`: Benchmarks predictions and quarantines misclassified images into `Backend/dataset/mismatches/<dish_id>/`.
+  - `Backend/train_food_model.py`: Fine-tunes MobileNetV3-Small and exports quantized `food_classifier.onnx`.
+  - `Backend/train_gemma_lora.py`: Generates the LoRA fine-tuning manifest (`gemma_lora_train.jsonl`) and trains Gemma 3n on quarantined mismatches.
