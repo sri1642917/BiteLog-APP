@@ -1,0 +1,4502 @@
+{
+  "idli_sambar": {
+    "name": "Idli Sambar",
+    "kcal": 180,
+    "protein_g": 6.0,
+    "carbs_g": 34.0,
+    "fats_g": 2.0,
+    "fiber_g": 3.5,
+    "query": "idli sambar"
+  },
+  "masala_dosa": {
+    "name": "Masala Dosa",
+    "kcal": 385,
+    "protein_g": 8.0,
+    "carbs_g": 54.0,
+    "fats_g": 15.0,
+    "fiber_g": 4.2,
+    "query": "masala dosa"
+  },
+  "plain_dosa": {
+    "name": "Plain Dosa",
+    "kcal": 168,
+    "protein_g": 4.0,
+    "carbs_g": 28.0,
+    "fats_g": 4.0,
+    "fiber_g": 1.8,
+    "query": "dosa south indian"
+  },
+  "medu_vada": {
+    "name": "Medu Vada",
+    "kcal": 240,
+    "protein_g": 6.5,
+    "carbs_g": 26.0,
+    "fats_g": 12.0,
+    "fiber_g": 2.5,
+    "query": "medu vada"
+  },
+  "upma": {
+    "name": "Rava Upma",
+    "kcal": 210,
+    "protein_g": 5.5,
+    "carbs_g": 35.0,
+    "fats_g": 5.5,
+    "fiber_g": 2.4,
+    "query": "upma indian food"
+  },
+  "poha": {
+    "name": "Kanda Poha",
+    "kcal": 250,
+    "protein_g": 5.0,
+    "carbs_g": 44.0,
+    "fats_g": 6.0,
+    "fiber_g": 3.0,
+    "query": "poha indian breakfast"
+  },
+  "pongal": {
+    "name": "Ven Pongal",
+    "kcal": 290,
+    "protein_g": 7.5,
+    "carbs_g": 42.0,
+    "fats_g": 10.0,
+    "fiber_g": 2.2,
+    "query": "ven pongal"
+  },
+  "uttapam": {
+    "name": "Onion Uttapam",
+    "kcal": 230,
+    "protein_g": 6.0,
+    "carbs_g": 38.0,
+    "fats_g": 5.5,
+    "fiber_g": 2.8,
+    "query": "uttapam"
+  },
+  "aloo_paratha": {
+    "name": "Aloo Paratha",
+    "kcal": 310,
+    "protein_g": 6.5,
+    "carbs_g": 45.0,
+    "fats_g": 11.5,
+    "fiber_g": 3.5,
+    "query": "aloo paratha"
+  },
+  "paneer_paratha": {
+    "name": "Paneer Paratha",
+    "kcal": 345,
+    "protein_g": 12.0,
+    "carbs_g": 40.0,
+    "fats_g": 15.0,
+    "fiber_g": 2.8,
+    "query": "paneer paratha"
+  },
+  "chole_bhature": {
+    "name": "Chole Bhature",
+    "kcal": 520,
+    "protein_g": 14.0,
+    "carbs_g": 68.0,
+    "fats_g": 21.0,
+    "fiber_g": 7.0,
+    "query": "chole bhature"
+  },
+  "pav_bhaji": {
+    "name": "Pav Bhaji",
+    "kcal": 410,
+    "protein_g": 10.0,
+    "carbs_g": 56.0,
+    "fats_g": 16.0,
+    "fiber_g": 5.5,
+    "query": "pav bhaji"
+  },
+  "rajma_chawal": {
+    "name": "Rajma Chawal",
+    "kcal": 390,
+    "protein_g": 13.0,
+    "carbs_g": 68.0,
+    "fats_g": 6.5,
+    "fiber_g": 8.5,
+    "query": "rajma chawal"
+  },
+  "dal_tadka": {
+    "name": "Dal Tadka",
+    "kcal": 220,
+    "protein_g": 11.0,
+    "carbs_g": 28.0,
+    "fats_g": 7.0,
+    "fiber_g": 5.5,
+    "query": "dal tadka"
+  },
+  "dal_makhani": {
+    "name": "Dal Makhani",
+    "kcal": 330,
+    "protein_g": 12.0,
+    "carbs_g": 32.0,
+    "fats_g": 17.0,
+    "fiber_g": 6.0,
+    "query": "dal makhani"
+  },
+  "paneer_butter_masala": {
+    "name": "Paneer Butter Masala",
+    "kcal": 380,
+    "protein_g": 14.0,
+    "carbs_g": 16.0,
+    "fats_g": 29.0,
+    "fiber_g": 2.2,
+    "query": "paneer butter masala"
+  },
+  "palak_paneer": {
+    "name": "Palak Paneer",
+    "kcal": 280,
+    "protein_g": 14.5,
+    "carbs_g": 12.0,
+    "fats_g": 19.0,
+    "fiber_g": 4.5,
+    "query": "palak paneer"
+  },
+  "kadai_paneer": {
+    "name": "Kadai Paneer",
+    "kcal": 310,
+    "protein_g": 14.0,
+    "carbs_g": 14.0,
+    "fats_g": 22.0,
+    "fiber_g": 3.0,
+    "query": "kadai paneer"
+  },
+  "butter_chicken": {
+    "name": "Butter Chicken",
+    "kcal": 410,
+    "protein_g": 26.0,
+    "carbs_g": 14.0,
+    "fats_g": 28.0,
+    "fiber_g": 1.8,
+    "query": "butter chicken"
+  },
+  "chicken_tikka_masala": {
+    "name": "Chicken Tikka Masala",
+    "kcal": 370,
+    "protein_g": 25.0,
+    "carbs_g": 15.0,
+    "fats_g": 23.0,
+    "fiber_g": 2.0,
+    "query": "chicken tikka masala"
+  },
+  "tandoori_chicken": {
+    "name": "Tandoori Chicken",
+    "kcal": 260,
+    "protein_g": 29.0,
+    "carbs_g": 4.0,
+    "fats_g": 14.0,
+    "fiber_g": 0.5,
+    "query": "tandoori chicken"
+  },
+  "chicken_biryani": {
+    "name": "Chicken Biryani",
+    "kcal": 450,
+    "protein_g": 24.0,
+    "carbs_g": 52.0,
+    "fats_g": 16.0,
+    "fiber_g": 2.5,
+    "query": "chicken biryani"
+  },
+  "mutton_biryani": {
+    "name": "Mutton Biryani",
+    "kcal": 495,
+    "protein_g": 25.0,
+    "carbs_g": 50.0,
+    "fats_g": 21.0,
+    "fiber_g": 2.2,
+    "query": "mutton biryani"
+  },
+  "veg_biryani": {
+    "name": "Veg Biryani",
+    "kcal": 340,
+    "protein_g": 8.0,
+    "carbs_g": 54.0,
+    "fats_g": 10.0,
+    "fiber_g": 4.5,
+    "query": "vegetable biryani"
+  },
+  "jeera_rice": {
+    "name": "Jeera Rice",
+    "kcal": 230,
+    "protein_g": 4.5,
+    "carbs_g": 42.0,
+    "fats_g": 5.0,
+    "fiber_g": 1.0,
+    "query": "jeera rice"
+  },
+  "curd_rice": {
+    "name": "Curd Rice",
+    "kcal": 240,
+    "protein_g": 6.5,
+    "carbs_g": 38.0,
+    "fats_g": 6.5,
+    "fiber_g": 0.8,
+    "query": "curd rice"
+  },
+  "lemon_rice": {
+    "name": "Lemon Rice",
+    "kcal": 265,
+    "protein_g": 5.0,
+    "carbs_g": 44.0,
+    "fats_g": 7.5,
+    "fiber_g": 1.8,
+    "query": "lemon rice"
+  },
+  "roti_chapati": {
+    "name": "Whole Wheat Roti",
+    "kcal": 105,
+    "protein_g": 3.5,
+    "carbs_g": 21.0,
+    "fats_g": 0.8,
+    "fiber_g": 3.0,
+    "query": "chapati roti"
+  },
+  "garlic_naan": {
+    "name": "Garlic Naan",
+    "kcal": 260,
+    "protein_g": 7.0,
+    "carbs_g": 42.0,
+    "fats_g": 7.0,
+    "fiber_g": 2.0,
+    "query": "garlic naan"
+  },
+  "samosa": {
+    "name": "Samosa (1 pc)",
+    "kcal": 260,
+    "protein_g": 5.0,
+    "carbs_g": 32.0,
+    "fats_g": 13.0,
+    "fiber_g": 3.0,
+    "query": "samosa"
+  },
+  "pakora": {
+    "name": "Onion Pakora",
+    "kcal": 280,
+    "protein_g": 6.0,
+    "carbs_g": 28.0,
+    "fats_g": 16.0,
+    "fiber_g": 3.5,
+    "query": "pakora"
+  },
+  "pani_puri": {
+    "name": "Pani Puri (6 pcs)",
+    "kcal": 210,
+    "protein_g": 4.5,
+    "carbs_g": 36.0,
+    "fats_g": 5.5,
+    "fiber_g": 3.2,
+    "query": "pani puri"
+  },
+  "bhel_puri": {
+    "name": "Bhel Puri",
+    "kcal": 240,
+    "protein_g": 5.5,
+    "carbs_g": 40.0,
+    "fats_g": 6.5,
+    "fiber_g": 3.8,
+    "query": "bhel puri"
+  },
+  "dhokla": {
+    "name": "Khaman Dhokla",
+    "kcal": 175,
+    "protein_g": 6.5,
+    "carbs_g": 28.0,
+    "fats_g": 4.0,
+    "fiber_g": 2.5,
+    "query": "dhokla"
+  },
+  "vada_pav": {
+    "name": "Vada Pav",
+    "kcal": 290,
+    "protein_g": 6.0,
+    "carbs_g": 42.0,
+    "fats_g": 11.0,
+    "fiber_g": 3.0,
+    "query": "vada pav"
+  },
+  "gulab_jamun": {
+    "name": "Gulab Jamun (2 pcs)",
+    "kcal": 320,
+    "protein_g": 4.0,
+    "carbs_g": 52.0,
+    "fats_g": 11.0,
+    "fiber_g": 0.5,
+    "query": "gulab jamun"
+  },
+  "jalebi": {
+    "name": "Jalebi",
+    "kcal": 300,
+    "protein_g": 2.5,
+    "carbs_g": 54.0,
+    "fats_g": 8.5,
+    "fiber_g": 0.4,
+    "query": "jalebi"
+  },
+  "rasgulla": {
+    "name": "Rasgulla (2 pcs)",
+    "kcal": 186,
+    "protein_g": 4.0,
+    "carbs_g": 38.0,
+    "fats_g": 1.8,
+    "fiber_g": 0.2,
+    "query": "rasgulla"
+  },
+  "kheer": {
+    "name": "Rice Kheer",
+    "kcal": 230,
+    "protein_g": 6.0,
+    "carbs_g": 36.0,
+    "fats_g": 7.0,
+    "fiber_g": 0.5,
+    "query": "rice kheer"
+  },
+  "boiled_eggs": {
+    "name": "Boiled Eggs (2 pcs)",
+    "kcal": 155,
+    "protein_g": 12.6,
+    "carbs_g": 1.1,
+    "fats_g": 10.6,
+    "fiber_g": 0.0,
+    "query": "boiled egg"
+  },
+  "omelette": {
+    "name": "Masala Omelette (2 eggs)",
+    "kcal": 195,
+    "protein_g": 13.0,
+    "carbs_g": 3.0,
+    "fats_g": 14.5,
+    "fiber_g": 0.6,
+    "query": "omelette"
+  },
+  "scrambled_eggs": {
+    "name": "Scrambled Eggs",
+    "kcal": 200,
+    "protein_g": 13.5,
+    "carbs_g": 2.2,
+    "fats_g": 15.0,
+    "fiber_g": 0.0,
+    "query": "scrambled eggs"
+  },
+  "fried_egg": {
+    "name": "Fried Egg",
+    "kcal": 90,
+    "protein_g": 6.3,
+    "carbs_g": 0.4,
+    "fats_g": 7.0,
+    "fiber_g": 0.0,
+    "query": "fried egg"
+  },
+  "banana": {
+    "name": "Banana (1 medium)",
+    "kcal": 105,
+    "protein_g": 1.3,
+    "carbs_g": 27.0,
+    "fats_g": 0.4,
+    "fiber_g": 3.1,
+    "query": "banana fruit"
+  },
+  "apple": {
+    "name": "Apple (1 medium)",
+    "kcal": 95,
+    "protein_g": 0.5,
+    "carbs_g": 25.0,
+    "fats_g": 0.3,
+    "fiber_g": 4.4,
+    "query": "red apple fruit"
+  },
+  "mango": {
+    "name": "Mango (1 cup)",
+    "kcal": 99,
+    "protein_g": 1.4,
+    "carbs_g": 25.0,
+    "fats_g": 0.6,
+    "fiber_g": 2.6,
+    "query": "mango fruit"
+  },
+  "orange": {
+    "name": "Orange (1 medium)",
+    "kcal": 62,
+    "protein_g": 1.2,
+    "carbs_g": 15.4,
+    "fats_g": 0.2,
+    "fiber_g": 3.1,
+    "query": "orange fruit"
+  },
+  "watermelon": {
+    "name": "Watermelon (1 cup)",
+    "kcal": 46,
+    "protein_g": 0.9,
+    "carbs_g": 11.5,
+    "fats_g": 0.2,
+    "fiber_g": 0.6,
+    "query": "watermelon"
+  },
+  "papaya": {
+    "name": "Papaya (1 cup)",
+    "kcal": 62,
+    "protein_g": 0.7,
+    "carbs_g": 15.7,
+    "fats_g": 0.4,
+    "fiber_g": 2.5,
+    "query": "papaya fruit"
+  },
+  "grapes": {
+    "name": "Grapes (1 cup)",
+    "kcal": 104,
+    "protein_g": 1.1,
+    "carbs_g": 27.3,
+    "fats_g": 0.2,
+    "fiber_g": 1.4,
+    "query": "grapes fruit"
+  },
+  "strawberry": {
+    "name": "Strawberries (1 cup)",
+    "kcal": 49,
+    "protein_g": 1.0,
+    "carbs_g": 11.7,
+    "fats_g": 0.5,
+    "fiber_g": 3.0,
+    "query": "strawberries"
+  },
+  "pineapple": {
+    "name": "Pineapple (1 cup)",
+    "kcal": 82,
+    "protein_g": 0.9,
+    "carbs_g": 21.6,
+    "fats_g": 0.2,
+    "fiber_g": 2.3,
+    "query": "pineapple fruit"
+  },
+  "pomegranate": {
+    "name": "Pomegranate (1 cup)",
+    "kcal": 144,
+    "protein_g": 2.9,
+    "carbs_g": 32.5,
+    "fats_g": 2.0,
+    "fiber_g": 7.0,
+    "query": "pomegranate"
+  },
+  "avocado": {
+    "name": "Avocado (half)",
+    "kcal": 160,
+    "protein_g": 2.0,
+    "carbs_g": 8.5,
+    "fats_g": 14.7,
+    "fiber_g": 6.7,
+    "query": "avocado"
+  },
+  "oatmeal": {
+    "name": "Oatmeal Bowl",
+    "kcal": 158,
+    "protein_g": 6.0,
+    "carbs_g": 27.0,
+    "fats_g": 3.2,
+    "fiber_g": 4.0,
+    "query": "oatmeal bowl"
+  },
+  "greek_yogurt": {
+    "name": "Greek Yogurt",
+    "kcal": 130,
+    "protein_g": 15.0,
+    "carbs_g": 7.0,
+    "fats_g": 4.0,
+    "fiber_g": 0.0,
+    "query": "greek yogurt"
+  },
+  "paneer_tikka": {
+    "name": "Paneer Tikka",
+    "kcal": 290,
+    "protein_g": 18.0,
+    "carbs_g": 10.0,
+    "fats_g": 20.0,
+    "fiber_g": 2.0,
+    "query": "paneer tikka"
+  },
+  "grilled_chicken": {
+    "name": "Grilled Chicken Breast",
+    "kcal": 230,
+    "protein_g": 42.0,
+    "carbs_g": 0.0,
+    "fats_g": 5.0,
+    "fiber_g": 0.0,
+    "query": "grilled chicken breast"
+  },
+  "grilled_salmon": {
+    "name": "Grilled Salmon",
+    "kcal": 280,
+    "protein_g": 34.0,
+    "carbs_g": 0.0,
+    "fats_g": 15.0,
+    "fiber_g": 0.0,
+    "query": "grilled salmon"
+  },
+  "fish_curry": {
+    "name": "Indian Fish Curry",
+    "kcal": 275,
+    "protein_g": 22.0,
+    "carbs_g": 9.0,
+    "fats_g": 17.0,
+    "fiber_g": 1.8,
+    "query": "fish curry"
+  },
+  "egg_curry": {
+    "name": "Egg Curry",
+    "kcal": 265,
+    "protein_g": 14.0,
+    "carbs_g": 11.0,
+    "fats_g": 18.0,
+    "fiber_g": 2.0,
+    "query": "egg curry"
+  },
+  "chana_masala": {
+    "name": "Chana Masala",
+    "kcal": 240,
+    "protein_g": 10.0,
+    "carbs_g": 34.0,
+    "fats_g": 7.0,
+    "fiber_g": 8.0,
+    "query": "chana masala"
+  },
+  "aloo_gobi": {
+    "name": "Aloo Gobi",
+    "kcal": 195,
+    "protein_g": 4.5,
+    "carbs_g": 26.0,
+    "fats_g": 8.0,
+    "fiber_g": 4.5,
+    "query": "aloo gobi"
+  },
+  "bhindi_masala": {
+    "name": "Bhindi Masala",
+    "kcal": 170,
+    "protein_g": 3.5,
+    "carbs_g": 16.0,
+    "fats_g": 10.0,
+    "fiber_g": 4.8,
+    "query": "bhindi masala"
+  },
+  "baingan_bharta": {
+    "name": "Baingan Bharta",
+    "kcal": 180,
+    "protein_g": 3.0,
+    "carbs_g": 15.0,
+    "fats_g": 12.0,
+    "fiber_g": 5.0,
+    "query": "baingan bharta"
+  },
+  "palak_dal": {
+    "name": "Palak Dal",
+    "kcal": 190,
+    "protein_g": 10.0,
+    "carbs_g": 25.0,
+    "fats_g": 5.5,
+    "fiber_g": 5.2,
+    "query": "palak dal"
+  },
+  "khichdi": {
+    "name": "Moong Dal Khichdi",
+    "kcal": 260,
+    "protein_g": 9.5,
+    "carbs_g": 44.0,
+    "fats_g": 5.0,
+    "fiber_g": 4.0,
+    "query": "khichdi"
+  },
+  "pizza": {
+    "name": "Pizza Slice (Cheese/Margherita)",
+    "kcal": 285,
+    "protein_g": 12.0,
+    "carbs_g": 36.0,
+    "fats_g": 10.0,
+    "fiber_g": 2.5,
+    "query": "margherita pizza"
+  },
+  "burger": {
+    "name": "Burger",
+    "kcal": 440,
+    "protein_g": 22.0,
+    "carbs_g": 40.0,
+    "fats_g": 21.0,
+    "fiber_g": 2.5,
+    "query": "hamburger"
+  },
+  "french_fries": {
+    "name": "French Fries",
+    "kcal": 312,
+    "protein_g": 3.4,
+    "carbs_g": 41.0,
+    "fats_g": 15.0,
+    "fiber_g": 3.8,
+    "query": "french fries"
+  },
+  "pasta": {
+    "name": "Pasta (Tomato/Red Sauce)",
+    "kcal": 320,
+    "protein_g": 11.0,
+    "carbs_g": 54.0,
+    "fats_g": 6.5,
+    "fiber_g": 3.5,
+    "query": "spaghetti tomato sauce"
+  },
+  "mac_and_cheese": {
+    "name": "Mac and Cheese",
+    "kcal": 370,
+    "protein_g": 14.0,
+    "carbs_g": 42.0,
+    "fats_g": 16.0,
+    "fiber_g": 1.8,
+    "query": "macaroni and cheese"
+  },
+  "sandwich": {
+    "name": "Grilled Sandwich",
+    "kcal": 310,
+    "protein_g": 12.0,
+    "carbs_g": 38.0,
+    "fats_g": 12.0,
+    "fiber_g": 3.0,
+    "query": "grilled cheese sandwich"
+  },
+  "caesar_salad": {
+    "name": "Caesar Salad",
+    "kcal": 240,
+    "protein_g": 10.0,
+    "carbs_g": 14.0,
+    "fats_g": 16.0,
+    "fiber_g": 3.2,
+    "query": "caesar salad"
+  },
+  "greek_salad": {
+    "name": "Greek Salad",
+    "kcal": 190,
+    "protein_g": 6.0,
+    "carbs_g": 12.0,
+    "fats_g": 14.0,
+    "fiber_g": 3.5,
+    "query": "greek salad"
+  },
+  "fried_rice": {
+    "name": "Veg Fried Rice",
+    "kcal": 330,
+    "protein_g": 7.5,
+    "carbs_g": 54.0,
+    "fats_g": 9.5,
+    "fiber_g": 2.8,
+    "query": "fried rice"
+  },
+  "hakka_noodles": {
+    "name": "Hakka Noodles",
+    "kcal": 350,
+    "protein_g": 8.0,
+    "carbs_g": 56.0,
+    "fats_g": 10.5,
+    "fiber_g": 3.0,
+    "query": "chow mein noodles"
+  },
+  "momos": {
+    "name": "Steamed Momos (6 pcs)",
+    "kcal": 240,
+    "protein_g": 9.0,
+    "carbs_g": 36.0,
+    "fats_g": 6.5,
+    "fiber_g": 2.0,
+    "query": "momos dumplings"
+  },
+  "spring_rolls": {
+    "name": "Spring Rolls (2 pcs)",
+    "kcal": 220,
+    "protein_g": 5.0,
+    "carbs_g": 28.0,
+    "fats_g": 10.0,
+    "fiber_g": 2.2,
+    "query": "spring rolls"
+  },
+  "sushi": {
+    "name": "Sushi Rolls (6 pcs)",
+    "kcal": 250,
+    "protein_g": 11.0,
+    "carbs_g": 42.0,
+    "fats_g": 4.5,
+    "fiber_g": 2.0,
+    "query": "sushi roll"
+  },
+  "ramen": {
+    "name": "Ramen Noodle Bowl",
+    "kcal": 430,
+    "protein_g": 18.0,
+    "carbs_g": 56.0,
+    "fats_g": 15.0,
+    "fiber_g": 3.0,
+    "query": "ramen"
+  },
+  "tacos": {
+    "name": "Tacos (2 pcs)",
+    "kcal": 340,
+    "protein_g": 16.0,
+    "carbs_g": 34.0,
+    "fats_g": 15.0,
+    "fiber_g": 4.5,
+    "query": "tacos"
+  },
+  "burrito": {
+    "name": "Burrito",
+    "kcal": 480,
+    "protein_g": 22.0,
+    "carbs_g": 60.0,
+    "fats_g": 17.0,
+    "fiber_g": 7.0,
+    "query": "burrito"
+  },
+  "pancakes": {
+    "name": "Pancakes (2 pcs)",
+    "kcal": 260,
+    "protein_g": 7.0,
+    "carbs_g": 42.0,
+    "fats_g": 7.0,
+    "fiber_g": 1.5,
+    "query": "pancakes"
+  },
+  "waffles": {
+    "name": "Waffles",
+    "kcal": 290,
+    "protein_g": 7.5,
+    "carbs_g": 40.0,
+    "fats_g": 11.0,
+    "fiber_g": 1.5,
+    "query": "waffles"
+  },
+  "donut": {
+    "name": "Glazed Donut",
+    "kcal": 260,
+    "protein_g": 3.5,
+    "carbs_g": 31.0,
+    "fats_g": 14.0,
+    "fiber_g": 0.8,
+    "query": "glazed doughnut"
+  },
+  "chocolate_cake": {
+    "name": "Chocolate Cake Slice",
+    "kcal": 350,
+    "protein_g": 4.5,
+    "carbs_g": 50.0,
+    "fats_g": 15.0,
+    "fiber_g": 2.5,
+    "query": "chocolate cake"
+  },
+  "ice_cream": {
+    "name": "Ice Cream (1 scoop)",
+    "kcal": 207,
+    "protein_g": 3.5,
+    "carbs_g": 24.0,
+    "fats_g": 11.0,
+    "fiber_g": 0.7,
+    "query": "ice cream scoop"
+  },
+  "cheesecake": {
+    "name": "Cheesecake Slice",
+    "kcal": 380,
+    "protein_g": 6.5,
+    "carbs_g": 32.0,
+    "fats_g": 25.0,
+    "fiber_g": 0.5,
+    "query": "cheesecake"
+  },
+  "almonds": {
+    "name": "Almonds (28g / ~23 nuts)",
+    "kcal": 164,
+    "protein_g": 6.0,
+    "carbs_g": 6.1,
+    "fats_g": 14.2,
+    "fiber_g": 3.5,
+    "query": "almonds"
+  },
+  "peanuts": {
+    "name": "Roasted Peanuts (28g)",
+    "kcal": 166,
+    "protein_g": 6.9,
+    "carbs_g": 6.0,
+    "fats_g": 14.0,
+    "fiber_g": 2.4,
+    "query": "peanuts"
+  },
+  "peanut_butter_toast": {
+    "name": "Peanut Butter Toast",
+    "kcal": 270,
+    "protein_g": 10.0,
+    "carbs_g": 26.0,
+    "fats_g": 15.0,
+    "fiber_g": 3.5,
+    "query": "peanut butter toast"
+  },
+  "protein_shake": {
+    "name": "Protein Shake",
+    "kcal": 160,
+    "protein_g": 25.0,
+    "carbs_g": 6.0,
+    "fats_g": 3.0,
+    "fiber_g": 1.0,
+    "query": "protein shake"
+  },
+  "smoothie_bowl": {
+    "name": "Fruit Smoothie Bowl",
+    "kcal": 280,
+    "protein_g": 7.0,
+    "carbs_g": 52.0,
+    "fats_g": 5.5,
+    "fiber_g": 6.0,
+    "query": "smoothie bowl"
+  },
+  "masala_chai": {
+    "name": "Masala Chai (1 cup)",
+    "kcal": 85,
+    "protein_g": 2.5,
+    "carbs_g": 12.0,
+    "fats_g": 3.0,
+    "fiber_g": 0.0,
+    "query": "masala chai"
+  },
+  "coffee": {
+    "name": "Milk Coffee (1 cup)",
+    "kcal": 95,
+    "protein_g": 3.5,
+    "carbs_g": 11.0,
+    "fats_g": 4.0,
+    "fiber_g": 0.0,
+    "query": "latte coffee"
+  },
+  "lassi": {
+    "name": "Sweet Lassi (1 glass)",
+    "kcal": 210,
+    "protein_g": 6.5,
+    "carbs_g": 32.0,
+    "fats_g": 6.0,
+    "fiber_g": 0.0,
+    "query": "mango lassi"
+  },
+  "sprouts_salad": {
+    "name": "Moong Sprouts Salad",
+    "kcal": 140,
+    "protein_g": 10.0,
+    "carbs_g": 22.0,
+    "fats_g": 1.5,
+    "fiber_g": 6.5,
+    "query": "mung bean sprouts salad"
+  },
+  "chickpea_salad": {
+    "name": "Chickpea Salad",
+    "kcal": 210,
+    "protein_g": 9.0,
+    "carbs_g": 30.0,
+    "fats_g": 6.0,
+    "fiber_g": 7.5,
+    "query": "chickpea salad"
+  },
+  "steamed_rice": {
+    "name": "Steamed White Rice (1 cup)",
+    "kcal": 205,
+    "protein_g": 4.3,
+    "carbs_g": 44.5,
+    "fats_g": 0.4,
+    "fiber_g": 0.6,
+    "query": "steamed white rice"
+  },
+  "broccoli": {
+    "name": "Steamed Broccoli",
+    "kcal": 55,
+    "protein_g": 3.7,
+    "carbs_g": 11.2,
+    "fats_g": 0.6,
+    "fiber_g": 5.1,
+    "query": "broccoli"
+  },
+  "spinach": {
+    "name": "Cooked Spinach",
+    "kcal": 41,
+    "protein_g": 5.3,
+    "carbs_g": 6.8,
+    "fats_g": 0.5,
+    "fiber_g": 4.3,
+    "query": "spinach"
+  },
+  "carrot": {
+    "name": "Carrots (1 cup)",
+    "kcal": 52,
+    "protein_g": 1.2,
+    "carbs_g": 12.3,
+    "fats_g": 0.3,
+    "fiber_g": 3.6,
+    "query": "carrot vegetable"
+  },
+  "cauliflower": {
+    "name": "Cauliflower",
+    "kcal": 29,
+    "protein_g": 2.3,
+    "carbs_g": 5.7,
+    "fats_g": 0.3,
+    "fiber_g": 2.5,
+    "query": "cauliflower"
+  },
+  "cabbage": {
+    "name": "Stir-Fried Cabbage",
+    "kcal": 44,
+    "protein_g": 2.0,
+    "carbs_g": 9.0,
+    "fats_g": 0.4,
+    "fiber_g": 3.5,
+    "query": "cabbage"
+  },
+  "okra_bhindi": {
+    "name": "Cooked Okra",
+    "kcal": 35,
+    "protein_g": 3.0,
+    "carbs_g": 7.2,
+    "fats_g": 0.3,
+    "fiber_g": 4.0,
+    "query": "okra vegetable"
+  },
+  "eggplant": {
+    "name": "Roasted Eggplant",
+    "kcal": 35,
+    "protein_g": 0.8,
+    "carbs_g": 8.7,
+    "fats_g": 0.2,
+    "fiber_g": 2.5,
+    "query": "eggplant"
+  },
+  "bell_pepper": {
+    "name": "Bell Pepper",
+    "kcal": 31,
+    "protein_g": 1.0,
+    "carbs_g": 6.0,
+    "fats_g": 0.3,
+    "fiber_g": 2.1,
+    "query": "bell pepper"
+  },
+  "tomato": {
+    "name": "Tomatoes (1 cup)",
+    "kcal": 32,
+    "protein_g": 1.6,
+    "carbs_g": 7.0,
+    "fats_g": 0.4,
+    "fiber_g": 2.2,
+    "query": "tomato"
+  },
+  "cucumber": {
+    "name": "Cucumber (1 cup)",
+    "kcal": 16,
+    "protein_g": 0.7,
+    "carbs_g": 3.8,
+    "fats_g": 0.1,
+    "fiber_g": 0.5,
+    "query": "cucumber"
+  },
+  "zucchini": {
+    "name": "Grilled Zucchini",
+    "kcal": 27,
+    "protein_g": 2.0,
+    "carbs_g": 4.8,
+    "fats_g": 0.5,
+    "fiber_g": 1.8,
+    "query": "zucchini"
+  },
+  "sweet_potato": {
+    "name": "Baked Sweet Potato",
+    "kcal": 103,
+    "protein_g": 2.3,
+    "carbs_g": 23.6,
+    "fats_g": 0.2,
+    "fiber_g": 3.8,
+    "query": "sweet potato"
+  },
+  "boiled_potato": {
+    "name": "Boiled Potato",
+    "kcal": 130,
+    "protein_g": 2.9,
+    "carbs_g": 30.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "boiled potato"
+  },
+  "mashed_potato": {
+    "name": "Mashed Potatoes",
+    "kcal": 214,
+    "protein_g": 4.0,
+    "carbs_g": 35.0,
+    "fats_g": 7.0,
+    "fiber_g": 3.2,
+    "query": "mashed potatoes"
+  },
+  "green_beans": {
+    "name": "Green Beans",
+    "kcal": 44,
+    "protein_g": 2.4,
+    "carbs_g": 9.9,
+    "fats_g": 0.4,
+    "fiber_g": 4.0,
+    "query": "green beans"
+  },
+  "green_peas": {
+    "name": "Green Peas (1 cup)",
+    "kcal": 134,
+    "protein_g": 8.6,
+    "carbs_g": 25.0,
+    "fats_g": 0.4,
+    "fiber_g": 8.8,
+    "query": "green peas"
+  },
+  "corn": {
+    "name": "Sweet Corn (1 cup)",
+    "kcal": 132,
+    "protein_g": 5.0,
+    "carbs_g": 29.0,
+    "fats_g": 1.8,
+    "fiber_g": 3.6,
+    "query": "sweet corn"
+  },
+  "mushrooms": {
+    "name": "Sauteed Mushrooms",
+    "kcal": 42,
+    "protein_g": 3.4,
+    "carbs_g": 5.2,
+    "fats_g": 0.8,
+    "fiber_g": 2.2,
+    "query": "mushrooms"
+  },
+  "asparagus": {
+    "name": "Grilled Asparagus",
+    "kcal": 40,
+    "protein_g": 4.3,
+    "carbs_g": 7.4,
+    "fats_g": 0.4,
+    "fiber_g": 3.6,
+    "query": "asparagus"
+  },
+  "beetroot": {
+    "name": "Boiled Beetroot",
+    "kcal": 75,
+    "protein_g": 2.9,
+    "carbs_g": 17.0,
+    "fats_g": 0.3,
+    "fiber_g": 3.4,
+    "query": "beetroot"
+  },
+  "radish": {
+    "name": "Radish",
+    "kcal": 19,
+    "protein_g": 0.8,
+    "carbs_g": 3.9,
+    "fats_g": 0.1,
+    "fiber_g": 1.9,
+    "query": "radish"
+  },
+  "turnip": {
+    "name": "Cooked Turnip",
+    "kcal": 34,
+    "protein_g": 1.1,
+    "carbs_g": 7.9,
+    "fats_g": 0.1,
+    "fiber_g": 3.1,
+    "query": "turnip"
+  },
+  "pumpkin": {
+    "name": "Roasted Pumpkin",
+    "kcal": 49,
+    "protein_g": 1.8,
+    "carbs_g": 12.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "pumpkin"
+  },
+  "bitter_gourd": {
+    "name": "Karela Fry",
+    "kcal": 95,
+    "protein_g": 2.0,
+    "carbs_g": 10.0,
+    "fats_g": 5.5,
+    "fiber_g": 3.8,
+    "query": "bitter gourd"
+  },
+  "bottle_gourd": {
+    "name": "Lauki Sabzi",
+    "kcal": 70,
+    "protein_g": 1.5,
+    "carbs_g": 9.0,
+    "fats_g": 3.2,
+    "fiber_g": 2.5,
+    "query": "bottle gourd"
+  },
+  "ridge_gourd": {
+    "name": "Turai Sabzi",
+    "kcal": 65,
+    "protein_g": 1.4,
+    "carbs_g": 8.5,
+    "fats_g": 3.0,
+    "fiber_g": 2.4,
+    "query": "ridge gourd"
+  },
+  "drumstick": {
+    "name": "Drumstick Curry",
+    "kcal": 90,
+    "protein_g": 3.0,
+    "carbs_g": 12.0,
+    "fats_g": 3.5,
+    "fiber_g": 4.0,
+    "query": "moringa drumstick"
+  },
+  "brussels_sprouts": {
+    "name": "Brussels Sprouts",
+    "kcal": 56,
+    "protein_g": 4.0,
+    "carbs_g": 11.1,
+    "fats_g": 0.8,
+    "fiber_g": 4.1,
+    "query": "brussels sprouts"
+  },
+  "kale": {
+    "name": "Kale Salad",
+    "kcal": 49,
+    "protein_g": 4.3,
+    "carbs_g": 8.8,
+    "fats_g": 0.9,
+    "fiber_g": 3.6,
+    "query": "kale"
+  },
+  "lettuce": {
+    "name": "Lettuce",
+    "kcal": 15,
+    "protein_g": 1.4,
+    "carbs_g": 2.9,
+    "fats_g": 0.2,
+    "fiber_g": 1.3,
+    "query": "lettuce"
+  },
+  "chicken_curry": {
+    "name": "Chicken Curry",
+    "kcal": 310,
+    "protein_g": 26.0,
+    "carbs_g": 9.0,
+    "fats_g": 19.0,
+    "fiber_g": 1.5,
+    "query": "chicken curry"
+  },
+  "roast_chicken": {
+    "name": "Roast Chicken",
+    "kcal": 270,
+    "protein_g": 31.0,
+    "carbs_g": 0.0,
+    "fats_g": 15.0,
+    "fiber_g": 0.0,
+    "query": "roast chicken"
+  },
+  "chicken_wings": {
+    "name": "Chicken Wings (4 pcs)",
+    "kcal": 360,
+    "protein_g": 24.0,
+    "carbs_g": 4.0,
+    "fats_g": 27.0,
+    "fiber_g": 0.2,
+    "query": "chicken wings"
+  },
+  "chicken_nuggets": {
+    "name": "Chicken Nuggets (6 pcs)",
+    "kcal": 280,
+    "protein_g": 15.0,
+    "carbs_g": 18.0,
+    "fats_g": 17.0,
+    "fiber_g": 1.0,
+    "query": "chicken nuggets"
+  },
+  "fried_chicken": {
+    "name": "Fried Chicken (1 pc)",
+    "kcal": 320,
+    "protein_g": 22.0,
+    "carbs_g": 11.0,
+    "fats_g": 21.0,
+    "fiber_g": 0.5,
+    "query": "fried chicken"
+  },
+  "chicken_kebab": {
+    "name": "Chicken Kebab",
+    "kcal": 250,
+    "protein_g": 28.0,
+    "carbs_g": 4.0,
+    "fats_g": 13.0,
+    "fiber_g": 0.8,
+    "query": "chicken kebab"
+  },
+  "mutton_curry": {
+    "name": "Mutton Curry",
+    "kcal": 360,
+    "protein_g": 25.0,
+    "carbs_g": 8.0,
+    "fats_g": 25.0,
+    "fiber_g": 1.5,
+    "query": "mutton curry"
+  },
+  "lamb_chops": {
+    "name": "Grilled Lamb Chops",
+    "kcal": 340,
+    "protein_g": 28.0,
+    "carbs_g": 0.0,
+    "fats_g": 25.0,
+    "fiber_g": 0.0,
+    "query": "lamb chops"
+  },
+  "beef_steak": {
+    "name": "Grilled Beef Steak",
+    "kcal": 330,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 20.0,
+    "fiber_g": 0.0,
+    "query": "beef steak"
+  },
+  "beef_burger_patty": {
+    "name": "Beef Patty",
+    "kcal": 290,
+    "protein_g": 24.0,
+    "carbs_g": 0.0,
+    "fats_g": 21.0,
+    "fiber_g": 0.0,
+    "query": "beef patty"
+  },
+  "pork_chops": {
+    "name": "Pork Chops",
+    "kcal": 295,
+    "protein_g": 29.0,
+    "carbs_g": 0.0,
+    "fats_g": 19.0,
+    "fiber_g": 0.0,
+    "query": "pork chops"
+  },
+  "bacon": {
+    "name": "Cooked Bacon (3 slices)",
+    "kcal": 160,
+    "protein_g": 11.0,
+    "carbs_g": 0.5,
+    "fats_g": 12.5,
+    "fiber_g": 0.0,
+    "query": "bacon"
+  },
+  "turkey_breast": {
+    "name": "Roasted Turkey Breast",
+    "kcal": 185,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 3.5,
+    "fiber_g": 0.0,
+    "query": "roast turkey"
+  },
+  "duck_roast": {
+    "name": "Roast Duck",
+    "kcal": 340,
+    "protein_g": 23.0,
+    "carbs_g": 0.0,
+    "fats_g": 28.0,
+    "fiber_g": 0.0,
+    "query": "roast duck"
+  },
+  "prawn_curry": {
+    "name": "Prawn Curry",
+    "kcal": 250,
+    "protein_g": 22.0,
+    "carbs_g": 8.0,
+    "fats_g": 14.0,
+    "fiber_g": 1.2,
+    "query": "prawn curry"
+  },
+  "garlic_shrimp": {
+    "name": "Garlic Butter Shrimp",
+    "kcal": 210,
+    "protein_g": 24.0,
+    "carbs_g": 2.0,
+    "fats_g": 11.0,
+    "fiber_g": 0.2,
+    "query": "garlic shrimp"
+  },
+  "fish_fry": {
+    "name": "Masala Fish Fry",
+    "kcal": 290,
+    "protein_g": 24.0,
+    "carbs_g": 8.0,
+    "fats_g": 18.0,
+    "fiber_g": 0.8,
+    "query": "fish fry"
+  },
+  "tuna_salad": {
+    "name": "Tuna Salad",
+    "kcal": 220,
+    "protein_g": 24.0,
+    "carbs_g": 4.0,
+    "fats_g": 12.0,
+    "fiber_g": 0.8,
+    "query": "tuna salad"
+  },
+  "crab_curry": {
+    "name": "Crab Masala",
+    "kcal": 240,
+    "protein_g": 22.0,
+    "carbs_g": 7.0,
+    "fats_g": 13.0,
+    "fiber_g": 1.0,
+    "query": "crab curry"
+  },
+  "keema_matar": {
+    "name": "Mutton Keema Matar",
+    "kcal": 350,
+    "protein_g": 24.0,
+    "carbs_g": 12.0,
+    "fats_g": 23.0,
+    "fiber_g": 3.5,
+    "query": "keema matar"
+  },
+  "chocolate_chip_cookie": {
+    "name": "Chocolate Chip Cookie (2 pcs)",
+    "kcal": 220,
+    "protein_g": 2.5,
+    "carbs_g": 30.0,
+    "fats_g": 11.0,
+    "fiber_g": 1.2,
+    "query": "chocolate chip cookie"
+  },
+  "oatmeal_cookie": {
+    "name": "Oatmeal Raisin Cookie (2 pcs)",
+    "kcal": 200,
+    "protein_g": 3.0,
+    "carbs_g": 30.0,
+    "fats_g": 8.0,
+    "fiber_g": 2.0,
+    "query": "oatmeal cookie"
+  },
+  "butter_cookie": {
+    "name": "Butter Cookies (3 pcs)",
+    "kcal": 190,
+    "protein_g": 2.2,
+    "carbs_g": 24.0,
+    "fats_g": 9.5,
+    "fiber_g": 0.5,
+    "query": "butter cookies"
+  },
+  "oreo_cookies": {
+    "name": "Cream Sandwich Cookies (3 pcs)",
+    "kcal": 160,
+    "protein_g": 1.5,
+    "carbs_g": 25.0,
+    "fats_g": 7.0,
+    "fiber_g": 1.0,
+    "query": "oreo cookies"
+  },
+  "digestive_biscuit": {
+    "name": "Digestive Biscuits (2 pcs)",
+    "kcal": 140,
+    "protein_g": 2.0,
+    "carbs_g": 20.0,
+    "fats_g": 6.0,
+    "fiber_g": 1.5,
+    "query": "digestive biscuit"
+  },
+  "marie_biscuit": {
+    "name": "Marie Biscuits (4 pcs)",
+    "kcal": 120,
+    "protein_g": 2.2,
+    "carbs_g": 22.0,
+    "fats_g": 2.5,
+    "fiber_g": 0.6,
+    "query": "marie biscuit"
+  },
+  "parle_g": {
+    "name": "Glucose Biscuits (5 pcs)",
+    "kcal": 135,
+    "protein_g": 2.0,
+    "carbs_g": 24.0,
+    "fats_g": 3.5,
+    "fiber_g": 0.5,
+    "query": "glucose biscuit"
+  },
+  "potato_chips": {
+    "name": "Potato Chips (28g)",
+    "kcal": 152,
+    "protein_g": 2.0,
+    "carbs_g": 15.0,
+    "fats_g": 10.0,
+    "fiber_g": 1.4,
+    "query": "potato chips"
+  },
+  "tortilla_chips": {
+    "name": "Tortilla Chips (28g)",
+    "kcal": 140,
+    "protein_g": 2.0,
+    "carbs_g": 19.0,
+    "fats_g": 7.0,
+    "fiber_g": 1.5,
+    "query": "tortilla chips"
+  },
+  "popcorn": {
+    "name": "Popcorn (3 cups)",
+    "kcal": 110,
+    "protein_g": 3.0,
+    "carbs_g": 19.0,
+    "fats_g": 3.0,
+    "fiber_g": 3.5,
+    "query": "popcorn"
+  },
+  "pretzels": {
+    "name": "Pretzels (28g)",
+    "kcal": 108,
+    "protein_g": 2.8,
+    "carbs_g": 22.5,
+    "fats_g": 0.8,
+    "fiber_g": 0.9,
+    "query": "pretzels"
+  },
+  "murukku": {
+    "name": "Murukku / Chakli (2 pcs)",
+    "kcal": 180,
+    "protein_g": 3.5,
+    "carbs_g": 22.0,
+    "fats_g": 9.0,
+    "fiber_g": 1.5,
+    "query": "murukku"
+  },
+  "khakhra": {
+    "name": "Methi Khakhra (2 pcs)",
+    "kcal": 130,
+    "protein_g": 3.5,
+    "carbs_g": 20.0,
+    "fats_g": 4.0,
+    "fiber_g": 2.5,
+    "query": "khakhra"
+  },
+  "makhana": {
+    "name": "Roasted Makhana (1 cup)",
+    "kcal": 105,
+    "protein_g": 3.0,
+    "carbs_g": 20.0,
+    "fats_g": 1.5,
+    "fiber_g": 2.0,
+    "query": "roasted makhana"
+  },
+  "roasted_chana": {
+    "name": "Roasted Chana (30g)",
+    "kcal": 110,
+    "protein_g": 6.5,
+    "carbs_g": 18.0,
+    "fats_g": 1.5,
+    "fiber_g": 4.5,
+    "query": "roasted chana"
+  },
+  "granola_bar": {
+    "name": "Granola Bar",
+    "kcal": 190,
+    "protein_g": 4.0,
+    "carbs_g": 29.0,
+    "fats_g": 7.0,
+    "fiber_g": 2.5,
+    "query": "granola bar"
+  },
+  "protein_bar": {
+    "name": "Protein Bar",
+    "kcal": 210,
+    "protein_g": 20.0,
+    "carbs_g": 22.0,
+    "fats_g": 7.0,
+    "fiber_g": 3.0,
+    "query": "protein bar"
+  },
+  "dark_chocolate": {
+    "name": "Dark Chocolate (30g)",
+    "kcal": 170,
+    "protein_g": 2.2,
+    "carbs_g": 13.0,
+    "fats_g": 12.0,
+    "fiber_g": 3.1,
+    "query": "dark chocolate"
+  },
+  "trail_mix": {
+    "name": "Trail Mix (30g)",
+    "kcal": 150,
+    "protein_g": 4.5,
+    "carbs_g": 13.0,
+    "fats_g": 9.5,
+    "fiber_g": 2.0,
+    "query": "trail mix"
+  },
+  "nachos_cheese": {
+    "name": "Nachos with Cheese",
+    "kcal": 340,
+    "protein_g": 9.0,
+    "carbs_g": 36.0,
+    "fats_g": 19.0,
+    "fiber_g": 3.0,
+    "query": "nachos"
+  },
+  "grilled_idli_sambar": {
+    "name": "Grilled Idli Sambar",
+    "kcal": 166,
+    "protein_g": 6.0,
+    "carbs_g": 31.3,
+    "fats_g": 1.8,
+    "fiber_g": 3.5,
+    "query": "grilled idli sambar"
+  },
+  "grilled_masala_dosa": {
+    "name": "Grilled Masala Dosa",
+    "kcal": 354,
+    "protein_g": 8.0,
+    "carbs_g": 49.7,
+    "fats_g": 13.8,
+    "fiber_g": 4.2,
+    "query": "grilled masala dosa"
+  },
+  "grilled_plain_dosa": {
+    "name": "Grilled Plain Dosa",
+    "kcal": 155,
+    "protein_g": 4.0,
+    "carbs_g": 25.8,
+    "fats_g": 3.7,
+    "fiber_g": 1.8,
+    "query": "grilled dosa south indian"
+  },
+  "grilled_medu_vada": {
+    "name": "Grilled Medu Vada",
+    "kcal": 221,
+    "protein_g": 6.5,
+    "carbs_g": 23.9,
+    "fats_g": 11.0,
+    "fiber_g": 2.5,
+    "query": "grilled medu vada"
+  },
+  "grilled_upma": {
+    "name": "Grilled Rava Upma",
+    "kcal": 193,
+    "protein_g": 5.5,
+    "carbs_g": 32.2,
+    "fats_g": 5.1,
+    "fiber_g": 2.4,
+    "query": "grilled upma indian food"
+  },
+  "grilled_poha": {
+    "name": "Grilled Kanda Poha",
+    "kcal": 230,
+    "protein_g": 5.0,
+    "carbs_g": 40.5,
+    "fats_g": 5.5,
+    "fiber_g": 3.0,
+    "query": "grilled poha indian breakfast"
+  },
+  "grilled_pongal": {
+    "name": "Grilled Ven Pongal",
+    "kcal": 267,
+    "protein_g": 7.5,
+    "carbs_g": 38.6,
+    "fats_g": 9.2,
+    "fiber_g": 2.2,
+    "query": "grilled ven pongal"
+  },
+  "grilled_uttapam": {
+    "name": "Grilled Onion Uttapam",
+    "kcal": 212,
+    "protein_g": 6.0,
+    "carbs_g": 35.0,
+    "fats_g": 5.1,
+    "fiber_g": 2.8,
+    "query": "grilled uttapam"
+  },
+  "grilled_aloo_paratha": {
+    "name": "Grilled Aloo Paratha",
+    "kcal": 285,
+    "protein_g": 6.5,
+    "carbs_g": 41.4,
+    "fats_g": 10.6,
+    "fiber_g": 3.5,
+    "query": "grilled aloo paratha"
+  },
+  "grilled_paneer_paratha": {
+    "name": "Grilled Paneer Paratha",
+    "kcal": 317,
+    "protein_g": 12.0,
+    "carbs_g": 36.8,
+    "fats_g": 13.8,
+    "fiber_g": 2.8,
+    "query": "grilled paneer paratha"
+  },
+  "grilled_chole_bhature": {
+    "name": "Grilled Chole Bhature",
+    "kcal": 478,
+    "protein_g": 14.0,
+    "carbs_g": 62.6,
+    "fats_g": 19.3,
+    "fiber_g": 7.0,
+    "query": "grilled chole bhature"
+  },
+  "grilled_pav_bhaji": {
+    "name": "Grilled Pav Bhaji",
+    "kcal": 377,
+    "protein_g": 10.0,
+    "carbs_g": 51.5,
+    "fats_g": 14.7,
+    "fiber_g": 5.5,
+    "query": "grilled pav bhaji"
+  },
+  "grilled_rajma_chawal": {
+    "name": "Grilled Rajma Chawal",
+    "kcal": 359,
+    "protein_g": 13.0,
+    "carbs_g": 62.6,
+    "fats_g": 6.0,
+    "fiber_g": 8.5,
+    "query": "grilled rajma chawal"
+  },
+  "grilled_dal_tadka": {
+    "name": "Grilled Dal Tadka",
+    "kcal": 202,
+    "protein_g": 11.0,
+    "carbs_g": 25.8,
+    "fats_g": 6.4,
+    "fiber_g": 5.5,
+    "query": "grilled dal tadka"
+  },
+  "grilled_dal_makhani": {
+    "name": "Grilled Dal Makhani",
+    "kcal": 304,
+    "protein_g": 12.0,
+    "carbs_g": 29.4,
+    "fats_g": 15.6,
+    "fiber_g": 6.0,
+    "query": "grilled dal makhani"
+  },
+  "grilled_paneer_butter_masala": {
+    "name": "Grilled Paneer Butter Masala",
+    "kcal": 350,
+    "protein_g": 14.0,
+    "carbs_g": 14.7,
+    "fats_g": 26.7,
+    "fiber_g": 2.2,
+    "query": "grilled paneer butter masala"
+  },
+  "grilled_palak_paneer": {
+    "name": "Grilled Palak Paneer",
+    "kcal": 258,
+    "protein_g": 14.5,
+    "carbs_g": 11.0,
+    "fats_g": 17.5,
+    "fiber_g": 4.5,
+    "query": "grilled palak paneer"
+  },
+  "grilled_kadai_paneer": {
+    "name": "Grilled Kadai Paneer",
+    "kcal": 285,
+    "protein_g": 14.0,
+    "carbs_g": 12.9,
+    "fats_g": 20.2,
+    "fiber_g": 3.0,
+    "query": "grilled kadai paneer"
+  },
+  "grilled_butter_chicken": {
+    "name": "Grilled Butter Chicken",
+    "kcal": 377,
+    "protein_g": 26.0,
+    "carbs_g": 12.9,
+    "fats_g": 25.8,
+    "fiber_g": 1.8,
+    "query": "grilled butter chicken"
+  },
+  "grilled_chicken_tikka_masala": {
+    "name": "Grilled Chicken Tikka Masala",
+    "kcal": 340,
+    "protein_g": 25.0,
+    "carbs_g": 13.8,
+    "fats_g": 21.2,
+    "fiber_g": 2.0,
+    "query": "grilled chicken tikka masala"
+  },
+  "grilled_tandoori_chicken": {
+    "name": "Grilled Tandoori Chicken",
+    "kcal": 239,
+    "protein_g": 29.0,
+    "carbs_g": 3.7,
+    "fats_g": 12.9,
+    "fiber_g": 0.5,
+    "query": "grilled tandoori chicken"
+  },
+  "grilled_chicken_biryani": {
+    "name": "Grilled Chicken Biryani",
+    "kcal": 414,
+    "protein_g": 24.0,
+    "carbs_g": 47.8,
+    "fats_g": 14.7,
+    "fiber_g": 2.5,
+    "query": "grilled chicken biryani"
+  },
+  "grilled_mutton_biryani": {
+    "name": "Grilled Mutton Biryani",
+    "kcal": 455,
+    "protein_g": 25.0,
+    "carbs_g": 46.0,
+    "fats_g": 19.3,
+    "fiber_g": 2.2,
+    "query": "grilled mutton biryani"
+  },
+  "grilled_veg_biryani": {
+    "name": "Grilled Veg Biryani",
+    "kcal": 313,
+    "protein_g": 8.0,
+    "carbs_g": 49.7,
+    "fats_g": 9.2,
+    "fiber_g": 4.5,
+    "query": "grilled vegetable biryani"
+  },
+  "grilled_jeera_rice": {
+    "name": "Grilled Jeera Rice",
+    "kcal": 212,
+    "protein_g": 4.5,
+    "carbs_g": 38.6,
+    "fats_g": 4.6,
+    "fiber_g": 1.0,
+    "query": "grilled jeera rice"
+  },
+  "grilled_curd_rice": {
+    "name": "Grilled Curd Rice",
+    "kcal": 221,
+    "protein_g": 6.5,
+    "carbs_g": 35.0,
+    "fats_g": 6.0,
+    "fiber_g": 0.8,
+    "query": "grilled curd rice"
+  },
+  "grilled_lemon_rice": {
+    "name": "Grilled Lemon Rice",
+    "kcal": 244,
+    "protein_g": 5.0,
+    "carbs_g": 40.5,
+    "fats_g": 6.9,
+    "fiber_g": 1.8,
+    "query": "grilled lemon rice"
+  },
+  "grilled_roti_chapati": {
+    "name": "Grilled Whole Wheat Roti",
+    "kcal": 97,
+    "protein_g": 3.5,
+    "carbs_g": 19.3,
+    "fats_g": 0.7,
+    "fiber_g": 3.0,
+    "query": "grilled chapati roti"
+  },
+  "grilled_garlic_naan": {
+    "name": "Grilled Garlic Naan",
+    "kcal": 239,
+    "protein_g": 7.0,
+    "carbs_g": 38.6,
+    "fats_g": 6.4,
+    "fiber_g": 2.0,
+    "query": "grilled garlic naan"
+  },
+  "grilled_samosa": {
+    "name": "Grilled Samosa (1 pc)",
+    "kcal": 239,
+    "protein_g": 5.0,
+    "carbs_g": 29.4,
+    "fats_g": 12.0,
+    "fiber_g": 3.0,
+    "query": "grilled samosa"
+  },
+  "grilled_pakora": {
+    "name": "Grilled Onion Pakora",
+    "kcal": 258,
+    "protein_g": 6.0,
+    "carbs_g": 25.8,
+    "fats_g": 14.7,
+    "fiber_g": 3.5,
+    "query": "grilled pakora"
+  },
+  "grilled_pani_puri": {
+    "name": "Grilled Pani Puri (6 pcs)",
+    "kcal": 193,
+    "protein_g": 4.5,
+    "carbs_g": 33.1,
+    "fats_g": 5.1,
+    "fiber_g": 3.2,
+    "query": "grilled pani puri"
+  },
+  "grilled_bhel_puri": {
+    "name": "Grilled Bhel Puri",
+    "kcal": 221,
+    "protein_g": 5.5,
+    "carbs_g": 36.8,
+    "fats_g": 6.0,
+    "fiber_g": 3.8,
+    "query": "grilled bhel puri"
+  },
+  "grilled_dhokla": {
+    "name": "Grilled Khaman Dhokla",
+    "kcal": 161,
+    "protein_g": 6.5,
+    "carbs_g": 25.8,
+    "fats_g": 3.7,
+    "fiber_g": 2.5,
+    "query": "grilled dhokla"
+  },
+  "grilled_vada_pav": {
+    "name": "Grilled Vada Pav",
+    "kcal": 267,
+    "protein_g": 6.0,
+    "carbs_g": 38.6,
+    "fats_g": 10.1,
+    "fiber_g": 3.0,
+    "query": "grilled vada pav"
+  },
+  "grilled_gulab_jamun": {
+    "name": "Grilled Gulab Jamun (2 pcs)",
+    "kcal": 294,
+    "protein_g": 4.0,
+    "carbs_g": 47.8,
+    "fats_g": 10.1,
+    "fiber_g": 0.5,
+    "query": "grilled gulab jamun"
+  },
+  "grilled_jalebi": {
+    "name": "Grilled Jalebi",
+    "kcal": 276,
+    "protein_g": 2.5,
+    "carbs_g": 49.7,
+    "fats_g": 7.8,
+    "fiber_g": 0.4,
+    "query": "grilled jalebi"
+  },
+  "grilled_rasgulla": {
+    "name": "Grilled Rasgulla (2 pcs)",
+    "kcal": 171,
+    "protein_g": 4.0,
+    "carbs_g": 35.0,
+    "fats_g": 1.7,
+    "fiber_g": 0.2,
+    "query": "grilled rasgulla"
+  },
+  "grilled_kheer": {
+    "name": "Grilled Rice Kheer",
+    "kcal": 212,
+    "protein_g": 6.0,
+    "carbs_g": 33.1,
+    "fats_g": 6.4,
+    "fiber_g": 0.5,
+    "query": "grilled rice kheer"
+  },
+  "grilled_boiled_eggs": {
+    "name": "Grilled Boiled Eggs (2 pcs)",
+    "kcal": 143,
+    "protein_g": 12.6,
+    "carbs_g": 1.0,
+    "fats_g": 9.8,
+    "fiber_g": 0.0,
+    "query": "grilled boiled egg"
+  },
+  "grilled_omelette": {
+    "name": "Grilled Masala Omelette (2 eggs)",
+    "kcal": 179,
+    "protein_g": 13.0,
+    "carbs_g": 2.8,
+    "fats_g": 13.3,
+    "fiber_g": 0.6,
+    "query": "grilled omelette"
+  },
+  "grilled_scrambled_eggs": {
+    "name": "Grilled Scrambled Eggs",
+    "kcal": 184,
+    "protein_g": 13.5,
+    "carbs_g": 2.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "grilled scrambled eggs"
+  },
+  "grilled_fried_egg": {
+    "name": "Grilled Fried Egg",
+    "kcal": 83,
+    "protein_g": 6.3,
+    "carbs_g": 0.4,
+    "fats_g": 6.4,
+    "fiber_g": 0.0,
+    "query": "grilled fried egg"
+  },
+  "grilled_banana": {
+    "name": "Grilled Banana (1 medium)",
+    "kcal": 97,
+    "protein_g": 1.3,
+    "carbs_g": 24.8,
+    "fats_g": 0.4,
+    "fiber_g": 3.1,
+    "query": "grilled banana fruit"
+  },
+  "grilled_apple": {
+    "name": "Grilled Apple (1 medium)",
+    "kcal": 87,
+    "protein_g": 0.5,
+    "carbs_g": 23.0,
+    "fats_g": 0.3,
+    "fiber_g": 4.4,
+    "query": "grilled red apple fruit"
+  },
+  "grilled_mango": {
+    "name": "Grilled Mango (1 cup)",
+    "kcal": 91,
+    "protein_g": 1.4,
+    "carbs_g": 23.0,
+    "fats_g": 0.6,
+    "fiber_g": 2.6,
+    "query": "grilled mango fruit"
+  },
+  "grilled_orange": {
+    "name": "Grilled Orange (1 medium)",
+    "kcal": 57,
+    "protein_g": 1.2,
+    "carbs_g": 14.2,
+    "fats_g": 0.2,
+    "fiber_g": 3.1,
+    "query": "grilled orange fruit"
+  },
+  "grilled_watermelon": {
+    "name": "Grilled Watermelon (1 cup)",
+    "kcal": 42,
+    "protein_g": 0.9,
+    "carbs_g": 10.6,
+    "fats_g": 0.2,
+    "fiber_g": 0.6,
+    "query": "grilled watermelon"
+  },
+  "grilled_papaya": {
+    "name": "Grilled Papaya (1 cup)",
+    "kcal": 57,
+    "protein_g": 0.7,
+    "carbs_g": 14.4,
+    "fats_g": 0.4,
+    "fiber_g": 2.5,
+    "query": "grilled papaya fruit"
+  },
+  "grilled_grapes": {
+    "name": "Grilled Grapes (1 cup)",
+    "kcal": 96,
+    "protein_g": 1.1,
+    "carbs_g": 25.1,
+    "fats_g": 0.2,
+    "fiber_g": 1.4,
+    "query": "grilled grapes fruit"
+  },
+  "grilled_strawberry": {
+    "name": "Grilled Strawberries (1 cup)",
+    "kcal": 45,
+    "protein_g": 1.0,
+    "carbs_g": 10.8,
+    "fats_g": 0.5,
+    "fiber_g": 3.0,
+    "query": "grilled strawberries"
+  },
+  "grilled_pineapple": {
+    "name": "Grilled Pineapple (1 cup)",
+    "kcal": 75,
+    "protein_g": 0.9,
+    "carbs_g": 19.9,
+    "fats_g": 0.2,
+    "fiber_g": 2.3,
+    "query": "grilled pineapple fruit"
+  },
+  "grilled_pomegranate": {
+    "name": "Grilled Pomegranate (1 cup)",
+    "kcal": 132,
+    "protein_g": 2.9,
+    "carbs_g": 29.9,
+    "fats_g": 1.8,
+    "fiber_g": 7.0,
+    "query": "grilled pomegranate"
+  },
+  "grilled_avocado": {
+    "name": "Grilled Avocado (half)",
+    "kcal": 147,
+    "protein_g": 2.0,
+    "carbs_g": 7.8,
+    "fats_g": 13.5,
+    "fiber_g": 6.7,
+    "query": "grilled avocado"
+  },
+  "grilled_oatmeal": {
+    "name": "Grilled Oatmeal Bowl",
+    "kcal": 145,
+    "protein_g": 6.0,
+    "carbs_g": 24.8,
+    "fats_g": 2.9,
+    "fiber_g": 4.0,
+    "query": "grilled oatmeal bowl"
+  },
+  "grilled_greek_yogurt": {
+    "name": "Grilled Greek Yogurt",
+    "kcal": 120,
+    "protein_g": 15.0,
+    "carbs_g": 6.4,
+    "fats_g": 3.7,
+    "fiber_g": 0.0,
+    "query": "grilled greek yogurt"
+  },
+  "grilled_paneer_tikka": {
+    "name": "Grilled Paneer Tikka",
+    "kcal": 267,
+    "protein_g": 18.0,
+    "carbs_g": 9.2,
+    "fats_g": 18.4,
+    "fiber_g": 2.0,
+    "query": "grilled paneer tikka"
+  },
+  "grilled_grilled_chicken": {
+    "name": "Grilled Grilled Chicken Breast",
+    "kcal": 212,
+    "protein_g": 42.0,
+    "carbs_g": 0.0,
+    "fats_g": 4.6,
+    "fiber_g": 0.0,
+    "query": "grilled grilled chicken breast"
+  },
+  "grilled_grilled_salmon": {
+    "name": "Grilled Grilled Salmon",
+    "kcal": 258,
+    "protein_g": 34.0,
+    "carbs_g": 0.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "grilled grilled salmon"
+  },
+  "grilled_fish_curry": {
+    "name": "Grilled Indian Fish Curry",
+    "kcal": 253,
+    "protein_g": 22.0,
+    "carbs_g": 8.3,
+    "fats_g": 15.6,
+    "fiber_g": 1.8,
+    "query": "grilled fish curry"
+  },
+  "grilled_egg_curry": {
+    "name": "Grilled Egg Curry",
+    "kcal": 244,
+    "protein_g": 14.0,
+    "carbs_g": 10.1,
+    "fats_g": 16.6,
+    "fiber_g": 2.0,
+    "query": "grilled egg curry"
+  },
+  "grilled_chana_masala": {
+    "name": "Grilled Chana Masala",
+    "kcal": 221,
+    "protein_g": 10.0,
+    "carbs_g": 31.3,
+    "fats_g": 6.4,
+    "fiber_g": 8.0,
+    "query": "grilled chana masala"
+  },
+  "grilled_aloo_gobi": {
+    "name": "Grilled Aloo Gobi",
+    "kcal": 179,
+    "protein_g": 4.5,
+    "carbs_g": 23.9,
+    "fats_g": 7.4,
+    "fiber_g": 4.5,
+    "query": "grilled aloo gobi"
+  },
+  "grilled_bhindi_masala": {
+    "name": "Grilled Bhindi Masala",
+    "kcal": 156,
+    "protein_g": 3.5,
+    "carbs_g": 14.7,
+    "fats_g": 9.2,
+    "fiber_g": 4.8,
+    "query": "grilled bhindi masala"
+  },
+  "grilled_baingan_bharta": {
+    "name": "Grilled Baingan Bharta",
+    "kcal": 166,
+    "protein_g": 3.0,
+    "carbs_g": 13.8,
+    "fats_g": 11.0,
+    "fiber_g": 5.0,
+    "query": "grilled baingan bharta"
+  },
+  "grilled_palak_dal": {
+    "name": "Grilled Palak Dal",
+    "kcal": 175,
+    "protein_g": 10.0,
+    "carbs_g": 23.0,
+    "fats_g": 5.1,
+    "fiber_g": 5.2,
+    "query": "grilled palak dal"
+  },
+  "grilled_khichdi": {
+    "name": "Grilled Moong Dal Khichdi",
+    "kcal": 239,
+    "protein_g": 9.5,
+    "carbs_g": 40.5,
+    "fats_g": 4.6,
+    "fiber_g": 4.0,
+    "query": "grilled khichdi"
+  },
+  "grilled_pizza": {
+    "name": "Grilled Pizza Slice (Cheese/Margherita)",
+    "kcal": 262,
+    "protein_g": 12.0,
+    "carbs_g": 33.1,
+    "fats_g": 9.2,
+    "fiber_g": 2.5,
+    "query": "grilled margherita pizza"
+  },
+  "grilled_burger": {
+    "name": "Grilled Burger",
+    "kcal": 405,
+    "protein_g": 22.0,
+    "carbs_g": 36.8,
+    "fats_g": 19.3,
+    "fiber_g": 2.5,
+    "query": "grilled hamburger"
+  },
+  "grilled_french_fries": {
+    "name": "Grilled French Fries",
+    "kcal": 287,
+    "protein_g": 3.4,
+    "carbs_g": 37.7,
+    "fats_g": 13.8,
+    "fiber_g": 3.8,
+    "query": "grilled french fries"
+  },
+  "grilled_pasta": {
+    "name": "Grilled Pasta (Tomato/Red Sauce)",
+    "kcal": 294,
+    "protein_g": 11.0,
+    "carbs_g": 49.7,
+    "fats_g": 6.0,
+    "fiber_g": 3.5,
+    "query": "grilled spaghetti tomato sauce"
+  },
+  "grilled_mac_and_cheese": {
+    "name": "Grilled Mac and Cheese",
+    "kcal": 340,
+    "protein_g": 14.0,
+    "carbs_g": 38.6,
+    "fats_g": 14.7,
+    "fiber_g": 1.8,
+    "query": "grilled macaroni and cheese"
+  },
+  "grilled_sandwich": {
+    "name": "Grilled Grilled Sandwich",
+    "kcal": 285,
+    "protein_g": 12.0,
+    "carbs_g": 35.0,
+    "fats_g": 11.0,
+    "fiber_g": 3.0,
+    "query": "grilled grilled cheese sandwich"
+  },
+  "grilled_caesar_salad": {
+    "name": "Grilled Caesar Salad",
+    "kcal": 221,
+    "protein_g": 10.0,
+    "carbs_g": 12.9,
+    "fats_g": 14.7,
+    "fiber_g": 3.2,
+    "query": "grilled caesar salad"
+  },
+  "grilled_greek_salad": {
+    "name": "Grilled Greek Salad",
+    "kcal": 175,
+    "protein_g": 6.0,
+    "carbs_g": 11.0,
+    "fats_g": 12.9,
+    "fiber_g": 3.5,
+    "query": "grilled greek salad"
+  },
+  "grilled_fried_rice": {
+    "name": "Grilled Veg Fried Rice",
+    "kcal": 304,
+    "protein_g": 7.5,
+    "carbs_g": 49.7,
+    "fats_g": 8.7,
+    "fiber_g": 2.8,
+    "query": "grilled fried rice"
+  },
+  "grilled_hakka_noodles": {
+    "name": "Grilled Hakka Noodles",
+    "kcal": 322,
+    "protein_g": 8.0,
+    "carbs_g": 51.5,
+    "fats_g": 9.7,
+    "fiber_g": 3.0,
+    "query": "grilled chow mein noodles"
+  },
+  "grilled_momos": {
+    "name": "Grilled Steamed Momos (6 pcs)",
+    "kcal": 221,
+    "protein_g": 9.0,
+    "carbs_g": 33.1,
+    "fats_g": 6.0,
+    "fiber_g": 2.0,
+    "query": "grilled momos dumplings"
+  },
+  "grilled_spring_rolls": {
+    "name": "Grilled Spring Rolls (2 pcs)",
+    "kcal": 202,
+    "protein_g": 5.0,
+    "carbs_g": 25.8,
+    "fats_g": 9.2,
+    "fiber_g": 2.2,
+    "query": "grilled spring rolls"
+  },
+  "grilled_sushi": {
+    "name": "Grilled Sushi Rolls (6 pcs)",
+    "kcal": 230,
+    "protein_g": 11.0,
+    "carbs_g": 38.6,
+    "fats_g": 4.1,
+    "fiber_g": 2.0,
+    "query": "grilled sushi roll"
+  },
+  "grilled_ramen": {
+    "name": "Grilled Ramen Noodle Bowl",
+    "kcal": 396,
+    "protein_g": 18.0,
+    "carbs_g": 51.5,
+    "fats_g": 13.8,
+    "fiber_g": 3.0,
+    "query": "grilled ramen"
+  },
+  "grilled_tacos": {
+    "name": "Grilled Tacos (2 pcs)",
+    "kcal": 313,
+    "protein_g": 16.0,
+    "carbs_g": 31.3,
+    "fats_g": 13.8,
+    "fiber_g": 4.5,
+    "query": "grilled tacos"
+  },
+  "grilled_burrito": {
+    "name": "Grilled Burrito",
+    "kcal": 442,
+    "protein_g": 22.0,
+    "carbs_g": 55.2,
+    "fats_g": 15.6,
+    "fiber_g": 7.0,
+    "query": "grilled burrito"
+  },
+  "grilled_pancakes": {
+    "name": "Grilled Pancakes (2 pcs)",
+    "kcal": 239,
+    "protein_g": 7.0,
+    "carbs_g": 38.6,
+    "fats_g": 6.4,
+    "fiber_g": 1.5,
+    "query": "grilled pancakes"
+  },
+  "grilled_waffles": {
+    "name": "Grilled Waffles",
+    "kcal": 267,
+    "protein_g": 7.5,
+    "carbs_g": 36.8,
+    "fats_g": 10.1,
+    "fiber_g": 1.5,
+    "query": "grilled waffles"
+  },
+  "grilled_donut": {
+    "name": "Grilled Glazed Donut",
+    "kcal": 239,
+    "protein_g": 3.5,
+    "carbs_g": 28.5,
+    "fats_g": 12.9,
+    "fiber_g": 0.8,
+    "query": "grilled glazed doughnut"
+  },
+  "grilled_chocolate_cake": {
+    "name": "Grilled Chocolate Cake Slice",
+    "kcal": 322,
+    "protein_g": 4.5,
+    "carbs_g": 46.0,
+    "fats_g": 13.8,
+    "fiber_g": 2.5,
+    "query": "grilled chocolate cake"
+  },
+  "grilled_ice_cream": {
+    "name": "Grilled Ice Cream (1 scoop)",
+    "kcal": 190,
+    "protein_g": 3.5,
+    "carbs_g": 22.1,
+    "fats_g": 10.1,
+    "fiber_g": 0.7,
+    "query": "grilled ice cream scoop"
+  },
+  "grilled_cheesecake": {
+    "name": "Grilled Cheesecake Slice",
+    "kcal": 350,
+    "protein_g": 6.5,
+    "carbs_g": 29.4,
+    "fats_g": 23.0,
+    "fiber_g": 0.5,
+    "query": "grilled cheesecake"
+  },
+  "grilled_almonds": {
+    "name": "Grilled Almonds (28g / ~23 nuts)",
+    "kcal": 151,
+    "protein_g": 6.0,
+    "carbs_g": 5.6,
+    "fats_g": 13.1,
+    "fiber_g": 3.5,
+    "query": "grilled almonds"
+  },
+  "grilled_peanuts": {
+    "name": "Grilled Roasted Peanuts (28g)",
+    "kcal": 153,
+    "protein_g": 6.9,
+    "carbs_g": 5.5,
+    "fats_g": 12.9,
+    "fiber_g": 2.4,
+    "query": "grilled peanuts"
+  },
+  "grilled_peanut_butter_toast": {
+    "name": "Grilled Peanut Butter Toast",
+    "kcal": 248,
+    "protein_g": 10.0,
+    "carbs_g": 23.9,
+    "fats_g": 13.8,
+    "fiber_g": 3.5,
+    "query": "grilled peanut butter toast"
+  },
+  "grilled_protein_shake": {
+    "name": "Grilled Protein Shake",
+    "kcal": 147,
+    "protein_g": 25.0,
+    "carbs_g": 5.5,
+    "fats_g": 2.8,
+    "fiber_g": 1.0,
+    "query": "grilled protein shake"
+  },
+  "grilled_smoothie_bowl": {
+    "name": "Grilled Fruit Smoothie Bowl",
+    "kcal": 258,
+    "protein_g": 7.0,
+    "carbs_g": 47.8,
+    "fats_g": 5.1,
+    "fiber_g": 6.0,
+    "query": "grilled smoothie bowl"
+  },
+  "grilled_masala_chai": {
+    "name": "Grilled Masala Chai (1 cup)",
+    "kcal": 78,
+    "protein_g": 2.5,
+    "carbs_g": 11.0,
+    "fats_g": 2.8,
+    "fiber_g": 0.0,
+    "query": "grilled masala chai"
+  },
+  "grilled_coffee": {
+    "name": "Grilled Milk Coffee (1 cup)",
+    "kcal": 87,
+    "protein_g": 3.5,
+    "carbs_g": 10.1,
+    "fats_g": 3.7,
+    "fiber_g": 0.0,
+    "query": "grilled latte coffee"
+  },
+  "grilled_lassi": {
+    "name": "Grilled Sweet Lassi (1 glass)",
+    "kcal": 193,
+    "protein_g": 6.5,
+    "carbs_g": 29.4,
+    "fats_g": 5.5,
+    "fiber_g": 0.0,
+    "query": "grilled mango lassi"
+  },
+  "grilled_sprouts_salad": {
+    "name": "Grilled Moong Sprouts Salad",
+    "kcal": 129,
+    "protein_g": 10.0,
+    "carbs_g": 20.2,
+    "fats_g": 1.4,
+    "fiber_g": 6.5,
+    "query": "grilled mung bean sprouts salad"
+  },
+  "grilled_chickpea_salad": {
+    "name": "Grilled Chickpea Salad",
+    "kcal": 193,
+    "protein_g": 9.0,
+    "carbs_g": 27.6,
+    "fats_g": 5.5,
+    "fiber_g": 7.5,
+    "query": "grilled chickpea salad"
+  },
+  "grilled_steamed_rice": {
+    "name": "Grilled Steamed White Rice (1 cup)",
+    "kcal": 189,
+    "protein_g": 4.3,
+    "carbs_g": 40.9,
+    "fats_g": 0.4,
+    "fiber_g": 0.6,
+    "query": "grilled steamed white rice"
+  },
+  "grilled_broccoli": {
+    "name": "Grilled Steamed Broccoli",
+    "kcal": 51,
+    "protein_g": 3.7,
+    "carbs_g": 10.3,
+    "fats_g": 0.6,
+    "fiber_g": 5.1,
+    "query": "grilled broccoli"
+  },
+  "grilled_spinach": {
+    "name": "Grilled Cooked Spinach",
+    "kcal": 38,
+    "protein_g": 5.3,
+    "carbs_g": 6.3,
+    "fats_g": 0.5,
+    "fiber_g": 4.3,
+    "query": "grilled spinach"
+  },
+  "grilled_carrot": {
+    "name": "Grilled Carrots (1 cup)",
+    "kcal": 48,
+    "protein_g": 1.2,
+    "carbs_g": 11.3,
+    "fats_g": 0.3,
+    "fiber_g": 3.6,
+    "query": "grilled carrot vegetable"
+  },
+  "grilled_cauliflower": {
+    "name": "Grilled Cauliflower",
+    "kcal": 27,
+    "protein_g": 2.3,
+    "carbs_g": 5.2,
+    "fats_g": 0.3,
+    "fiber_g": 2.5,
+    "query": "grilled cauliflower"
+  },
+  "grilled_cabbage": {
+    "name": "Grilled Stir-Fried Cabbage",
+    "kcal": 40,
+    "protein_g": 2.0,
+    "carbs_g": 8.3,
+    "fats_g": 0.4,
+    "fiber_g": 3.5,
+    "query": "grilled cabbage"
+  },
+  "grilled_okra_bhindi": {
+    "name": "Grilled Cooked Okra",
+    "kcal": 32,
+    "protein_g": 3.0,
+    "carbs_g": 6.6,
+    "fats_g": 0.3,
+    "fiber_g": 4.0,
+    "query": "grilled okra vegetable"
+  },
+  "grilled_eggplant": {
+    "name": "Grilled Roasted Eggplant",
+    "kcal": 32,
+    "protein_g": 0.8,
+    "carbs_g": 8.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.5,
+    "query": "grilled eggplant"
+  },
+  "grilled_bell_pepper": {
+    "name": "Grilled Bell Pepper",
+    "kcal": 29,
+    "protein_g": 1.0,
+    "carbs_g": 5.5,
+    "fats_g": 0.3,
+    "fiber_g": 2.1,
+    "query": "grilled bell pepper"
+  },
+  "grilled_tomato": {
+    "name": "Grilled Tomatoes (1 cup)",
+    "kcal": 29,
+    "protein_g": 1.6,
+    "carbs_g": 6.4,
+    "fats_g": 0.4,
+    "fiber_g": 2.2,
+    "query": "grilled tomato"
+  },
+  "grilled_cucumber": {
+    "name": "Grilled Cucumber (1 cup)",
+    "kcal": 15,
+    "protein_g": 0.7,
+    "carbs_g": 3.5,
+    "fats_g": 0.1,
+    "fiber_g": 0.5,
+    "query": "grilled cucumber"
+  },
+  "grilled_zucchini": {
+    "name": "Grilled Grilled Zucchini",
+    "kcal": 25,
+    "protein_g": 2.0,
+    "carbs_g": 4.4,
+    "fats_g": 0.5,
+    "fiber_g": 1.8,
+    "query": "grilled zucchini"
+  },
+  "grilled_sweet_potato": {
+    "name": "Grilled Baked Sweet Potato",
+    "kcal": 95,
+    "protein_g": 2.3,
+    "carbs_g": 21.7,
+    "fats_g": 0.2,
+    "fiber_g": 3.8,
+    "query": "grilled sweet potato"
+  },
+  "grilled_boiled_potato": {
+    "name": "Grilled Boiled Potato",
+    "kcal": 120,
+    "protein_g": 2.9,
+    "carbs_g": 27.6,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "grilled boiled potato"
+  },
+  "grilled_mashed_potato": {
+    "name": "Grilled Mashed Potatoes",
+    "kcal": 197,
+    "protein_g": 4.0,
+    "carbs_g": 32.2,
+    "fats_g": 6.4,
+    "fiber_g": 3.2,
+    "query": "grilled mashed potatoes"
+  },
+  "grilled_green_beans": {
+    "name": "Grilled Green Beans",
+    "kcal": 40,
+    "protein_g": 2.4,
+    "carbs_g": 9.1,
+    "fats_g": 0.4,
+    "fiber_g": 4.0,
+    "query": "grilled green beans"
+  },
+  "grilled_green_peas": {
+    "name": "Grilled Green Peas (1 cup)",
+    "kcal": 123,
+    "protein_g": 8.6,
+    "carbs_g": 23.0,
+    "fats_g": 0.4,
+    "fiber_g": 8.8,
+    "query": "grilled green peas"
+  },
+  "grilled_corn": {
+    "name": "Grilled Sweet Corn (1 cup)",
+    "kcal": 121,
+    "protein_g": 5.0,
+    "carbs_g": 26.7,
+    "fats_g": 1.7,
+    "fiber_g": 3.6,
+    "query": "grilled sweet corn"
+  },
+  "grilled_mushrooms": {
+    "name": "Grilled Sauteed Mushrooms",
+    "kcal": 39,
+    "protein_g": 3.4,
+    "carbs_g": 4.8,
+    "fats_g": 0.7,
+    "fiber_g": 2.2,
+    "query": "grilled mushrooms"
+  },
+  "grilled_asparagus": {
+    "name": "Grilled Grilled Asparagus",
+    "kcal": 37,
+    "protein_g": 4.3,
+    "carbs_g": 6.8,
+    "fats_g": 0.4,
+    "fiber_g": 3.6,
+    "query": "grilled asparagus"
+  },
+  "grilled_beetroot": {
+    "name": "Grilled Boiled Beetroot",
+    "kcal": 69,
+    "protein_g": 2.9,
+    "carbs_g": 15.6,
+    "fats_g": 0.3,
+    "fiber_g": 3.4,
+    "query": "grilled beetroot"
+  },
+  "grilled_radish": {
+    "name": "Grilled Radish",
+    "kcal": 17,
+    "protein_g": 0.8,
+    "carbs_g": 3.6,
+    "fats_g": 0.1,
+    "fiber_g": 1.9,
+    "query": "grilled radish"
+  },
+  "grilled_turnip": {
+    "name": "Grilled Cooked Turnip",
+    "kcal": 31,
+    "protein_g": 1.1,
+    "carbs_g": 7.3,
+    "fats_g": 0.1,
+    "fiber_g": 3.1,
+    "query": "grilled turnip"
+  },
+  "grilled_pumpkin": {
+    "name": "Grilled Roasted Pumpkin",
+    "kcal": 45,
+    "protein_g": 1.8,
+    "carbs_g": 11.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "grilled pumpkin"
+  },
+  "grilled_bitter_gourd": {
+    "name": "Grilled Karela Fry",
+    "kcal": 87,
+    "protein_g": 2.0,
+    "carbs_g": 9.2,
+    "fats_g": 5.1,
+    "fiber_g": 3.8,
+    "query": "grilled bitter gourd"
+  },
+  "grilled_bottle_gourd": {
+    "name": "Grilled Lauki Sabzi",
+    "kcal": 64,
+    "protein_g": 1.5,
+    "carbs_g": 8.3,
+    "fats_g": 2.9,
+    "fiber_g": 2.5,
+    "query": "grilled bottle gourd"
+  },
+  "grilled_ridge_gourd": {
+    "name": "Grilled Turai Sabzi",
+    "kcal": 60,
+    "protein_g": 1.4,
+    "carbs_g": 7.8,
+    "fats_g": 2.8,
+    "fiber_g": 2.4,
+    "query": "grilled ridge gourd"
+  },
+  "grilled_drumstick": {
+    "name": "Grilled Drumstick Curry",
+    "kcal": 83,
+    "protein_g": 3.0,
+    "carbs_g": 11.0,
+    "fats_g": 3.2,
+    "fiber_g": 4.0,
+    "query": "grilled moringa drumstick"
+  },
+  "grilled_brussels_sprouts": {
+    "name": "Grilled Brussels Sprouts",
+    "kcal": 52,
+    "protein_g": 4.0,
+    "carbs_g": 10.2,
+    "fats_g": 0.7,
+    "fiber_g": 4.1,
+    "query": "grilled brussels sprouts"
+  },
+  "grilled_kale": {
+    "name": "Grilled Kale Salad",
+    "kcal": 45,
+    "protein_g": 4.3,
+    "carbs_g": 8.1,
+    "fats_g": 0.8,
+    "fiber_g": 3.6,
+    "query": "grilled kale"
+  },
+  "grilled_lettuce": {
+    "name": "Grilled Lettuce",
+    "kcal": 14,
+    "protein_g": 1.4,
+    "carbs_g": 2.7,
+    "fats_g": 0.2,
+    "fiber_g": 1.3,
+    "query": "grilled lettuce"
+  },
+  "grilled_chicken_curry": {
+    "name": "Grilled Chicken Curry",
+    "kcal": 285,
+    "protein_g": 26.0,
+    "carbs_g": 8.3,
+    "fats_g": 17.5,
+    "fiber_g": 1.5,
+    "query": "grilled chicken curry"
+  },
+  "grilled_roast_chicken": {
+    "name": "Grilled Roast Chicken",
+    "kcal": 248,
+    "protein_g": 31.0,
+    "carbs_g": 0.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "grilled roast chicken"
+  },
+  "grilled_chicken_wings": {
+    "name": "Grilled Chicken Wings (4 pcs)",
+    "kcal": 331,
+    "protein_g": 24.0,
+    "carbs_g": 3.7,
+    "fats_g": 24.8,
+    "fiber_g": 0.2,
+    "query": "grilled chicken wings"
+  },
+  "grilled_chicken_nuggets": {
+    "name": "Grilled Chicken Nuggets (6 pcs)",
+    "kcal": 258,
+    "protein_g": 15.0,
+    "carbs_g": 16.6,
+    "fats_g": 15.6,
+    "fiber_g": 1.0,
+    "query": "grilled chicken nuggets"
+  },
+  "grilled_fried_chicken": {
+    "name": "Grilled Fried Chicken (1 pc)",
+    "kcal": 294,
+    "protein_g": 22.0,
+    "carbs_g": 10.1,
+    "fats_g": 19.3,
+    "fiber_g": 0.5,
+    "query": "grilled fried chicken"
+  },
+  "grilled_chicken_kebab": {
+    "name": "Grilled Chicken Kebab",
+    "kcal": 230,
+    "protein_g": 28.0,
+    "carbs_g": 3.7,
+    "fats_g": 12.0,
+    "fiber_g": 0.8,
+    "query": "grilled chicken kebab"
+  },
+  "grilled_mutton_curry": {
+    "name": "Grilled Mutton Curry",
+    "kcal": 331,
+    "protein_g": 25.0,
+    "carbs_g": 7.4,
+    "fats_g": 23.0,
+    "fiber_g": 1.5,
+    "query": "grilled mutton curry"
+  },
+  "grilled_lamb_chops": {
+    "name": "Grilled Grilled Lamb Chops",
+    "kcal": 313,
+    "protein_g": 28.0,
+    "carbs_g": 0.0,
+    "fats_g": 23.0,
+    "fiber_g": 0.0,
+    "query": "grilled lamb chops"
+  },
+  "grilled_beef_steak": {
+    "name": "Grilled Grilled Beef Steak",
+    "kcal": 304,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 18.4,
+    "fiber_g": 0.0,
+    "query": "grilled beef steak"
+  },
+  "grilled_beef_burger_patty": {
+    "name": "Grilled Beef Patty",
+    "kcal": 267,
+    "protein_g": 24.0,
+    "carbs_g": 0.0,
+    "fats_g": 19.3,
+    "fiber_g": 0.0,
+    "query": "grilled beef patty"
+  },
+  "grilled_pork_chops": {
+    "name": "Grilled Pork Chops",
+    "kcal": 271,
+    "protein_g": 29.0,
+    "carbs_g": 0.0,
+    "fats_g": 17.5,
+    "fiber_g": 0.0,
+    "query": "grilled pork chops"
+  },
+  "grilled_bacon": {
+    "name": "Grilled Cooked Bacon (3 slices)",
+    "kcal": 147,
+    "protein_g": 11.0,
+    "carbs_g": 0.5,
+    "fats_g": 11.5,
+    "fiber_g": 0.0,
+    "query": "grilled bacon"
+  },
+  "grilled_turkey_breast": {
+    "name": "Grilled Roasted Turkey Breast",
+    "kcal": 170,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 3.2,
+    "fiber_g": 0.0,
+    "query": "grilled roast turkey"
+  },
+  "grilled_duck_roast": {
+    "name": "Grilled Roast Duck",
+    "kcal": 313,
+    "protein_g": 23.0,
+    "carbs_g": 0.0,
+    "fats_g": 25.8,
+    "fiber_g": 0.0,
+    "query": "grilled roast duck"
+  },
+  "grilled_prawn_curry": {
+    "name": "Grilled Prawn Curry",
+    "kcal": 230,
+    "protein_g": 22.0,
+    "carbs_g": 7.4,
+    "fats_g": 12.9,
+    "fiber_g": 1.2,
+    "query": "grilled prawn curry"
+  },
+  "grilled_garlic_shrimp": {
+    "name": "Grilled Garlic Butter Shrimp",
+    "kcal": 193,
+    "protein_g": 24.0,
+    "carbs_g": 1.8,
+    "fats_g": 10.1,
+    "fiber_g": 0.2,
+    "query": "grilled garlic shrimp"
+  },
+  "grilled_fish_fry": {
+    "name": "Grilled Masala Fish Fry",
+    "kcal": 267,
+    "protein_g": 24.0,
+    "carbs_g": 7.4,
+    "fats_g": 16.6,
+    "fiber_g": 0.8,
+    "query": "grilled fish fry"
+  },
+  "grilled_tuna_salad": {
+    "name": "Grilled Tuna Salad",
+    "kcal": 202,
+    "protein_g": 24.0,
+    "carbs_g": 3.7,
+    "fats_g": 11.0,
+    "fiber_g": 0.8,
+    "query": "grilled tuna salad"
+  },
+  "grilled_crab_curry": {
+    "name": "Grilled Crab Masala",
+    "kcal": 221,
+    "protein_g": 22.0,
+    "carbs_g": 6.4,
+    "fats_g": 12.0,
+    "fiber_g": 1.0,
+    "query": "grilled crab curry"
+  },
+  "grilled_keema_matar": {
+    "name": "Grilled Mutton Keema Matar",
+    "kcal": 322,
+    "protein_g": 24.0,
+    "carbs_g": 11.0,
+    "fats_g": 21.2,
+    "fiber_g": 3.5,
+    "query": "grilled keema matar"
+  },
+  "grilled_chocolate_chip_cookie": {
+    "name": "Grilled Chocolate Chip Cookie (2 pcs)",
+    "kcal": 202,
+    "protein_g": 2.5,
+    "carbs_g": 27.6,
+    "fats_g": 10.1,
+    "fiber_g": 1.2,
+    "query": "grilled chocolate chip cookie"
+  },
+  "grilled_oatmeal_cookie": {
+    "name": "Grilled Oatmeal Raisin Cookie (2 pcs)",
+    "kcal": 184,
+    "protein_g": 3.0,
+    "carbs_g": 27.6,
+    "fats_g": 7.4,
+    "fiber_g": 2.0,
+    "query": "grilled oatmeal cookie"
+  },
+  "grilled_butter_cookie": {
+    "name": "Grilled Butter Cookies (3 pcs)",
+    "kcal": 175,
+    "protein_g": 2.2,
+    "carbs_g": 22.1,
+    "fats_g": 8.7,
+    "fiber_g": 0.5,
+    "query": "grilled butter cookies"
+  },
+  "grilled_oreo_cookies": {
+    "name": "Grilled Cream Sandwich Cookies (3 pcs)",
+    "kcal": 147,
+    "protein_g": 1.5,
+    "carbs_g": 23.0,
+    "fats_g": 6.4,
+    "fiber_g": 1.0,
+    "query": "grilled oreo cookies"
+  },
+  "grilled_digestive_biscuit": {
+    "name": "Grilled Digestive Biscuits (2 pcs)",
+    "kcal": 129,
+    "protein_g": 2.0,
+    "carbs_g": 18.4,
+    "fats_g": 5.5,
+    "fiber_g": 1.5,
+    "query": "grilled digestive biscuit"
+  },
+  "grilled_marie_biscuit": {
+    "name": "Grilled Marie Biscuits (4 pcs)",
+    "kcal": 110,
+    "protein_g": 2.2,
+    "carbs_g": 20.2,
+    "fats_g": 2.3,
+    "fiber_g": 0.6,
+    "query": "grilled marie biscuit"
+  },
+  "grilled_parle_g": {
+    "name": "Grilled Glucose Biscuits (5 pcs)",
+    "kcal": 124,
+    "protein_g": 2.0,
+    "carbs_g": 22.1,
+    "fats_g": 3.2,
+    "fiber_g": 0.5,
+    "query": "grilled glucose biscuit"
+  },
+  "grilled_potato_chips": {
+    "name": "Grilled Potato Chips (28g)",
+    "kcal": 140,
+    "protein_g": 2.0,
+    "carbs_g": 13.8,
+    "fats_g": 9.2,
+    "fiber_g": 1.4,
+    "query": "grilled potato chips"
+  },
+  "grilled_tortilla_chips": {
+    "name": "Grilled Tortilla Chips (28g)",
+    "kcal": 129,
+    "protein_g": 2.0,
+    "carbs_g": 17.5,
+    "fats_g": 6.4,
+    "fiber_g": 1.5,
+    "query": "grilled tortilla chips"
+  },
+  "grilled_popcorn": {
+    "name": "Grilled Popcorn (3 cups)",
+    "kcal": 101,
+    "protein_g": 3.0,
+    "carbs_g": 17.5,
+    "fats_g": 2.8,
+    "fiber_g": 3.5,
+    "query": "grilled popcorn"
+  },
+  "grilled_pretzels": {
+    "name": "Grilled Pretzels (28g)",
+    "kcal": 99,
+    "protein_g": 2.8,
+    "carbs_g": 20.7,
+    "fats_g": 0.7,
+    "fiber_g": 0.9,
+    "query": "grilled pretzels"
+  },
+  "grilled_murukku": {
+    "name": "Grilled Murukku / Chakli (2 pcs)",
+    "kcal": 166,
+    "protein_g": 3.5,
+    "carbs_g": 20.2,
+    "fats_g": 8.3,
+    "fiber_g": 1.5,
+    "query": "grilled murukku"
+  },
+  "grilled_khakhra": {
+    "name": "Grilled Methi Khakhra (2 pcs)",
+    "kcal": 120,
+    "protein_g": 3.5,
+    "carbs_g": 18.4,
+    "fats_g": 3.7,
+    "fiber_g": 2.5,
+    "query": "grilled khakhra"
+  },
+  "grilled_makhana": {
+    "name": "Grilled Roasted Makhana (1 cup)",
+    "kcal": 97,
+    "protein_g": 3.0,
+    "carbs_g": 18.4,
+    "fats_g": 1.4,
+    "fiber_g": 2.0,
+    "query": "grilled roasted makhana"
+  },
+  "grilled_roasted_chana": {
+    "name": "Grilled Roasted Chana (30g)",
+    "kcal": 101,
+    "protein_g": 6.5,
+    "carbs_g": 16.6,
+    "fats_g": 1.4,
+    "fiber_g": 4.5,
+    "query": "grilled roasted chana"
+  },
+  "grilled_granola_bar": {
+    "name": "Grilled Granola Bar",
+    "kcal": 175,
+    "protein_g": 4.0,
+    "carbs_g": 26.7,
+    "fats_g": 6.4,
+    "fiber_g": 2.5,
+    "query": "grilled granola bar"
+  },
+  "grilled_protein_bar": {
+    "name": "Grilled Protein Bar",
+    "kcal": 193,
+    "protein_g": 20.0,
+    "carbs_g": 20.2,
+    "fats_g": 6.4,
+    "fiber_g": 3.0,
+    "query": "grilled protein bar"
+  },
+  "grilled_dark_chocolate": {
+    "name": "Grilled Dark Chocolate (30g)",
+    "kcal": 156,
+    "protein_g": 2.2,
+    "carbs_g": 12.0,
+    "fats_g": 11.0,
+    "fiber_g": 3.1,
+    "query": "grilled dark chocolate"
+  },
+  "grilled_trail_mix": {
+    "name": "Grilled Trail Mix (30g)",
+    "kcal": 138,
+    "protein_g": 4.5,
+    "carbs_g": 12.0,
+    "fats_g": 8.7,
+    "fiber_g": 2.0,
+    "query": "grilled trail mix"
+  },
+  "grilled_nachos_cheese": {
+    "name": "Grilled Nachos with Cheese",
+    "kcal": 313,
+    "protein_g": 9.0,
+    "carbs_g": 33.1,
+    "fats_g": 17.5,
+    "fiber_g": 3.0,
+    "query": "grilled nachos"
+  },
+  "steamed_idli_sambar": {
+    "name": "Steamed Idli Sambar",
+    "kcal": 166,
+    "protein_g": 6.0,
+    "carbs_g": 31.3,
+    "fats_g": 1.8,
+    "fiber_g": 3.5,
+    "query": "steamed idli sambar"
+  },
+  "steamed_masala_dosa": {
+    "name": "Steamed Masala Dosa",
+    "kcal": 354,
+    "protein_g": 8.0,
+    "carbs_g": 49.7,
+    "fats_g": 13.8,
+    "fiber_g": 4.2,
+    "query": "steamed masala dosa"
+  },
+  "steamed_plain_dosa": {
+    "name": "Steamed Plain Dosa",
+    "kcal": 155,
+    "protein_g": 4.0,
+    "carbs_g": 25.8,
+    "fats_g": 3.7,
+    "fiber_g": 1.8,
+    "query": "steamed dosa south indian"
+  },
+  "steamed_medu_vada": {
+    "name": "Steamed Medu Vada",
+    "kcal": 221,
+    "protein_g": 6.5,
+    "carbs_g": 23.9,
+    "fats_g": 11.0,
+    "fiber_g": 2.5,
+    "query": "steamed medu vada"
+  },
+  "steamed_upma": {
+    "name": "Steamed Rava Upma",
+    "kcal": 193,
+    "protein_g": 5.5,
+    "carbs_g": 32.2,
+    "fats_g": 5.1,
+    "fiber_g": 2.4,
+    "query": "steamed upma indian food"
+  },
+  "steamed_poha": {
+    "name": "Steamed Kanda Poha",
+    "kcal": 230,
+    "protein_g": 5.0,
+    "carbs_g": 40.5,
+    "fats_g": 5.5,
+    "fiber_g": 3.0,
+    "query": "steamed poha indian breakfast"
+  },
+  "steamed_pongal": {
+    "name": "Steamed Ven Pongal",
+    "kcal": 267,
+    "protein_g": 7.5,
+    "carbs_g": 38.6,
+    "fats_g": 9.2,
+    "fiber_g": 2.2,
+    "query": "steamed ven pongal"
+  },
+  "steamed_uttapam": {
+    "name": "Steamed Onion Uttapam",
+    "kcal": 212,
+    "protein_g": 6.0,
+    "carbs_g": 35.0,
+    "fats_g": 5.1,
+    "fiber_g": 2.8,
+    "query": "steamed uttapam"
+  },
+  "steamed_aloo_paratha": {
+    "name": "Steamed Aloo Paratha",
+    "kcal": 285,
+    "protein_g": 6.5,
+    "carbs_g": 41.4,
+    "fats_g": 10.6,
+    "fiber_g": 3.5,
+    "query": "steamed aloo paratha"
+  },
+  "steamed_paneer_paratha": {
+    "name": "Steamed Paneer Paratha",
+    "kcal": 317,
+    "protein_g": 12.0,
+    "carbs_g": 36.8,
+    "fats_g": 13.8,
+    "fiber_g": 2.8,
+    "query": "steamed paneer paratha"
+  },
+  "steamed_chole_bhature": {
+    "name": "Steamed Chole Bhature",
+    "kcal": 478,
+    "protein_g": 14.0,
+    "carbs_g": 62.6,
+    "fats_g": 19.3,
+    "fiber_g": 7.0,
+    "query": "steamed chole bhature"
+  },
+  "steamed_pav_bhaji": {
+    "name": "Steamed Pav Bhaji",
+    "kcal": 377,
+    "protein_g": 10.0,
+    "carbs_g": 51.5,
+    "fats_g": 14.7,
+    "fiber_g": 5.5,
+    "query": "steamed pav bhaji"
+  },
+  "steamed_rajma_chawal": {
+    "name": "Steamed Rajma Chawal",
+    "kcal": 359,
+    "protein_g": 13.0,
+    "carbs_g": 62.6,
+    "fats_g": 6.0,
+    "fiber_g": 8.5,
+    "query": "steamed rajma chawal"
+  },
+  "steamed_dal_tadka": {
+    "name": "Steamed Dal Tadka",
+    "kcal": 202,
+    "protein_g": 11.0,
+    "carbs_g": 25.8,
+    "fats_g": 6.4,
+    "fiber_g": 5.5,
+    "query": "steamed dal tadka"
+  },
+  "steamed_dal_makhani": {
+    "name": "Steamed Dal Makhani",
+    "kcal": 304,
+    "protein_g": 12.0,
+    "carbs_g": 29.4,
+    "fats_g": 15.6,
+    "fiber_g": 6.0,
+    "query": "steamed dal makhani"
+  },
+  "steamed_paneer_butter_masala": {
+    "name": "Steamed Paneer Butter Masala",
+    "kcal": 350,
+    "protein_g": 14.0,
+    "carbs_g": 14.7,
+    "fats_g": 26.7,
+    "fiber_g": 2.2,
+    "query": "steamed paneer butter masala"
+  },
+  "steamed_palak_paneer": {
+    "name": "Steamed Palak Paneer",
+    "kcal": 258,
+    "protein_g": 14.5,
+    "carbs_g": 11.0,
+    "fats_g": 17.5,
+    "fiber_g": 4.5,
+    "query": "steamed palak paneer"
+  },
+  "steamed_kadai_paneer": {
+    "name": "Steamed Kadai Paneer",
+    "kcal": 285,
+    "protein_g": 14.0,
+    "carbs_g": 12.9,
+    "fats_g": 20.2,
+    "fiber_g": 3.0,
+    "query": "steamed kadai paneer"
+  },
+  "steamed_butter_chicken": {
+    "name": "Steamed Butter Chicken",
+    "kcal": 377,
+    "protein_g": 26.0,
+    "carbs_g": 12.9,
+    "fats_g": 25.8,
+    "fiber_g": 1.8,
+    "query": "steamed butter chicken"
+  },
+  "steamed_chicken_tikka_masala": {
+    "name": "Steamed Chicken Tikka Masala",
+    "kcal": 340,
+    "protein_g": 25.0,
+    "carbs_g": 13.8,
+    "fats_g": 21.2,
+    "fiber_g": 2.0,
+    "query": "steamed chicken tikka masala"
+  },
+  "steamed_tandoori_chicken": {
+    "name": "Steamed Tandoori Chicken",
+    "kcal": 239,
+    "protein_g": 29.0,
+    "carbs_g": 3.7,
+    "fats_g": 12.9,
+    "fiber_g": 0.5,
+    "query": "steamed tandoori chicken"
+  },
+  "steamed_chicken_biryani": {
+    "name": "Steamed Chicken Biryani",
+    "kcal": 414,
+    "protein_g": 24.0,
+    "carbs_g": 47.8,
+    "fats_g": 14.7,
+    "fiber_g": 2.5,
+    "query": "steamed chicken biryani"
+  },
+  "steamed_mutton_biryani": {
+    "name": "Steamed Mutton Biryani",
+    "kcal": 455,
+    "protein_g": 25.0,
+    "carbs_g": 46.0,
+    "fats_g": 19.3,
+    "fiber_g": 2.2,
+    "query": "steamed mutton biryani"
+  },
+  "steamed_veg_biryani": {
+    "name": "Steamed Veg Biryani",
+    "kcal": 313,
+    "protein_g": 8.0,
+    "carbs_g": 49.7,
+    "fats_g": 9.2,
+    "fiber_g": 4.5,
+    "query": "steamed vegetable biryani"
+  },
+  "steamed_jeera_rice": {
+    "name": "Steamed Jeera Rice",
+    "kcal": 212,
+    "protein_g": 4.5,
+    "carbs_g": 38.6,
+    "fats_g": 4.6,
+    "fiber_g": 1.0,
+    "query": "steamed jeera rice"
+  },
+  "steamed_curd_rice": {
+    "name": "Steamed Curd Rice",
+    "kcal": 221,
+    "protein_g": 6.5,
+    "carbs_g": 35.0,
+    "fats_g": 6.0,
+    "fiber_g": 0.8,
+    "query": "steamed curd rice"
+  },
+  "steamed_lemon_rice": {
+    "name": "Steamed Lemon Rice",
+    "kcal": 244,
+    "protein_g": 5.0,
+    "carbs_g": 40.5,
+    "fats_g": 6.9,
+    "fiber_g": 1.8,
+    "query": "steamed lemon rice"
+  },
+  "steamed_roti_chapati": {
+    "name": "Steamed Whole Wheat Roti",
+    "kcal": 97,
+    "protein_g": 3.5,
+    "carbs_g": 19.3,
+    "fats_g": 0.7,
+    "fiber_g": 3.0,
+    "query": "steamed chapati roti"
+  },
+  "steamed_garlic_naan": {
+    "name": "Steamed Garlic Naan",
+    "kcal": 239,
+    "protein_g": 7.0,
+    "carbs_g": 38.6,
+    "fats_g": 6.4,
+    "fiber_g": 2.0,
+    "query": "steamed garlic naan"
+  },
+  "steamed_samosa": {
+    "name": "Steamed Samosa (1 pc)",
+    "kcal": 239,
+    "protein_g": 5.0,
+    "carbs_g": 29.4,
+    "fats_g": 12.0,
+    "fiber_g": 3.0,
+    "query": "steamed samosa"
+  },
+  "steamed_pakora": {
+    "name": "Steamed Onion Pakora",
+    "kcal": 258,
+    "protein_g": 6.0,
+    "carbs_g": 25.8,
+    "fats_g": 14.7,
+    "fiber_g": 3.5,
+    "query": "steamed pakora"
+  },
+  "steamed_pani_puri": {
+    "name": "Steamed Pani Puri (6 pcs)",
+    "kcal": 193,
+    "protein_g": 4.5,
+    "carbs_g": 33.1,
+    "fats_g": 5.1,
+    "fiber_g": 3.2,
+    "query": "steamed pani puri"
+  },
+  "steamed_bhel_puri": {
+    "name": "Steamed Bhel Puri",
+    "kcal": 221,
+    "protein_g": 5.5,
+    "carbs_g": 36.8,
+    "fats_g": 6.0,
+    "fiber_g": 3.8,
+    "query": "steamed bhel puri"
+  },
+  "steamed_dhokla": {
+    "name": "Steamed Khaman Dhokla",
+    "kcal": 161,
+    "protein_g": 6.5,
+    "carbs_g": 25.8,
+    "fats_g": 3.7,
+    "fiber_g": 2.5,
+    "query": "steamed dhokla"
+  },
+  "steamed_vada_pav": {
+    "name": "Steamed Vada Pav",
+    "kcal": 267,
+    "protein_g": 6.0,
+    "carbs_g": 38.6,
+    "fats_g": 10.1,
+    "fiber_g": 3.0,
+    "query": "steamed vada pav"
+  },
+  "steamed_gulab_jamun": {
+    "name": "Steamed Gulab Jamun (2 pcs)",
+    "kcal": 294,
+    "protein_g": 4.0,
+    "carbs_g": 47.8,
+    "fats_g": 10.1,
+    "fiber_g": 0.5,
+    "query": "steamed gulab jamun"
+  },
+  "steamed_jalebi": {
+    "name": "Steamed Jalebi",
+    "kcal": 276,
+    "protein_g": 2.5,
+    "carbs_g": 49.7,
+    "fats_g": 7.8,
+    "fiber_g": 0.4,
+    "query": "steamed jalebi"
+  },
+  "steamed_rasgulla": {
+    "name": "Steamed Rasgulla (2 pcs)",
+    "kcal": 171,
+    "protein_g": 4.0,
+    "carbs_g": 35.0,
+    "fats_g": 1.7,
+    "fiber_g": 0.2,
+    "query": "steamed rasgulla"
+  },
+  "steamed_kheer": {
+    "name": "Steamed Rice Kheer",
+    "kcal": 212,
+    "protein_g": 6.0,
+    "carbs_g": 33.1,
+    "fats_g": 6.4,
+    "fiber_g": 0.5,
+    "query": "steamed rice kheer"
+  },
+  "steamed_boiled_eggs": {
+    "name": "Steamed Boiled Eggs (2 pcs)",
+    "kcal": 143,
+    "protein_g": 12.6,
+    "carbs_g": 1.0,
+    "fats_g": 9.8,
+    "fiber_g": 0.0,
+    "query": "steamed boiled egg"
+  },
+  "steamed_omelette": {
+    "name": "Steamed Masala Omelette (2 eggs)",
+    "kcal": 179,
+    "protein_g": 13.0,
+    "carbs_g": 2.8,
+    "fats_g": 13.3,
+    "fiber_g": 0.6,
+    "query": "steamed omelette"
+  },
+  "steamed_scrambled_eggs": {
+    "name": "Steamed Scrambled Eggs",
+    "kcal": 184,
+    "protein_g": 13.5,
+    "carbs_g": 2.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "steamed scrambled eggs"
+  },
+  "steamed_fried_egg": {
+    "name": "Steamed Fried Egg",
+    "kcal": 83,
+    "protein_g": 6.3,
+    "carbs_g": 0.4,
+    "fats_g": 6.4,
+    "fiber_g": 0.0,
+    "query": "steamed fried egg"
+  },
+  "steamed_banana": {
+    "name": "Steamed Banana (1 medium)",
+    "kcal": 97,
+    "protein_g": 1.3,
+    "carbs_g": 24.8,
+    "fats_g": 0.4,
+    "fiber_g": 3.1,
+    "query": "steamed banana fruit"
+  },
+  "steamed_apple": {
+    "name": "Steamed Apple (1 medium)",
+    "kcal": 87,
+    "protein_g": 0.5,
+    "carbs_g": 23.0,
+    "fats_g": 0.3,
+    "fiber_g": 4.4,
+    "query": "steamed red apple fruit"
+  },
+  "steamed_mango": {
+    "name": "Steamed Mango (1 cup)",
+    "kcal": 91,
+    "protein_g": 1.4,
+    "carbs_g": 23.0,
+    "fats_g": 0.6,
+    "fiber_g": 2.6,
+    "query": "steamed mango fruit"
+  },
+  "steamed_orange": {
+    "name": "Steamed Orange (1 medium)",
+    "kcal": 57,
+    "protein_g": 1.2,
+    "carbs_g": 14.2,
+    "fats_g": 0.2,
+    "fiber_g": 3.1,
+    "query": "steamed orange fruit"
+  },
+  "steamed_watermelon": {
+    "name": "Steamed Watermelon (1 cup)",
+    "kcal": 42,
+    "protein_g": 0.9,
+    "carbs_g": 10.6,
+    "fats_g": 0.2,
+    "fiber_g": 0.6,
+    "query": "steamed watermelon"
+  },
+  "steamed_papaya": {
+    "name": "Steamed Papaya (1 cup)",
+    "kcal": 57,
+    "protein_g": 0.7,
+    "carbs_g": 14.4,
+    "fats_g": 0.4,
+    "fiber_g": 2.5,
+    "query": "steamed papaya fruit"
+  },
+  "steamed_grapes": {
+    "name": "Steamed Grapes (1 cup)",
+    "kcal": 96,
+    "protein_g": 1.1,
+    "carbs_g": 25.1,
+    "fats_g": 0.2,
+    "fiber_g": 1.4,
+    "query": "steamed grapes fruit"
+  },
+  "steamed_strawberry": {
+    "name": "Steamed Strawberries (1 cup)",
+    "kcal": 45,
+    "protein_g": 1.0,
+    "carbs_g": 10.8,
+    "fats_g": 0.5,
+    "fiber_g": 3.0,
+    "query": "steamed strawberries"
+  },
+  "steamed_pineapple": {
+    "name": "Steamed Pineapple (1 cup)",
+    "kcal": 75,
+    "protein_g": 0.9,
+    "carbs_g": 19.9,
+    "fats_g": 0.2,
+    "fiber_g": 2.3,
+    "query": "steamed pineapple fruit"
+  },
+  "steamed_pomegranate": {
+    "name": "Steamed Pomegranate (1 cup)",
+    "kcal": 132,
+    "protein_g": 2.9,
+    "carbs_g": 29.9,
+    "fats_g": 1.8,
+    "fiber_g": 7.0,
+    "query": "steamed pomegranate"
+  },
+  "steamed_avocado": {
+    "name": "Steamed Avocado (half)",
+    "kcal": 147,
+    "protein_g": 2.0,
+    "carbs_g": 7.8,
+    "fats_g": 13.5,
+    "fiber_g": 6.7,
+    "query": "steamed avocado"
+  },
+  "steamed_oatmeal": {
+    "name": "Steamed Oatmeal Bowl",
+    "kcal": 145,
+    "protein_g": 6.0,
+    "carbs_g": 24.8,
+    "fats_g": 2.9,
+    "fiber_g": 4.0,
+    "query": "steamed oatmeal bowl"
+  },
+  "steamed_greek_yogurt": {
+    "name": "Steamed Greek Yogurt",
+    "kcal": 120,
+    "protein_g": 15.0,
+    "carbs_g": 6.4,
+    "fats_g": 3.7,
+    "fiber_g": 0.0,
+    "query": "steamed greek yogurt"
+  },
+  "steamed_paneer_tikka": {
+    "name": "Steamed Paneer Tikka",
+    "kcal": 267,
+    "protein_g": 18.0,
+    "carbs_g": 9.2,
+    "fats_g": 18.4,
+    "fiber_g": 2.0,
+    "query": "steamed paneer tikka"
+  },
+  "steamed_grilled_chicken": {
+    "name": "Steamed Grilled Chicken Breast",
+    "kcal": 212,
+    "protein_g": 42.0,
+    "carbs_g": 0.0,
+    "fats_g": 4.6,
+    "fiber_g": 0.0,
+    "query": "steamed grilled chicken breast"
+  },
+  "steamed_grilled_salmon": {
+    "name": "Steamed Grilled Salmon",
+    "kcal": 258,
+    "protein_g": 34.0,
+    "carbs_g": 0.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "steamed grilled salmon"
+  },
+  "steamed_fish_curry": {
+    "name": "Steamed Indian Fish Curry",
+    "kcal": 253,
+    "protein_g": 22.0,
+    "carbs_g": 8.3,
+    "fats_g": 15.6,
+    "fiber_g": 1.8,
+    "query": "steamed fish curry"
+  },
+  "steamed_egg_curry": {
+    "name": "Steamed Egg Curry",
+    "kcal": 244,
+    "protein_g": 14.0,
+    "carbs_g": 10.1,
+    "fats_g": 16.6,
+    "fiber_g": 2.0,
+    "query": "steamed egg curry"
+  },
+  "steamed_chana_masala": {
+    "name": "Steamed Chana Masala",
+    "kcal": 221,
+    "protein_g": 10.0,
+    "carbs_g": 31.3,
+    "fats_g": 6.4,
+    "fiber_g": 8.0,
+    "query": "steamed chana masala"
+  },
+  "steamed_aloo_gobi": {
+    "name": "Steamed Aloo Gobi",
+    "kcal": 179,
+    "protein_g": 4.5,
+    "carbs_g": 23.9,
+    "fats_g": 7.4,
+    "fiber_g": 4.5,
+    "query": "steamed aloo gobi"
+  },
+  "steamed_bhindi_masala": {
+    "name": "Steamed Bhindi Masala",
+    "kcal": 156,
+    "protein_g": 3.5,
+    "carbs_g": 14.7,
+    "fats_g": 9.2,
+    "fiber_g": 4.8,
+    "query": "steamed bhindi masala"
+  },
+  "steamed_baingan_bharta": {
+    "name": "Steamed Baingan Bharta",
+    "kcal": 166,
+    "protein_g": 3.0,
+    "carbs_g": 13.8,
+    "fats_g": 11.0,
+    "fiber_g": 5.0,
+    "query": "steamed baingan bharta"
+  },
+  "steamed_palak_dal": {
+    "name": "Steamed Palak Dal",
+    "kcal": 175,
+    "protein_g": 10.0,
+    "carbs_g": 23.0,
+    "fats_g": 5.1,
+    "fiber_g": 5.2,
+    "query": "steamed palak dal"
+  },
+  "steamed_khichdi": {
+    "name": "Steamed Moong Dal Khichdi",
+    "kcal": 239,
+    "protein_g": 9.5,
+    "carbs_g": 40.5,
+    "fats_g": 4.6,
+    "fiber_g": 4.0,
+    "query": "steamed khichdi"
+  },
+  "steamed_pizza": {
+    "name": "Steamed Pizza Slice (Cheese/Margherita)",
+    "kcal": 262,
+    "protein_g": 12.0,
+    "carbs_g": 33.1,
+    "fats_g": 9.2,
+    "fiber_g": 2.5,
+    "query": "steamed margherita pizza"
+  },
+  "steamed_burger": {
+    "name": "Steamed Burger",
+    "kcal": 405,
+    "protein_g": 22.0,
+    "carbs_g": 36.8,
+    "fats_g": 19.3,
+    "fiber_g": 2.5,
+    "query": "steamed hamburger"
+  },
+  "steamed_french_fries": {
+    "name": "Steamed French Fries",
+    "kcal": 287,
+    "protein_g": 3.4,
+    "carbs_g": 37.7,
+    "fats_g": 13.8,
+    "fiber_g": 3.8,
+    "query": "steamed french fries"
+  },
+  "steamed_pasta": {
+    "name": "Steamed Pasta (Tomato/Red Sauce)",
+    "kcal": 294,
+    "protein_g": 11.0,
+    "carbs_g": 49.7,
+    "fats_g": 6.0,
+    "fiber_g": 3.5,
+    "query": "steamed spaghetti tomato sauce"
+  },
+  "steamed_mac_and_cheese": {
+    "name": "Steamed Mac and Cheese",
+    "kcal": 340,
+    "protein_g": 14.0,
+    "carbs_g": 38.6,
+    "fats_g": 14.7,
+    "fiber_g": 1.8,
+    "query": "steamed macaroni and cheese"
+  },
+  "steamed_sandwich": {
+    "name": "Steamed Grilled Sandwich",
+    "kcal": 285,
+    "protein_g": 12.0,
+    "carbs_g": 35.0,
+    "fats_g": 11.0,
+    "fiber_g": 3.0,
+    "query": "steamed grilled cheese sandwich"
+  },
+  "steamed_caesar_salad": {
+    "name": "Steamed Caesar Salad",
+    "kcal": 221,
+    "protein_g": 10.0,
+    "carbs_g": 12.9,
+    "fats_g": 14.7,
+    "fiber_g": 3.2,
+    "query": "steamed caesar salad"
+  },
+  "steamed_greek_salad": {
+    "name": "Steamed Greek Salad",
+    "kcal": 175,
+    "protein_g": 6.0,
+    "carbs_g": 11.0,
+    "fats_g": 12.9,
+    "fiber_g": 3.5,
+    "query": "steamed greek salad"
+  },
+  "steamed_fried_rice": {
+    "name": "Steamed Veg Fried Rice",
+    "kcal": 304,
+    "protein_g": 7.5,
+    "carbs_g": 49.7,
+    "fats_g": 8.7,
+    "fiber_g": 2.8,
+    "query": "steamed fried rice"
+  },
+  "steamed_hakka_noodles": {
+    "name": "Steamed Hakka Noodles",
+    "kcal": 322,
+    "protein_g": 8.0,
+    "carbs_g": 51.5,
+    "fats_g": 9.7,
+    "fiber_g": 3.0,
+    "query": "steamed chow mein noodles"
+  },
+  "steamed_momos": {
+    "name": "Steamed Steamed Momos (6 pcs)",
+    "kcal": 221,
+    "protein_g": 9.0,
+    "carbs_g": 33.1,
+    "fats_g": 6.0,
+    "fiber_g": 2.0,
+    "query": "steamed momos dumplings"
+  },
+  "steamed_spring_rolls": {
+    "name": "Steamed Spring Rolls (2 pcs)",
+    "kcal": 202,
+    "protein_g": 5.0,
+    "carbs_g": 25.8,
+    "fats_g": 9.2,
+    "fiber_g": 2.2,
+    "query": "steamed spring rolls"
+  },
+  "steamed_sushi": {
+    "name": "Steamed Sushi Rolls (6 pcs)",
+    "kcal": 230,
+    "protein_g": 11.0,
+    "carbs_g": 38.6,
+    "fats_g": 4.1,
+    "fiber_g": 2.0,
+    "query": "steamed sushi roll"
+  },
+  "steamed_ramen": {
+    "name": "Steamed Ramen Noodle Bowl",
+    "kcal": 396,
+    "protein_g": 18.0,
+    "carbs_g": 51.5,
+    "fats_g": 13.8,
+    "fiber_g": 3.0,
+    "query": "steamed ramen"
+  },
+  "steamed_tacos": {
+    "name": "Steamed Tacos (2 pcs)",
+    "kcal": 313,
+    "protein_g": 16.0,
+    "carbs_g": 31.3,
+    "fats_g": 13.8,
+    "fiber_g": 4.5,
+    "query": "steamed tacos"
+  },
+  "steamed_burrito": {
+    "name": "Steamed Burrito",
+    "kcal": 442,
+    "protein_g": 22.0,
+    "carbs_g": 55.2,
+    "fats_g": 15.6,
+    "fiber_g": 7.0,
+    "query": "steamed burrito"
+  },
+  "steamed_pancakes": {
+    "name": "Steamed Pancakes (2 pcs)",
+    "kcal": 239,
+    "protein_g": 7.0,
+    "carbs_g": 38.6,
+    "fats_g": 6.4,
+    "fiber_g": 1.5,
+    "query": "steamed pancakes"
+  },
+  "steamed_waffles": {
+    "name": "Steamed Waffles",
+    "kcal": 267,
+    "protein_g": 7.5,
+    "carbs_g": 36.8,
+    "fats_g": 10.1,
+    "fiber_g": 1.5,
+    "query": "steamed waffles"
+  },
+  "steamed_donut": {
+    "name": "Steamed Glazed Donut",
+    "kcal": 239,
+    "protein_g": 3.5,
+    "carbs_g": 28.5,
+    "fats_g": 12.9,
+    "fiber_g": 0.8,
+    "query": "steamed glazed doughnut"
+  },
+  "steamed_chocolate_cake": {
+    "name": "Steamed Chocolate Cake Slice",
+    "kcal": 322,
+    "protein_g": 4.5,
+    "carbs_g": 46.0,
+    "fats_g": 13.8,
+    "fiber_g": 2.5,
+    "query": "steamed chocolate cake"
+  },
+  "steamed_ice_cream": {
+    "name": "Steamed Ice Cream (1 scoop)",
+    "kcal": 190,
+    "protein_g": 3.5,
+    "carbs_g": 22.1,
+    "fats_g": 10.1,
+    "fiber_g": 0.7,
+    "query": "steamed ice cream scoop"
+  },
+  "steamed_cheesecake": {
+    "name": "Steamed Cheesecake Slice",
+    "kcal": 350,
+    "protein_g": 6.5,
+    "carbs_g": 29.4,
+    "fats_g": 23.0,
+    "fiber_g": 0.5,
+    "query": "steamed cheesecake"
+  },
+  "steamed_almonds": {
+    "name": "Steamed Almonds (28g / ~23 nuts)",
+    "kcal": 151,
+    "protein_g": 6.0,
+    "carbs_g": 5.6,
+    "fats_g": 13.1,
+    "fiber_g": 3.5,
+    "query": "steamed almonds"
+  },
+  "steamed_peanuts": {
+    "name": "Steamed Roasted Peanuts (28g)",
+    "kcal": 153,
+    "protein_g": 6.9,
+    "carbs_g": 5.5,
+    "fats_g": 12.9,
+    "fiber_g": 2.4,
+    "query": "steamed peanuts"
+  },
+  "steamed_peanut_butter_toast": {
+    "name": "Steamed Peanut Butter Toast",
+    "kcal": 248,
+    "protein_g": 10.0,
+    "carbs_g": 23.9,
+    "fats_g": 13.8,
+    "fiber_g": 3.5,
+    "query": "steamed peanut butter toast"
+  },
+  "steamed_protein_shake": {
+    "name": "Steamed Protein Shake",
+    "kcal": 147,
+    "protein_g": 25.0,
+    "carbs_g": 5.5,
+    "fats_g": 2.8,
+    "fiber_g": 1.0,
+    "query": "steamed protein shake"
+  },
+  "steamed_smoothie_bowl": {
+    "name": "Steamed Fruit Smoothie Bowl",
+    "kcal": 258,
+    "protein_g": 7.0,
+    "carbs_g": 47.8,
+    "fats_g": 5.1,
+    "fiber_g": 6.0,
+    "query": "steamed smoothie bowl"
+  },
+  "steamed_masala_chai": {
+    "name": "Steamed Masala Chai (1 cup)",
+    "kcal": 78,
+    "protein_g": 2.5,
+    "carbs_g": 11.0,
+    "fats_g": 2.8,
+    "fiber_g": 0.0,
+    "query": "steamed masala chai"
+  },
+  "steamed_coffee": {
+    "name": "Steamed Milk Coffee (1 cup)",
+    "kcal": 87,
+    "protein_g": 3.5,
+    "carbs_g": 10.1,
+    "fats_g": 3.7,
+    "fiber_g": 0.0,
+    "query": "steamed latte coffee"
+  },
+  "steamed_lassi": {
+    "name": "Steamed Sweet Lassi (1 glass)",
+    "kcal": 193,
+    "protein_g": 6.5,
+    "carbs_g": 29.4,
+    "fats_g": 5.5,
+    "fiber_g": 0.0,
+    "query": "steamed mango lassi"
+  },
+  "steamed_sprouts_salad": {
+    "name": "Steamed Moong Sprouts Salad",
+    "kcal": 129,
+    "protein_g": 10.0,
+    "carbs_g": 20.2,
+    "fats_g": 1.4,
+    "fiber_g": 6.5,
+    "query": "steamed mung bean sprouts salad"
+  },
+  "steamed_chickpea_salad": {
+    "name": "Steamed Chickpea Salad",
+    "kcal": 193,
+    "protein_g": 9.0,
+    "carbs_g": 27.6,
+    "fats_g": 5.5,
+    "fiber_g": 7.5,
+    "query": "steamed chickpea salad"
+  },
+  "steamed_steamed_rice": {
+    "name": "Steamed Steamed White Rice (1 cup)",
+    "kcal": 189,
+    "protein_g": 4.3,
+    "carbs_g": 40.9,
+    "fats_g": 0.4,
+    "fiber_g": 0.6,
+    "query": "steamed steamed white rice"
+  },
+  "steamed_broccoli": {
+    "name": "Steamed Steamed Broccoli",
+    "kcal": 51,
+    "protein_g": 3.7,
+    "carbs_g": 10.3,
+    "fats_g": 0.6,
+    "fiber_g": 5.1,
+    "query": "steamed broccoli"
+  },
+  "steamed_spinach": {
+    "name": "Steamed Cooked Spinach",
+    "kcal": 38,
+    "protein_g": 5.3,
+    "carbs_g": 6.3,
+    "fats_g": 0.5,
+    "fiber_g": 4.3,
+    "query": "steamed spinach"
+  },
+  "steamed_carrot": {
+    "name": "Steamed Carrots (1 cup)",
+    "kcal": 48,
+    "protein_g": 1.2,
+    "carbs_g": 11.3,
+    "fats_g": 0.3,
+    "fiber_g": 3.6,
+    "query": "steamed carrot vegetable"
+  },
+  "steamed_cauliflower": {
+    "name": "Steamed Cauliflower",
+    "kcal": 27,
+    "protein_g": 2.3,
+    "carbs_g": 5.2,
+    "fats_g": 0.3,
+    "fiber_g": 2.5,
+    "query": "steamed cauliflower"
+  },
+  "steamed_cabbage": {
+    "name": "Steamed Stir-Fried Cabbage",
+    "kcal": 40,
+    "protein_g": 2.0,
+    "carbs_g": 8.3,
+    "fats_g": 0.4,
+    "fiber_g": 3.5,
+    "query": "steamed cabbage"
+  },
+  "steamed_okra_bhindi": {
+    "name": "Steamed Cooked Okra",
+    "kcal": 32,
+    "protein_g": 3.0,
+    "carbs_g": 6.6,
+    "fats_g": 0.3,
+    "fiber_g": 4.0,
+    "query": "steamed okra vegetable"
+  },
+  "steamed_eggplant": {
+    "name": "Steamed Roasted Eggplant",
+    "kcal": 32,
+    "protein_g": 0.8,
+    "carbs_g": 8.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.5,
+    "query": "steamed eggplant"
+  },
+  "steamed_bell_pepper": {
+    "name": "Steamed Bell Pepper",
+    "kcal": 29,
+    "protein_g": 1.0,
+    "carbs_g": 5.5,
+    "fats_g": 0.3,
+    "fiber_g": 2.1,
+    "query": "steamed bell pepper"
+  },
+  "steamed_tomato": {
+    "name": "Steamed Tomatoes (1 cup)",
+    "kcal": 29,
+    "protein_g": 1.6,
+    "carbs_g": 6.4,
+    "fats_g": 0.4,
+    "fiber_g": 2.2,
+    "query": "steamed tomato"
+  },
+  "steamed_cucumber": {
+    "name": "Steamed Cucumber (1 cup)",
+    "kcal": 15,
+    "protein_g": 0.7,
+    "carbs_g": 3.5,
+    "fats_g": 0.1,
+    "fiber_g": 0.5,
+    "query": "steamed cucumber"
+  },
+  "steamed_zucchini": {
+    "name": "Steamed Grilled Zucchini",
+    "kcal": 25,
+    "protein_g": 2.0,
+    "carbs_g": 4.4,
+    "fats_g": 0.5,
+    "fiber_g": 1.8,
+    "query": "steamed zucchini"
+  },
+  "steamed_sweet_potato": {
+    "name": "Steamed Baked Sweet Potato",
+    "kcal": 95,
+    "protein_g": 2.3,
+    "carbs_g": 21.7,
+    "fats_g": 0.2,
+    "fiber_g": 3.8,
+    "query": "steamed sweet potato"
+  },
+  "steamed_boiled_potato": {
+    "name": "Steamed Boiled Potato",
+    "kcal": 120,
+    "protein_g": 2.9,
+    "carbs_g": 27.6,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "steamed boiled potato"
+  },
+  "steamed_mashed_potato": {
+    "name": "Steamed Mashed Potatoes",
+    "kcal": 197,
+    "protein_g": 4.0,
+    "carbs_g": 32.2,
+    "fats_g": 6.4,
+    "fiber_g": 3.2,
+    "query": "steamed mashed potatoes"
+  },
+  "steamed_green_beans": {
+    "name": "Steamed Green Beans",
+    "kcal": 40,
+    "protein_g": 2.4,
+    "carbs_g": 9.1,
+    "fats_g": 0.4,
+    "fiber_g": 4.0,
+    "query": "steamed green beans"
+  },
+  "steamed_green_peas": {
+    "name": "Steamed Green Peas (1 cup)",
+    "kcal": 123,
+    "protein_g": 8.6,
+    "carbs_g": 23.0,
+    "fats_g": 0.4,
+    "fiber_g": 8.8,
+    "query": "steamed green peas"
+  },
+  "steamed_corn": {
+    "name": "Steamed Sweet Corn (1 cup)",
+    "kcal": 121,
+    "protein_g": 5.0,
+    "carbs_g": 26.7,
+    "fats_g": 1.7,
+    "fiber_g": 3.6,
+    "query": "steamed sweet corn"
+  },
+  "steamed_mushrooms": {
+    "name": "Steamed Sauteed Mushrooms",
+    "kcal": 39,
+    "protein_g": 3.4,
+    "carbs_g": 4.8,
+    "fats_g": 0.7,
+    "fiber_g": 2.2,
+    "query": "steamed mushrooms"
+  },
+  "steamed_asparagus": {
+    "name": "Steamed Grilled Asparagus",
+    "kcal": 37,
+    "protein_g": 4.3,
+    "carbs_g": 6.8,
+    "fats_g": 0.4,
+    "fiber_g": 3.6,
+    "query": "steamed asparagus"
+  },
+  "steamed_beetroot": {
+    "name": "Steamed Boiled Beetroot",
+    "kcal": 69,
+    "protein_g": 2.9,
+    "carbs_g": 15.6,
+    "fats_g": 0.3,
+    "fiber_g": 3.4,
+    "query": "steamed beetroot"
+  },
+  "steamed_radish": {
+    "name": "Steamed Radish",
+    "kcal": 17,
+    "protein_g": 0.8,
+    "carbs_g": 3.6,
+    "fats_g": 0.1,
+    "fiber_g": 1.9,
+    "query": "steamed radish"
+  },
+  "steamed_turnip": {
+    "name": "Steamed Cooked Turnip",
+    "kcal": 31,
+    "protein_g": 1.1,
+    "carbs_g": 7.3,
+    "fats_g": 0.1,
+    "fiber_g": 3.1,
+    "query": "steamed turnip"
+  },
+  "steamed_pumpkin": {
+    "name": "Steamed Roasted Pumpkin",
+    "kcal": 45,
+    "protein_g": 1.8,
+    "carbs_g": 11.0,
+    "fats_g": 0.2,
+    "fiber_g": 2.7,
+    "query": "steamed pumpkin"
+  },
+  "steamed_bitter_gourd": {
+    "name": "Steamed Karela Fry",
+    "kcal": 87,
+    "protein_g": 2.0,
+    "carbs_g": 9.2,
+    "fats_g": 5.1,
+    "fiber_g": 3.8,
+    "query": "steamed bitter gourd"
+  },
+  "steamed_bottle_gourd": {
+    "name": "Steamed Lauki Sabzi",
+    "kcal": 64,
+    "protein_g": 1.5,
+    "carbs_g": 8.3,
+    "fats_g": 2.9,
+    "fiber_g": 2.5,
+    "query": "steamed bottle gourd"
+  },
+  "steamed_ridge_gourd": {
+    "name": "Steamed Turai Sabzi",
+    "kcal": 60,
+    "protein_g": 1.4,
+    "carbs_g": 7.8,
+    "fats_g": 2.8,
+    "fiber_g": 2.4,
+    "query": "steamed ridge gourd"
+  },
+  "steamed_drumstick": {
+    "name": "Steamed Drumstick Curry",
+    "kcal": 83,
+    "protein_g": 3.0,
+    "carbs_g": 11.0,
+    "fats_g": 3.2,
+    "fiber_g": 4.0,
+    "query": "steamed moringa drumstick"
+  },
+  "steamed_brussels_sprouts": {
+    "name": "Steamed Brussels Sprouts",
+    "kcal": 52,
+    "protein_g": 4.0,
+    "carbs_g": 10.2,
+    "fats_g": 0.7,
+    "fiber_g": 4.1,
+    "query": "steamed brussels sprouts"
+  },
+  "steamed_kale": {
+    "name": "Steamed Kale Salad",
+    "kcal": 45,
+    "protein_g": 4.3,
+    "carbs_g": 8.1,
+    "fats_g": 0.8,
+    "fiber_g": 3.6,
+    "query": "steamed kale"
+  },
+  "steamed_lettuce": {
+    "name": "Steamed Lettuce",
+    "kcal": 14,
+    "protein_g": 1.4,
+    "carbs_g": 2.7,
+    "fats_g": 0.2,
+    "fiber_g": 1.3,
+    "query": "steamed lettuce"
+  },
+  "steamed_chicken_curry": {
+    "name": "Steamed Chicken Curry",
+    "kcal": 285,
+    "protein_g": 26.0,
+    "carbs_g": 8.3,
+    "fats_g": 17.5,
+    "fiber_g": 1.5,
+    "query": "steamed chicken curry"
+  },
+  "steamed_roast_chicken": {
+    "name": "Steamed Roast Chicken",
+    "kcal": 248,
+    "protein_g": 31.0,
+    "carbs_g": 0.0,
+    "fats_g": 13.8,
+    "fiber_g": 0.0,
+    "query": "steamed roast chicken"
+  },
+  "steamed_chicken_wings": {
+    "name": "Steamed Chicken Wings (4 pcs)",
+    "kcal": 331,
+    "protein_g": 24.0,
+    "carbs_g": 3.7,
+    "fats_g": 24.8,
+    "fiber_g": 0.2,
+    "query": "steamed chicken wings"
+  },
+  "steamed_chicken_nuggets": {
+    "name": "Steamed Chicken Nuggets (6 pcs)",
+    "kcal": 258,
+    "protein_g": 15.0,
+    "carbs_g": 16.6,
+    "fats_g": 15.6,
+    "fiber_g": 1.0,
+    "query": "steamed chicken nuggets"
+  },
+  "steamed_fried_chicken": {
+    "name": "Steamed Fried Chicken (1 pc)",
+    "kcal": 294,
+    "protein_g": 22.0,
+    "carbs_g": 10.1,
+    "fats_g": 19.3,
+    "fiber_g": 0.5,
+    "query": "steamed fried chicken"
+  },
+  "steamed_chicken_kebab": {
+    "name": "Steamed Chicken Kebab",
+    "kcal": 230,
+    "protein_g": 28.0,
+    "carbs_g": 3.7,
+    "fats_g": 12.0,
+    "fiber_g": 0.8,
+    "query": "steamed chicken kebab"
+  },
+  "steamed_mutton_curry": {
+    "name": "Steamed Mutton Curry",
+    "kcal": 331,
+    "protein_g": 25.0,
+    "carbs_g": 7.4,
+    "fats_g": 23.0,
+    "fiber_g": 1.5,
+    "query": "steamed mutton curry"
+  },
+  "steamed_lamb_chops": {
+    "name": "Steamed Grilled Lamb Chops",
+    "kcal": 313,
+    "protein_g": 28.0,
+    "carbs_g": 0.0,
+    "fats_g": 23.0,
+    "fiber_g": 0.0,
+    "query": "steamed lamb chops"
+  },
+  "steamed_beef_steak": {
+    "name": "Steamed Grilled Beef Steak",
+    "kcal": 304,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 18.4,
+    "fiber_g": 0.0,
+    "query": "steamed beef steak"
+  },
+  "steamed_beef_burger_patty": {
+    "name": "Steamed Beef Patty",
+    "kcal": 267,
+    "protein_g": 24.0,
+    "carbs_g": 0.0,
+    "fats_g": 19.3,
+    "fiber_g": 0.0,
+    "query": "steamed beef patty"
+  },
+  "steamed_pork_chops": {
+    "name": "Steamed Pork Chops",
+    "kcal": 271,
+    "protein_g": 29.0,
+    "carbs_g": 0.0,
+    "fats_g": 17.5,
+    "fiber_g": 0.0,
+    "query": "steamed pork chops"
+  },
+  "steamed_bacon": {
+    "name": "Steamed Cooked Bacon (3 slices)",
+    "kcal": 147,
+    "protein_g": 11.0,
+    "carbs_g": 0.5,
+    "fats_g": 11.5,
+    "fiber_g": 0.0,
+    "query": "steamed bacon"
+  },
+  "steamed_turkey_breast": {
+    "name": "Steamed Roasted Turkey Breast",
+    "kcal": 170,
+    "protein_g": 36.0,
+    "carbs_g": 0.0,
+    "fats_g": 3.2,
+    "fiber_g": 0.0,
+    "query": "steamed roast turkey"
+  },
+  "steamed_duck_roast": {
+    "name": "Steamed Roast Duck",
+    "kcal": 313,
+    "protein_g": 23.0,
+    "carbs_g": 0.0,
+    "fats_g": 25.8,
+    "fiber_g": 0.0,
+    "query": "steamed roast duck"
+  },
+  "steamed_prawn_curry": {
+    "name": "Steamed Prawn Curry",
+    "kcal": 230,
+    "protein_g": 22.0,
+    "carbs_g": 7.4,
+    "fats_g": 12.9,
+    "fiber_g": 1.2,
+    "query": "steamed prawn curry"
+  },
+  "steamed_garlic_shrimp": {
+    "name": "Steamed Garlic Butter Shrimp",
+    "kcal": 193,
+    "protein_g": 24.0,
+    "carbs_g": 1.8,
+    "fats_g": 10.1,
+    "fiber_g": 0.2,
+    "query": "steamed garlic shrimp"
+  },
+  "steamed_fish_fry": {
+    "name": "Steamed Masala Fish Fry",
+    "kcal": 267,
+    "protein_g": 24.0,
+    "carbs_g": 7.4,
+    "fats_g": 16.6,
+    "fiber_g": 0.8,
+    "query": "steamed fish fry"
+  },
+  "steamed_tuna_salad": {
+    "name": "Steamed Tuna Salad",
+    "kcal": 202,
+    "protein_g": 24.0,
+    "carbs_g": 3.7,
+    "fats_g": 11.0,
+    "fiber_g": 0.8,
+    "query": "steamed tuna salad"
+  },
+  "steamed_crab_curry": {
+    "name": "Steamed Crab Masala",
+    "kcal": 221,
+    "protein_g": 22.0,
+    "carbs_g": 6.4,
+    "fats_g": 12.0,
+    "fiber_g": 1.0,
+    "query": "steamed crab curry"
+  },
+  "steamed_keema_matar": {
+    "name": "Steamed Mutton Keema Matar",
+    "kcal": 322,
+    "protein_g": 24.0,
+    "carbs_g": 11.0,
+    "fats_g": 21.2,
+    "fiber_g": 3.5,
+    "query": "steamed keema matar"
+  },
+  "steamed_chocolate_chip_cookie": {
+    "name": "Steamed Chocolate Chip Cookie (2 pcs)",
+    "kcal": 202,
+    "protein_g": 2.5,
+    "carbs_g": 27.6,
+    "fats_g": 10.1,
+    "fiber_g": 1.2,
+    "query": "steamed chocolate chip cookie"
+  },
+  "steamed_oatmeal_cookie": {
+    "name": "Steamed Oatmeal Raisin Cookie (2 pcs)",
+    "kcal": 184,
+    "protein_g": 3.0,
+    "carbs_g": 27.6,
+    "fats_g": 7.4,
+    "fiber_g": 2.0,
+    "query": "steamed oatmeal cookie"
+  },
+  "steamed_butter_cookie": {
+    "name": "Steamed Butter Cookies (3 pcs)",
+    "kcal": 175,
+    "protein_g": 2.2,
+    "carbs_g": 22.1,
+    "fats_g": 8.7,
+    "fiber_g": 0.5,
+    "query": "steamed butter cookies"
+  },
+  "steamed_oreo_cookies": {
+    "name": "Steamed Cream Sandwich Cookies (3 pcs)",
+    "kcal": 147,
+    "protein_g": 1.5,
+    "carbs_g": 23.0,
+    "fats_g": 6.4,
+    "fiber_g": 1.0,
+    "query": "steamed oreo cookies"
+  },
+  "steamed_digestive_biscuit": {
+    "name": "Steamed Digestive Biscuits (2 pcs)",
+    "kcal": 129,
+    "protein_g": 2.0,
+    "carbs_g": 18.4,
+    "fats_g": 5.5,
+    "fiber_g": 1.5,
+    "query": "steamed digestive biscuit"
+  },
+  "steamed_marie_biscuit": {
+    "name": "Steamed Marie Biscuits (4 pcs)",
+    "kcal": 110,
+    "protein_g": 2.2,
+    "carbs_g": 20.2,
+    "fats_g": 2.3,
+    "fiber_g": 0.6,
+    "query": "steamed marie biscuit"
+  },
+  "steamed_parle_g": {
+    "name": "Steamed Glucose Biscuits (5 pcs)",
+    "kcal": 124,
+    "protein_g": 2.0,
+    "carbs_g": 22.1,
+    "fats_g": 3.2,
+    "fiber_g": 0.5,
+    "query": "steamed glucose biscuit"
+  },
+  "steamed_potato_chips": {
+    "name": "Steamed Potato Chips (28g)",
+    "kcal": 140,
+    "protein_g": 2.0,
+    "carbs_g": 13.8,
+    "fats_g": 9.2,
+    "fiber_g": 1.4,
+    "query": "steamed potato chips"
+  },
+  "steamed_tortilla_chips": {
+    "name": "Steamed Tortilla Chips (28g)",
+    "kcal": 129,
+    "protein_g": 2.0,
+    "carbs_g": 17.5,
+    "fats_g": 6.4,
+    "fiber_g": 1.5,
+    "query": "steamed tortilla chips"
+  },
+  "steamed_popcorn": {
+    "name": "Steamed Popcorn (3 cups)",
+    "kcal": 101,
+    "protein_g": 3.0,
+    "carbs_g": 17.5,
+    "fats_g": 2.8,
+    "fiber_g": 3.5,
+    "query": "steamed popcorn"
+  }
+}
