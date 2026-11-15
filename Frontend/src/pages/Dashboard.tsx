@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Flame,
@@ -18,6 +18,7 @@ import {
 import { api } from '../services/api';
 import { DashboardSummary } from '../types';
 import { getLocalDateString } from '../utils/dateUtils';
+import { CameraCaptureModal } from '../components/CameraCaptureModal';
 
 // Zero initial state: completely clean, no mock or random data
 const ZERO_SUMMARY: DashboardSummary = {
@@ -52,6 +53,9 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [summary, setSummary] = useState<DashboardSummary>(ZERO_SUMMARY);
   const [showAddChoice, setShowAddChoice] = useState(false);
+  const [showLiveCamera, setShowLiveCamera] = useState(false);
+
+  const directUploadInputRef = useRef<HTMLInputElement>(null);
 
   const loadData = async () => {
     try {
@@ -69,6 +73,19 @@ export const Dashboard: React.FC = () => {
     loadData();
   }, []);
 
+  const handleFileCapturedFromHome = (file: File) => {
+    setShowAddChoice(false);
+    setShowLiveCamera(false);
+    navigate('/add-entry', { state: { capturedFile: file } });
+  };
+
+  const handleDirectUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileCapturedFromHome(file);
+    }
+  };
+
   const hasEntries = summary.today_calories.total > 0 || summary.today_protein.total > 0 || summary.entries_summary.count > 0;
   const calPercent = Math.min(100, Math.round(summary.today_calories.percentage));
   const protPercent = Math.min(100, Math.round(summary.today_protein.percentage));
@@ -79,6 +96,22 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-4 pb-20 select-none">
+      {/* Hidden synchronous file input for direct Gallery/Upload selection */}
+      <input
+        ref={directUploadInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/jpg,image/*"
+        onChange={handleDirectUploadChange}
+        className="hidden"
+      />
+
+      {/* Live Camera Viewfinder Modal */}
+      <CameraCaptureModal
+        isOpen={showLiveCamera}
+        onClose={() => setShowLiveCamera(false)}
+        onCapture={handleFileCapturedFromHome}
+      />
+
       {/* ================= REPHRASED TOP MOTIVATIONAL BANNER ================= */}
       {!hasEntries ? (
         <div className="bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent border border-emerald-500/20 rounded-2xl p-4 relative overflow-hidden">
@@ -96,7 +129,7 @@ export const Dashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowAddChoice(true)}
-                className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-[11px] font-bold rounded-xl shadow-xs transition-all"
+                className="btn-tactile mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-[11px] font-bold rounded-xl shadow-sm"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Log Today's First Meal</span>
@@ -112,9 +145,13 @@ export const Dashboard: React.FC = () => {
               {summary.entries_summary.count} {summary.entries_summary.count === 1 ? 'meal' : 'meals'} logged today
             </span>
           </div>
-          <Link to="/add-entry" className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setShowAddChoice(true)}
+            className="btn-tactile text-xs font-bold text-emerald-700 hover:text-emerald-800 bg-white px-2.5 py-1 rounded-lg border border-emerald-200/80 shadow-2xs flex items-center gap-1"
+          >
             <span>+ Add More</span>
-          </Link>
+          </button>
         </div>
       )}
 
@@ -176,15 +213,15 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* ================= 3. 2X2 QUICK ACTION SHORTCUTS (Matching ui-design-1.png Mobile Screen 1) ================= */}
+      {/* ================= 3. 2X2 QUICK ACTION SHORTCUTS ================= */}
       <div className="grid grid-cols-2 gap-3 pt-1">
         {/* Add Entry */}
         <button
           type="button"
           onClick={() => setShowAddChoice(true)}
-          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform text-left cursor-pointer"
+          className="card-tactile bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] group"
         >
-          <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-emerald-600 border border-slate-100 shadow-2xs">
+          <div className="w-11 h-11 rounded-xl bg-emerald-50/70 group-hover:bg-emerald-100/80 flex items-center justify-center text-emerald-600 border border-emerald-100 shadow-2xs transition-colors">
             <PlusSquare className="w-5 h-5 stroke-[2]" />
           </div>
           <span className="text-xs font-semibold text-slate-800">Add Entry</span>
@@ -193,9 +230,9 @@ export const Dashboard: React.FC = () => {
         {/* Calendar */}
         <Link
           to="/calendar"
-          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform"
+          className="card-tactile bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] group"
         >
-          <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-blue-600 border border-slate-100 shadow-2xs">
+          <div className="w-11 h-11 rounded-xl bg-blue-50/70 group-hover:bg-blue-100/80 flex items-center justify-center text-blue-600 border border-blue-100 shadow-2xs transition-colors">
             <Calendar className="w-5 h-5 stroke-[2]" />
           </div>
           <span className="text-xs font-semibold text-slate-800">Calendar</span>
@@ -204,9 +241,9 @@ export const Dashboard: React.FC = () => {
         {/* Reports */}
         <Link
           to="/reports/weekly"
-          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform"
+          className="card-tactile bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] group"
         >
-          <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-orange-500 border border-slate-100 shadow-2xs">
+          <div className="w-11 h-11 rounded-xl bg-orange-50/70 group-hover:bg-orange-100/80 flex items-center justify-center text-orange-500 border border-orange-100 shadow-2xs transition-colors">
             <BarChart3 className="w-5 h-5 stroke-[2]" />
           </div>
           <span className="text-xs font-semibold text-slate-800">Reports</span>
@@ -215,16 +252,16 @@ export const Dashboard: React.FC = () => {
         {/* Weight & Goals */}
         <Link
           to="/weight-goals"
-          className="bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] active:scale-[0.98] transition-transform"
+          className="card-tactile bg-white rounded-2xl p-4 flex flex-col items-center justify-center text-center gap-2.5 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] group"
         >
-          <div className="w-11 h-11 rounded-xl bg-slate-50 flex items-center justify-center text-purple-600 border border-slate-100 shadow-2xs">
+          <div className="w-11 h-11 rounded-xl bg-purple-50/70 group-hover:bg-purple-100/80 flex items-center justify-center text-purple-600 border border-purple-100 shadow-2xs transition-colors">
             <Scale className="w-5 h-5 stroke-[2]" />
           </div>
           <span className="text-xs font-semibold text-slate-800">Weight & Goals</span>
         </Link>
       </div>
 
-      {/* ================= 4. TODAY'S ENTRIES LIST (Pure Clean State) ================= */}
+      {/* ================= 4. TODAY'S ENTRIES LIST ================= */}
       <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">Today's Meals</h4>
@@ -243,36 +280,51 @@ export const Dashboard: React.FC = () => {
             </div>
             <p className="text-xs font-semibold text-slate-700">No meals logged yet today</p>
             <p className="text-[11px] text-slate-400 mt-0.5 max-w-[220px]">
-              Analyze a meal photo, upload a screenshot, or paste text to start tracking your daily progress.
+              Snap a live food photo or upload from gallery to track your daily progress.
             </p>
-            <Link
-              to="/add-entry"
-              className="mt-3 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+            <button
+              type="button"
+              onClick={() => setShowAddChoice(true)}
+              className="btn-tactile mt-3 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs"
             >
               + Add Entry
-            </Link>
+            </button>
           </div>
         ) : (
           <div className="divide-y divide-slate-100">
             {todayEntries.map((entry) => (
-              <div key={entry.id} className="py-2.5 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded-md">
-                    {entry.meal_type || 'Meal'}
-                  </span>
-                  <span className="text-xs font-bold text-slate-900">
-                    {entry.calories_kcal} <span className="text-[10px] font-normal text-slate-500">kcal</span>
-                  </span>
-                  <span className="text-xs font-bold text-emerald-600">
-                    {entry.protein_g}g
-                  </span>
-                  {entry.fiber_g && entry.fiber_g > 0 ? (
-                    <span className="text-[10px] font-semibold text-blue-600">
-                      {entry.fiber_g}g fib
+              <div key={entry.id} className="py-2.5 flex items-center justify-between gap-2">
+                <div className="space-y-0.5 min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-1.5 py-0.5 rounded-md">
+                      {entry.meal_type || 'Meal'}
                     </span>
-                  ) : null}
+                    {entry.food_name && (
+                      <span className="text-xs font-bold text-slate-800 truncate">
+                        {entry.food_name}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="font-bold text-slate-900">
+                      {entry.calories_kcal} <span className="text-[10px] font-normal text-slate-500">kcal</span>
+                    </span>
+                    <span className="font-bold text-emerald-600">
+                      {entry.protein_g}g prot
+                    </span>
+                    {entry.carbs_g ? (
+                      <span className="text-[10px] font-semibold text-slate-500">
+                        {entry.carbs_g}g carb
+                      </span>
+                    ) : null}
+                    {entry.fiber_g && entry.fiber_g > 0 ? (
+                      <span className="text-[10px] font-semibold text-blue-600">
+                        {entry.fiber_g}g fib
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <span className="text-[10px] text-slate-400 font-medium">{entry.time}</span>
                 </div>
               </div>
@@ -283,7 +335,7 @@ export const Dashboard: React.FC = () => {
 
       {/* ================= 2-OPTION ACTION SHEET FOR ADD ENTRY ================= */}
       {showAddChoice && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150"
           onClick={() => setShowAddChoice(false)}
         >
@@ -306,39 +358,48 @@ export const Dashboard: React.FC = () => {
             </div>
 
             <div className="space-y-2.5 pt-1">
-              {/* Option 1: Open Camera */}
+              {/* Option 1: Open Camera (Launches Live Camera Viewfinder directly on tap!) */}
               <button
                 type="button"
                 onClick={() => {
                   setShowAddChoice(false);
-                  navigate('/add-entry?mode=camera');
+                  setShowLiveCamera(true);
                 }}
-                className="w-full p-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-2xl flex items-center gap-3.5 shadow-sm active:scale-95 transition-all text-left cursor-pointer"
+                className="btn-tactile w-full p-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-2xl flex items-center gap-3.5 shadow-md text-left"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                   <Camera className="w-5 h-5 text-white stroke-[2.2]" />
                 </div>
                 <div>
                   <div className="text-xs font-bold leading-tight">1. Open Camera</div>
-                  <div className="text-[10.5px] text-emerald-100 leading-tight mt-0.5">Snap a live picture of your food plate</div>
+                  <div className="text-[10.5px] text-emerald-100 leading-tight mt-0.5">
+                    Snap a live picture via device camera
+                  </div>
                 </div>
               </button>
 
-              {/* Option 2: Upload Image */}
+              {/* Option 2: Upload Image (Synchronously opens gallery picker on tap!) */}
               <button
                 type="button"
                 onClick={() => {
-                  setShowAddChoice(false);
-                  navigate('/add-entry?mode=upload');
+                  if (directUploadInputRef.current) {
+                    directUploadInputRef.current.value = '';
+                    directUploadInputRef.current.click();
+                  } else {
+                    setShowAddChoice(false);
+                    navigate('/add-entry');
+                  }
                 }}
-                className="w-full p-3.5 bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 rounded-2xl flex items-center gap-3.5 shadow-2xs active:scale-95 transition-all text-left cursor-pointer"
+                className="btn-tactile w-full p-3.5 bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-800 rounded-2xl flex items-center gap-3.5 shadow-2xs text-left"
               >
-                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 text-slate-600">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 text-blue-600">
                   <ImageIcon className="w-5 h-5 stroke-[2.2]" />
                 </div>
                 <div>
                   <div className="text-xs font-bold leading-tight">2. Upload Image</div>
-                  <div className="text-[10.5px] text-slate-500 leading-tight mt-0.5">Choose an existing photo from gallery or files</div>
+                  <div className="text-[10.5px] text-slate-500 leading-tight mt-0.5">
+                    Choose an existing photo from gallery or files
+                  </div>
                 </div>
               </button>
             </div>

@@ -5,6 +5,8 @@ from pydantic import BaseModel, Field
 class EntryBase(BaseModel):
     date: str = Field(..., description="Date formatted as YYYY-MM-DD")
     time: str = Field(..., description="Time formatted as HH:MM or HH:MM AM/PM")
+    food_name: Optional[str] = Field(default=None, description="Detected or entered food dish name")
+    food_items: Optional[str] = Field(default=None, description="Sub-items or ingredients summary")
     calories_kcal: float = Field(..., ge=0, description="Total Calories in kcal")
     protein_g: float = Field(..., ge=0, description="Total Protein in grams")
     carbs_g: Optional[float] = Field(default=0.0, ge=0, description="Total Carbohydrates in grams")
@@ -19,6 +21,8 @@ class EntryCreate(EntryBase):
 class EntryUpdate(BaseModel):
     date: Optional[str] = None
     time: Optional[str] = None
+    food_name: Optional[str] = None
+    food_items: Optional[str] = None
     calories_kcal: Optional[float] = Field(None, ge=0)
     protein_g: Optional[float] = Field(None, ge=0)
     carbs_g: Optional[float] = Field(None, ge=0)

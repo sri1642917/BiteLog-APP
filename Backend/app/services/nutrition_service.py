@@ -94,6 +94,8 @@ class NutritionService:
                     "id": e.id,
                     "date": e.date,
                     "time": e.time,
+                    "food_name": getattr(e, 'food_name', None),
+                    "food_items": getattr(e, 'food_items', None),
                     "calories_kcal": e.calories_kcal,
                     "protein_g": e.protein_g,
                     "carbs_g": getattr(e, 'carbs_g', 0.0) or 0.0,

@@ -22,6 +22,10 @@ def init_db():
                     conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN fiber_g FLOAT DEFAULT 0.0")
                 if "meal_type" not in cols:
                     conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN meal_type VARCHAR(30) DEFAULT 'Lunch'")
+                if "food_name" not in cols:
+                    conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN food_name VARCHAR(160) DEFAULT NULL")
+                if "food_items" not in cols:
+                    conn.exec_driver_sql("ALTER TABLE entries ADD COLUMN food_items VARCHAR(400) DEFAULT NULL")
                 conn.commit()
     except Exception as e:
         print(f"Schema migration check: {e}")

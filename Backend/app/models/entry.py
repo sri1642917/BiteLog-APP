@@ -8,6 +8,8 @@ class Entry(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     date = Column(String(10), nullable=False, index=True) # YYYY-MM-DD
     time = Column(String(8), nullable=False) # HH:MM or HH:MM:SS
+    food_name = Column(String(160), nullable=True)
+    food_items = Column(String(400), nullable=True)
     calories_kcal = Column(Float, nullable=False)
     protein_g = Column(Float, nullable=False)
     carbs_g = Column(Float, default=0.0, nullable=True)

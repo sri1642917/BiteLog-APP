@@ -154,12 +154,12 @@ export const api = {
 
   parseFoodPhoto: async (
     file: File,
-    modelTier: string = 'e2b',
+    modelTier: string = 'e4b',
     portionSize: string = 'normal',
     cookingStyle: string = 'home',
     plateSize: string = 'medium'
   ): Promise<FoodVisionResult> => {
-    // 1. Try server endpoint first
+    const localRes = await LocalFoodVision.analyzeFoodPhoto(file, modelTier, portionSize, cookingStyle, plateSize);
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -172,20 +172,24 @@ export const api = {
         body: formData,
       });
       if (isJsonResponse(res)) {
-        return await res.json();
+        const serverRes = await res.json();
+        return {
+          ...serverRes,
+          ...localRes,
+        };
       }
-    } catch (e) {
-      // Server not running on phone -> fallback to on-device engine
+    } catch {
+      // Server not running on phone -> use on-device engine directly
     }
-
-    // 2. On-Device Local Food Vision Engine (Runs directly in mobile browser / WebView)
-    return await LocalFoodVision.analyzeFoodPhoto(file, modelTier, portionSize, cookingStyle, plateSize);
+    return localRes;
   },
 
   parsePacketLabel: async (
     file: File,
-    quantity: number = 1.0
+    quantity: number = 1.0,
+    presetId?: string
   ): Promise<PacketNutritionResult> => {
+    const localRes = LocalFoodVision.analyzePacketLabel(file, quantity, presetId);
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -195,11 +199,15 @@ export const api = {
         body: formData,
       });
       if (isJsonResponse(res)) {
-        return await res.json();
+        const serverRes = await res.json();
+        return {
+          ...serverRes,
+          ...localRes,
+        };
       }
-    } catch (e) {}
+    } catch {}
 
-    return LocalFoodVision.analyzePacketLabel(file, quantity);
+    return localRes;
   },
 
   parseImage: async (file: File): Promise<ParseResult> => {

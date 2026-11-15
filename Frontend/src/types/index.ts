@@ -2,6 +2,8 @@ export interface Entry {
   id: number;
   date: string;
   time: string;
+  food_name?: string;
+  food_items?: string;
   calories_kcal: number;
   protein_g: number;
   carbs_g?: number;

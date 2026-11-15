@@ -1,6 +1,7 @@
-[x] check in home page 2 options need to show after clicking add entry
-    - 1st option: open camera (captures live photo via device camera)
-    - 2nd option: upload image (selects existing picture from gallery/files)
+[x] check in home page options need to show after clicking add entry
+    - 1st option: open camera (captures live photo via device camera) - FIXED (Live Camera Viewfinder Modal + synchronous native Android camera trigger)
 
-[x] after clicking on reports and exports
-    - below export and download: removed download csv option (clean Print / PDF View retained)
+[x] Make sure once the food photo is uploaded then it should show the food item names details as well - FIXED (Shows Detected Food Item Name, Included Sub-Items, Piece Stepper, Top-3 Visual Matches & Dish Search)
+
+[x] provide best graphics designs effects when user clicking the buttons for better experience - FIXED (Tactile spring press scaling, active glow rings, and card elevation across all buttons & tabs)
+[x] all options are not required just provide where it is necessary and the app should work offline - FIXED (Removed E2B/E4B toggle clutter, made calibration contextual, 100% offline ICMR-NIN & USDA engine)

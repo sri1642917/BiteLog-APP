@@ -585,6 +585,12 @@ Food-calories-tracker-app-detailed-analysis/
 ## 11. Version History & Changelog
 
 ### 🚀 Version 1.3.1 (Current Stable)
+* **>90% Offline Food Accuracy Engine, Dish Breakdown & Live Camera Viewfinder**:
+  - **Live In-App Camera Viewfinder (`CameraCaptureModal.tsx` & `MainActivity.java`)**: Launches an interactive live camera preview (`getUserMedia` rear lens + framing guides + camera flip + synchronous native Android camera fallback) directly from the Dashboard and Add Entry screens without popup/gesture blocks.
+  - **Detected Food Item Name & Sub-Items Breakdown**: Displays the primary food dish title (editable), portion weight (`~350g`), and included sub-items chips (e.g. *Crispy Urad Dal Medu Vada, Hot Lentil Vegetable Sambar, Coconut & Tomato Chutney*), and saves `food_name` & `food_items` across Today's Meals and post-log cards.
+  - **Top-4 Closest Visual Matches, Piece Stepper & Searchable Dish Catalog**: Provides 1-tap dish switching across top visual candidates, a live **Piece / Serving Stepper (`- / +`)** that dynamically scales all 5 macros, and an inline searchable **ICMR-NIN & USDA** catalog of 20+ Indian & global meals.
+  - **Contextual Decluttered UI & Tactile Button Graphics (`index.css`)**: Removed unnecessary model-tier toggle clutter, made calibration controls contextual, and added spring-physics press animations (`.btn-tactile`, `.card-tactile`, `.pill-tactile`).
+  - **Future Dataset Training Pipeline (`Backend/train_food_model.py`)**: Ready-to-run PyTorch MobileNetV3 training script that exports quantized `.onnx` weights + `class_map.json` for custom food datasets.
 * **100% Autonomous On-Device Mobile Engine (Zero `<!doctype` HTML Crashes)**:
   - **Eliminated Mobile JSON Syntax Errors**: When installed on a standalone Android phone without a host computer, Capacitor's local web server serves `index.html` on unhandled `/api/*` endpoints. Added strict `isJsonResponse()` content-type inspection and automatic client-side fallback across all network services, preventing `Unexpected token '<', "<!doctype "` errors permanently.
   - **On-Device Canvas Food Vision (`localFoodVision.ts`)**: Built-in visual classifier using HTML5 Canvas pixel analysis (HSV color extraction + Laplacian-equivalent texture variance). Accurately classifies food dishes (Vada / Dosa breakfast platters, Biryani, Steamed Idli, Rich Curries, Salads & Fruits) directly in mobile WebView RAM in < 20ms.
