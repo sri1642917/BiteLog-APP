@@ -335,8 +335,8 @@ flowchart LR
    - Saves meal entries (`food_name`, `food_items`, 5 macros) to SQLite, blocks accidental double-taps within 15s (`HTTP 409`), and computes real-time Dashboard totals & remaining targets.
 4. **Calendar & Reports (`calendar.py`, `reports.py` → `report_service.py`)**:
    - Aggregates **Day, Weekly, Monthly, Quarterly, 6-Month, and Yearly** nutrition trends, powers monthly calendar heatmaps, and exports CSV reports.
-5. **Weight, Auth, Backup & Offline Multi-Language (`weight.py`, `auth.py`, `backup.py`, `i18n.ts`)**:
-   - Computes **BMI, BMR (Mifflin-St Jeor), TDEE**, and goal ETA (`weight_service.py`), handles offline salted `PBKDF2-SHA256` auth (`auth_service.py`), provides full JSON backup/restore/purge, and supports **100% offline English, Telugu (`తెలుగు`), and Hindi (`हिन्दी`)** UI switching via `EN | తె | हि`.
+5. **Weight, Set Goal, Auth, Backup & Offline Multi-Language (`weight.py`, `WeightGoals.tsx`, `auth.py`, `backup.py`, `i18n.ts`)**:
+   - Computes **BMI, BMR (Mifflin-St Jeor), TDEE**, and goal ETA (`weight_service.py`), provides a **Set Your Goal** selector (**1. Weight Loss `-500 kcal`**, **2. Weight Gain `+350 kcal`**, **3. Maintain `TDEE ±0`**) with Current/Target Weight inputs, 1-tap macro target updates, and personalized suggestions, handles offline salted `PBKDF2-SHA256` auth, and supports **100% offline English, Telugu (`తెలుగు`), and Hindi (`हिन्दी`)** UI switching.
 
 ---
 

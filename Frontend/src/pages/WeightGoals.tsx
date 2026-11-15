@@ -41,6 +41,8 @@ export const WeightGoals: React.FC = () => {
   const [targetWeightStr, setTargetWeightStr] = useState<string>('65');
   const [gender, setGender] = useState<string>('male');
   const [activityLevel, setActivityLevel] = useState<string>('moderate');
+  const [goalMode, setGoalMode] = useState<'loss' | 'gain' | 'maintain'>('loss');
+  const [goalSavedMsg, setGoalSavedMsg] = useState<string | null>(null);
 
   const loadAll = async () => {
     try {
@@ -137,6 +139,194 @@ export const WeightGoals: React.FC = () => {
 
   return (
     <div className="max-w-xl mx-auto space-y-6 pb-20">
+      {/* Set Your Goal (1. Weight Loss, 2. Weight Gain, 3. Maintain Weight) */}
+      {(() => {
+        const curW = parseFloat(currentWeightStr) || stats.current_weight_kg || 70;
+        const tarW = goalMode === 'maintain' ? curW : (parseFloat(targetWeightStr) || stats.target_weight_kg || 65);
+        const h = parseFloat(heightStr) || 175;
+        const birthYear = parseInt((dob || '1995-01-01').split('-')[0], 10) || 1995;
+        const age = Math.max(15, Math.min(90, new Date().getFullYear() - birthYear));
+        const bmr = 10 * curW + 6.25 * h - 5 * age + (gender === 'female' ? -161 : 5);
+        const actMult =
+          activityLevel === 'sedentary' ? 1.2 :
+          activityLevel === 'light' ? 1.375 :
+          activityLevel === 'active' ? 1.725 :
+          activityLevel === 'very_active' ? 1.9 : 1.55;
+        const tdee = Math.round(bmr * actMult);
+
+        const minCal = gender === 'female' ? 1200 : 1500;
+        const targetCal =
+          goalMode === 'loss' ? Math.max(minCal, tdee - 500) :
+          goalMode === 'gain' ? tdee + 350 : tdee;
+
+        const targetProtein = Math.round(curW * (goalMode === 'maintain' ? 1.5 : 1.8));
+        const targetFats = Math.round((targetCal * 0.25) / 9);
+        const targetCarbs = Math.max(50, Math.round((targetCal - (targetProtein * 4 + targetFats * 9)) / 4));
+        const targetFiber = goalMode === 'loss' ? 30 : 28;
+
+        const diffKg = Math.abs(curW - tarW);
+        const weeks =
+          goalMode === 'maintain' ? 0 :
+          goalMode === 'loss' ? Math.max(1, Math.ceil(diffKg / 0.45)) :
+          Math.max(1, Math.ceil(diffKg / 0.35));
+
+        const suggestions =
+          goalMode === 'loss'
+            ? [
+                `Maintain a safe 500 kcal daily deficit (~${targetCal} kcal/day) to lose ~0.45 kg/week without muscle loss.`,
+                `Hit ${targetProtein}g protein & ${targetFiber}g fiber daily (Boiled Eggs, Dal, Paneer, Apples) to stay full longer.`,
+                `Limit deep-fried snacks (Chips, Samosa) and sugary sweets; drink 2.5–3L water daily.`
+              ]
+            : goalMode === 'gain'
+            ? [
+                `Aim for a clean +350 kcal surplus (~${targetCal} kcal/day) for steady ~0.35 kg/week lean muscle gain.`,
+                `Hit ${targetProtein}g protein daily—add 1 scoop Whey + 300ml Milk or 2 Boiled Eggs + Banana post-workout.`,
+                `Include complex carbs (Rice, Oats, Chapati, Almonds) and strength train 3–4x/week.`
+              ]
+            : [
+                `Eat at your exact maintenance TDEE (~${targetCal} kcal/day) to keep weight steady at ${curW} kg.`,
+                `Target ${targetProtein}g protein & ${targetFiber}g fiber daily with balanced home-cooked meals.`,
+                `Weigh yourself once a week in the morning to stay within ±0.5 kg of your target.`
+              ];
+
+        const handleApplyGoal = async () => {
+          try {
+            await api.updateSettings({
+              date_of_birth: dob,
+              height_cm: h,
+              current_weight_kg: curW,
+              target_weight_kg: tarW,
+              gender,
+              activity_level: activityLevel,
+              calorie_target: targetCal,
+              protein_target: targetProtein,
+            });
+            await api.logWeight(getLocalDateString(), curW);
+            setGoalSavedMsg(`Goal applied! Daily target set to ${targetCal} kcal & ${targetProtein}g protein.`);
+            setTimeout(() => setGoalSavedMsg(null), 4000);
+            loadAll();
+          } catch {
+            alert('Failed to save goal.');
+          }
+        };
+
+        return (
+          <div className="dashboard-card p-5 space-y-4 border border-emerald-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-emerald-600" />
+                <h3 className="text-sm font-black text-slate-900">Set Your Goal</h3>
+              </div>
+              <span className="text-[10.5px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                TDEE: {tdee} kcal/day
+              </span>
+            </div>
+
+            {/* 3 Goal Mode Buttons */}
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { id: 'loss' as const, label: '1. Weight Loss', sub: '-500 kcal' },
+                { id: 'gain' as const, label: '2. Weight Gain', sub: '+350 kcal' },
+                { id: 'maintain' as const, label: '3. Maintain', sub: 'TDEE ±0' },
+              ].map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => {
+                    setGoalMode(g.id);
+                    if (g.id === 'maintain') setTargetWeightStr(currentWeightStr);
+                  }}
+                  className={`pill-tactile p-2.5 rounded-xl border text-center transition-all ${
+                    goalMode === g.id
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-emerald-300'
+                  }`}
+                >
+                  <div className="text-[11px] font-extrabold">{g.label}</div>
+                  <div className={`text-[9.5px] font-semibold mt-0.5 ${goalMode === g.id ? 'text-emerald-100' : 'text-slate-400'}`}>
+                    {g.sub}
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Current Weight & Target Weight Inputs */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[11px] font-bold text-slate-600 mb-1">Current Weight (kg)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={currentWeightStr}
+                  onChange={(e) => {
+                    setCurrentWeightStr(e.target.value);
+                    if (goalMode === 'maintain') setTargetWeightStr(e.target.value);
+                  }}
+                  className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-bold text-slate-600 mb-1">Target Weight (kg)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  disabled={goalMode === 'maintain'}
+                  value={goalMode === 'maintain' ? currentWeightStr : targetWeightStr}
+                  onChange={(e) => setTargetWeightStr(e.target.value)}
+                  className="w-full px-3 py-2 text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 disabled:opacity-60"
+                />
+              </div>
+            </div>
+
+            {/* Calculated Daily Targets Summary */}
+            <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-xl p-3 space-y-2">
+              <div className="flex items-center justify-between text-[11px] font-extrabold text-emerald-950">
+                <span>Recommended Daily Targets</span>
+                <span>{weeks > 0 ? `Est. ${weeks} weeks` : 'Maintenance'}</span>
+              </div>
+              <div className="grid grid-cols-5 gap-1 text-center">
+                {[
+                  { label: 'kcal', val: targetCal },
+                  { label: 'Protein', val: `${targetProtein}g` },
+                  { label: 'Carbs', val: `${targetCarbs}g` },
+                  { label: 'Fats', val: `${targetFats}g` },
+                  { label: 'Fiber', val: `${targetFiber}g` },
+                ].map((m) => (
+                  <div key={m.label} className="bg-white rounded-lg py-1.5 border border-emerald-100">
+                    <div className="text-[11px] font-black text-emerald-700">{m.val}</div>
+                    <div className="text-[9px] font-semibold text-slate-400">{m.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Personalized Suggestions */}
+            <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 space-y-1.5">
+              <div className="text-[11px] font-extrabold text-slate-800">💡 Personalized Suggestions</div>
+              <ul className="space-y-1 text-[10.5px] text-slate-600 leading-snug list-disc pl-4">
+                {suggestions.map((s, idx) => (
+                  <li key={idx}>{s}</li>
+                ))}
+              </ul>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleApplyGoal}
+              className="btn-tactile w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl shadow-sm"
+            >
+              Apply Goal & Update Daily Targets
+            </button>
+
+            {goalSavedMsg && (
+              <div className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 text-center">
+                ✓ {goalSavedMsg}
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
       {/* Current Weight Card (Exact match to ui-design-1.png Mobile Screen 5) */}
       <div className="dashboard-card p-6 md:p-8 space-y-4">
         <div className="flex items-center justify-between">
