@@ -324,9 +324,10 @@ flowchart LR
 
 ### Core Backend Modules (Short & Crisp)
 
-1. **Food Photo Vision (`parse.py` → `food_vision_service.py`)**:
-   - Decodes image in RAM (`220×220`), crops central `80%`, extracts 8 multi-zone HSV & texture features, and matches against **23 ICMR-NIN / USDA dishes** (`detected_dish`, `items_detected`, `piece_count`, `top_matches`).
-   - Scales 5 macros (`kcal, P, C, F, Fiber`) by `plate_size` (`0.65x / 1.0x / 1.4x`) and `cooking_style` (`+0g / +11g / +24g` fat) using Atwater (`4P + 4C + 9F`).
+1. **Food Photo Vision, Per-Piece Whole Foods & Health Insights (`parse.py` → `food_vision_service.py`)**:
+   - Decodes image in RAM (`220×220`), crops central `80%`, extracts 8 multi-zone HSV & texture features, and matches against **29 ICMR-NIN / USDA dishes & countable whole foods** (`Apple 182g`, `Banana 118g`, `Orange 131g`, `Boiled Egg 50g`, `Almonds`, `Chips`, plus 23 cooked dishes).
+   - Uses **100% exact per-piece USDA multiplication** (`Per-Piece Macro × Count`, `0g` added oil) for whole foods, and scales cooked dishes by `plate_size` (`0.65x / 1.0x / 1.4x`) and `cooking_style` (`+0g / +11g / +24g` fat) via Atwater (`4P + 4C + 9F`).
+   - Returns a collapsible **2-line `health_insight`** (`🌿 Health Benefits` for nutritious items or `⚠️ Take in Small Portions` caution for deep-fried/ultra-processed items like chips, samosa, or sweets).
 2. **Packet & Powder Scanner (`parse.py` → `packet_nutrition_service.py`)**:
    - Auto-detects **Protein Bar (`bar`)** vs. **Protein Powder (`scoop`)** or parses printed nutrition labels via Tesseract OCR.
    - Scales macros by serving quantity (`0.5x–2x`) and adds **Water (`+0 kcal`)** or **Milk (`200 ml / 300 ml`)** macros when `scoop` is active.

@@ -291,8 +291,135 @@ FOOD_DISH_CATALOG: List[Dict[str, Any]] = [
         "densities": {"protein": 5.8, "carbs": 21.0, "base_fat": 3.2, "fiber": 3.5},
         "signature": {"yo": 0.220, "green": 0.040, "wc": 0.480, "rb": 0.140, "diff": 6.8, "c_wc": 0.540, "c_yo": 0.220, "c_gr": 0.030},
         "keywords": ["oats", "oatmeal", "porridge", "muesli", "cereal"]
+    },
+    {
+        "id": "apple_fruit",
+        "name": "Fresh Whole Apple (Medium • USDA 182g)",
+        "category": "Snacks",
+        "items_included": ["Whole Raw Apple with Skin (182g USDA Reference)", "Rich in Soluble Pectin Fiber & Polyphenols"],
+        "unit_name": "apple",
+        "default_pieces": 1,
+        "grams_per_piece": 182,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 95, "protein_g": 0.5, "carbs_g": 25.1, "fats_g": 0.3, "fiber_g": 4.4},
+        "densities": {"protein": 0.27, "carbs": 13.8, "base_fat": 0.17, "fiber": 2.4},
+        "signature": {"yo": 0.080, "green": 0.050, "wc": 0.280, "rb": 0.520, "diff": 6.2, "c_wc": 0.050, "c_yo": 0.060, "c_gr": 0.020},
+        "keywords": ["apple", "apples", "red apple", "green apple"]
+    },
+    {
+        "id": "banana_fruit",
+        "name": "Fresh Ripe Banana (Medium • USDA 118g)",
+        "category": "Snacks",
+        "items_included": ["Medium Ripe Banana (118g USDA Reference)", "Natural Potassium & Prebiotic Resistant Starch"],
+        "unit_name": "banana",
+        "default_pieces": 1,
+        "grams_per_piece": 118,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 105, "protein_g": 1.3, "carbs_g": 27.0, "fats_g": 0.4, "fiber_g": 3.1},
+        "densities": {"protein": 1.1, "carbs": 22.9, "base_fat": 0.33, "fiber": 2.6},
+        "signature": {"yo": 0.620, "green": 0.030, "wc": 0.280, "rb": 0.020, "diff": 5.4, "c_wc": 0.120, "c_yo": 0.780, "c_gr": 0.020},
+        "keywords": ["banana", "bananas", "kela"]
+    },
+    {
+        "id": "orange_fruit",
+        "name": "Fresh Citrus Orange (Medium • USDA 131g)",
+        "category": "Snacks",
+        "items_included": ["Medium Fresh Orange (131g USDA Reference)", "High Vitamin C, Citrus Bioflavonoids & Fiber"],
+        "unit_name": "orange",
+        "default_pieces": 1,
+        "grams_per_piece": 131,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 62, "protein_g": 1.2, "carbs_g": 15.4, "fats_g": 0.2, "fiber_g": 3.1},
+        "densities": {"protein": 0.9, "carbs": 11.8, "base_fat": 0.15, "fiber": 2.4},
+        "signature": {"yo": 0.680, "green": 0.020, "wc": 0.200, "rb": 0.080, "diff": 6.8, "c_wc": 0.040, "c_yo": 0.860, "c_gr": 0.000},
+        "keywords": ["orange", "oranges", "mosambi", "citrus", "mandarin"]
+    },
+    {
+        "id": "boiled_egg",
+        "name": "Hard-Boiled Whole Egg (Large • USDA 50g)",
+        "category": "Breakfast",
+        "items_included": ["Large Hard-Boiled Egg (50g USDA Reference)", "Complete Bioavailable Protein, Choline & Vitamin D"],
+        "unit_name": "egg",
+        "default_pieces": 2,
+        "grams_per_piece": 50,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 78, "protein_g": 6.3, "carbs_g": 0.6, "fats_g": 5.3, "fiber_g": 0.0},
+        "densities": {"protein": 12.6, "carbs": 1.1, "base_fat": 10.6, "fiber": 0.0},
+        "signature": {"yo": 0.240, "green": 0.010, "wc": 0.660, "rb": 0.020, "diff": 5.2, "c_wc": 0.580, "c_yo": 0.340, "c_gr": 0.000},
+        "keywords": ["boiled egg", "boiled eggs", "hard boiled", "anda"]
+    },
+    {
+        "id": "almonds_nuts",
+        "name": "Whole Raw / Roasted Almonds (USDA Reference)",
+        "category": "Snacks",
+        "items_included": ["Whole Almonds (1.2g per almond • USDA Reference)", "Vitamin E, Magnesium & Heart-Healthy Monounsaturated Fats"],
+        "unit_name": "almond",
+        "default_pieces": 10,
+        "grams_per_piece": 1.2,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 7, "protein_g": 0.25, "carbs_g": 0.26, "fats_g": 0.6, "fiber_g": 0.15},
+        "densities": {"protein": 21.2, "carbs": 21.6, "base_fat": 49.9, "fiber": 12.5},
+        "signature": {"yo": 0.380, "green": 0.010, "wc": 0.220, "rb": 0.360, "diff": 9.2, "c_wc": 0.120, "c_yo": 0.450, "c_gr": 0.000},
+        "keywords": ["almond", "almonds", "badam", "nuts", "cashew", "walnut"]
+    },
+    {
+        "id": "potato_chips",
+        "name": "Crispy Potato Chips / Fried Salted Snack Pack",
+        "category": "Snacks",
+        "items_included": ["Deep-Fried Salted Potato Crisps / Wafer Chips", "High Refined Frying Oil & Sodium Content"],
+        "unit_name": "pack (45g)",
+        "default_pieces": 1,
+        "grams_per_piece": 45,
+        "is_whole_food": True,
+        "per_piece_macros": {"calories_kcal": 242, "protein_g": 2.9, "carbs_g": 24.2, "fats_g": 14.8, "fiber_g": 1.8},
+        "densities": {"protein": 6.4, "carbs": 53.8, "base_fat": 33.0, "fiber": 4.0},
+        "signature": {"yo": 0.720, "green": 0.010, "wc": 0.160, "rb": 0.080, "diff": 11.4, "c_wc": 0.080, "c_yo": 0.840, "c_gr": 0.000},
+        "keywords": ["chips", "lays", "kurkure", "namkeen", "crisps", "fries", "french fries"]
     }
 ]
+
+HEALTH_INSIGHTS: Dict[str, Dict[str, str]] = {
+    "apple_fruit": {
+        "rating": "healthy",
+        "insight": "Rich in soluble pectin fiber and polyphenols that support gut health and steady blood sugar.\nPromotes heart health and fullness with only 95 kcal per medium apple (USDA)."
+    },
+    "banana_fruit": {
+        "rating": "healthy",
+        "insight": "Packed with bioavailable potassium, vitamin B6, and natural prebiotic fiber for sustained energy.\nSupports muscle function, digestion, and post-workout glycogen recovery."
+    },
+    "orange_fruit": {
+        "rating": "healthy",
+        "insight": "Delivers over 100% daily Vitamin C alongside citrus bioflavonoids and soluble fiber.\nBoosts immune defense, collagen synthesis, and iron absorption naturally."
+    },
+    "boiled_egg": {
+        "rating": "healthy",
+        "insight": "Provides 6.3g of complete bioavailable protein, essential choline, and Vitamin D per egg.\nSupports muscle repair, brain health, and satiety without any added cooking oil."
+    },
+    "almonds_nuts": {
+        "rating": "healthy",
+        "insight": "Loaded with heart-healthy monounsaturated fats, Vitamin E, magnesium, and plant protein.\nHelps lower LDL cholesterol and keeps hunger stable between meals."
+    },
+    "potato_chips": {
+        "rating": "limit",
+        "insight": "⚠️ Take in small portions: High in refined frying oils, saturated fats, and sodium that can spike LDL cholesterol and blood pressure.\nEnjoy only a small handful occasionally and pair with water or protein-rich foods."
+    },
+    "samosa_snack": {
+        "rating": "limit",
+        "insight": "⚠️ Take in small portions: Deep-fried pastry crust absorbs significant oil and refined carbs, increasing calorie density.\nLimit to 1 piece occasionally and pair with mint chutney or unsweetened tea."
+    },
+    "festive_naan_platter": {
+        "rating": "limit",
+        "insight": "⚠️ Take in small portions: Combines refined flour naan, rich cream gravy, and sugar-syrup sweets (Gulab Jamun & Jalebi).\nShare the platter or eat a smaller portion to avoid sharp blood glucose and calorie spikes."
+    },
+    "cafe_snack_combo": {
+        "rating": "limit",
+        "insight": "⚠️ Take in small portions: High in refined flour, processed cheese, and added sugar from the cupcake.\nTake a modest portion and balance your next meal with lean protein and fresh greens."
+    },
+    "puri_bhaji": {
+        "rating": "limit",
+        "insight": "⚠️ Take in small portions: Deep-fried puris absorb extra cooking oil alongside high-glycemic potato bhaji.\nEnjoy 1–2 puris mindfully and pair with curd or salad to slow glucose absorption."
+    }
+}
 
 
 class FoodVisionService:
@@ -507,46 +634,85 @@ class FoodVisionService:
         best_cand = top_matches[0]
 
         # 5. Compute calibrated macros for the winning dish
+        import re
         pieces = best_spec["default_pieces"]
-        raw_grams = pieces * best_spec["grams_per_piece"] * plate_scale * portion_modifier
-        estimated_grams = int(round(raw_grams / 5.0) * 5)
+        num_match = re.search(r"(?:^|[^a-z])([1-9])\s*(?:apple|banana|orange|egg|almond|samosa|idli|vada|dosa|roti|puri)", file_lower)
+        if num_match:
+            pieces = int(num_match.group(1))
 
-        effective_added_fat = added_fat_g * min(1.5, max(0.5, plate_scale * portion_modifier))
+        health_info = HEALTH_INSIGHTS.get(best_spec["id"], {
+            "rating": "healthy" if best_spec["id"] in ["idli_sambar", "idli_dosa_combo", "veg_biryani", "chapati_curry", "chicken_curry_rice", "poha_upma", "egg_omelette_toast", "dal_rice", "grilled_chicken_salad", "fresh_salad_fruit", "oats_porridge"] else "balanced",
+            "insight": "Provides a balanced combination of macronutrients, protein, and dietary fiber for sustained energy.\nPair with hydration and fresh greens for optimal digestion and metabolic health."
+        })
 
-        densities = best_spec["densities"]
-        base_protein = (estimated_grams / 100.0) * densities["protein"]
-        base_carbs = (estimated_grams / 100.0) * densities["carbs"]
-        base_fats = (estimated_grams / 100.0) * densities["base_fat"] + effective_added_fat
-        base_fiber = (estimated_grams / 100.0) * densities["fiber"]
+        if best_spec.get("is_whole_food") and best_spec.get("per_piece_macros"):
+            ppm = best_spec["per_piece_macros"]
+            estimated_grams = int(round(pieces * best_spec["grams_per_piece"]))
+            total_protein = round(ppm["protein_g"] * pieces, 1)
+            total_carbs = round(ppm["carbs_g"] * pieces, 1)
+            total_fats = round(ppm["fats_g"] * pieces, 1)
+            total_fiber = round(ppm["fiber_g"] * pieces, 1)
+            total_calories = int(round(ppm["calories_kcal"] * pieces))
 
-        min_protein = round(max(2.0, base_protein * 0.92), 1)
-        max_protein = round(base_protein * 1.08, 1)
-        total_protein = round((min_protein + max_protein) / 2.0, 1)
-        protein_range_str = f"~{min_protein:g} – {max_protein:g} g"
+            min_protein = round(total_protein * 0.95, 1)
+            max_protein = round(total_protein * 1.05, 1)
+            min_carbs = round(total_carbs * 0.95, 1)
+            max_carbs = round(total_carbs * 1.05, 1)
+            min_fats = round(total_fats * 0.95, 1)
+            max_fats = round(total_fats * 1.05, 1)
+            min_fiber = round(total_fiber * 0.95, 1)
+            max_fiber = round(total_fiber * 1.05, 1)
+            min_cal = round(total_calories * 0.95)
+            max_cal = round(total_calories * 1.05)
 
-        min_carbs = round(max(3.0, base_carbs * 0.92), 1)
-        max_carbs = round(base_carbs * 1.08, 1)
-        total_carbs = round((min_carbs + max_carbs) / 2.0, 1)
-        carbs_range_str = f"~{min_carbs:g} – {max_carbs:g} g"
+            protein_range_str = f"~{min_protein:g} – {max_protein:g} g"
+            carbs_range_str = f"~{min_carbs:g} – {max_carbs:g} g"
+            fats_range_str = f"~{min_fats:g} – {max_fats:g} g"
+            fiber_range_str = f"~{min_fiber:g} – {max_fiber:g} g"
+            calorie_range_str = f"~{int(min_cal)} – {int(max_cal)} kcal"
+            unit_plural = f"{best_spec['unit_name']}s" if pieces != 1 else best_spec["unit_name"]
+            portion_notes_str = f"{pieces} {unit_plural} ({estimated_grams}g • 100% Verified USDA Per-Piece Reference)"
+        else:
+            raw_grams = pieces * best_spec["grams_per_piece"] * plate_scale * portion_modifier
+            estimated_grams = int(round(raw_grams / 5.0) * 5)
 
-        min_fats = round(max(1.0, base_fats * 0.90), 1)
-        max_fats = round(base_fats * 1.10, 1)
-        total_fats = round((min_fats + max_fats) / 2.0, 1)
-        fats_range_str = f"~{min_fats:g} – {max_fats:g} g"
+            effective_added_fat = added_fat_g * min(1.5, max(0.5, plate_scale * portion_modifier))
 
-        min_fiber = round(max(0.5, base_fiber * 0.92), 1)
-        max_fiber = round(base_fiber * 1.08, 1)
-        total_fiber = round((min_fiber + max_fiber) / 2.0, 1)
-        fiber_range_str = f"~{min_fiber:g} – {max_fiber:g} g"
+            densities = best_spec["densities"]
+            base_protein = (estimated_grams / 100.0) * densities["protein"]
+            base_carbs = (estimated_grams / 100.0) * densities["carbs"]
+            base_fats = (estimated_grams / 100.0) * densities["base_fat"] + effective_added_fat
+            base_fiber = (estimated_grams / 100.0) * densities["fiber"]
 
-        min_cal = round((4.0 * (min_protein + min_carbs) + 9.0 * min_fats) / 5.0) * 5.0
-        max_cal = round((4.0 * (max_protein + max_carbs) + 9.0 * max_fats) / 5.0) * 5.0
-        total_calories = int(round(4.0 * (total_protein + total_carbs) + 9.0 * total_fats))
+            min_protein = round(max(2.0, base_protein * 0.92), 1)
+            max_protein = round(base_protein * 1.08, 1)
+            total_protein = round((min_protein + max_protein) / 2.0, 1)
+            protein_range_str = f"~{min_protein:g} – {max_protein:g} g"
 
-        calorie_range_str = f"~{int(min_cal)} – {int(max_cal)} kcal"
+            min_carbs = round(max(3.0, base_carbs * 0.92), 1)
+            max_carbs = round(base_carbs * 1.08, 1)
+            total_carbs = round((min_carbs + max_carbs) / 2.0, 1)
+            carbs_range_str = f"~{min_carbs:g} – {max_carbs:g} g"
+
+            min_fats = round(max(1.0, base_fats * 0.90), 1)
+            max_fats = round(base_fats * 1.10, 1)
+            total_fats = round((min_fats + max_fats) / 2.0, 1)
+            fats_range_str = f"~{min_fats:g} – {max_fats:g} g"
+
+            min_fiber = round(max(0.5, base_fiber * 0.92), 1)
+            max_fiber = round(base_fiber * 1.08, 1)
+            total_fiber = round((min_fiber + max_fiber) / 2.0, 1)
+            fiber_range_str = f"~{min_fiber:g} – {max_fiber:g} g"
+
+            min_cal = round((4.0 * (min_protein + min_carbs) + 9.0 * min_fats) / 5.0) * 5.0
+            max_cal = round((4.0 * (max_protein + max_carbs) + 9.0 * max_fats) / 5.0) * 5.0
+            total_calories = int(round(4.0 * (total_protein + total_carbs) + 9.0 * total_fats))
+
+            calorie_range_str = f"~{int(min_cal)} – {int(max_cal)} kcal"
+            unit_plural = f"{best_spec['unit_name']}s" if pieces != 1 else best_spec["unit_name"]
+            portion_notes_str = f"{pieces} {unit_plural} (~{estimated_grams}g • {plate_name} • {style_label})"
+
         elapsed_ms = max(8, int((time.time() - start_time) * 1000))
-
-        unit_plural = f"{best_spec['unit_name']}s" if pieces != 1 else best_spec["unit_name"]
 
         return {
             "success": True,
@@ -556,6 +722,9 @@ class FoodVisionService:
             "unit_name": best_spec["unit_name"],
             "piece_count": pieces,
             "estimated_grams": estimated_grams,
+            "is_whole_food": bool(best_spec.get("is_whole_food")),
+            "health_rating": health_info["rating"],
+            "health_insight": health_info["insight"],
             "top_matches": top_matches,
             "calories_kcal": float(total_calories),
             "min_calories_kcal": float(min_cal),
@@ -579,7 +748,7 @@ class FoodVisionService:
             "max_fiber_g": float(max_fiber),
             "fiber_range_str": fiber_range_str,
             "confidence_level": f"High • {best_cand['confidence_pct']}% Calibrated Match ({best_spec['name']})",
-            "portion_notes": f"{pieces} {unit_plural} (~{estimated_grams}g • {plate_name} • {style_label})",
+            "portion_notes": portion_notes_str,
             "model_used": "On-Device Multi-Zone Vision + ICMR-NIN / USDA Engine",
             "plate_size": plate_size,
             "cooking_style": cooking_style,

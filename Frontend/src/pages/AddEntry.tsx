@@ -25,7 +25,8 @@ import { getLocalDateString } from '../utils/dateUtils';
 import {
   LocalFoodVision,
   DishCandidate,
-  FoodVisionResult
+  FoodVisionResult,
+  getHealthInsight
 } from '../services/localFoodVision';
 import { CameraCaptureModal } from '../components/CameraCaptureModal';
 
@@ -107,6 +108,7 @@ export const AddEntry: React.FC = () => {
   const [packetServingUnit, setPacketServingUnit] = useState<string>('bar');
   const [liquidType, setLiquidType] = useState<'water' | 'toned_milk' | 'skim_milk'>('water');
   const [liquidMl, setLiquidMl] = useState<number>(200);
+  const [showHealthInsight, setShowHealthInsight] = useState<boolean>(false);
   const [packetIngredients, setPacketIngredients] = useState<string | null>(null);
   const [basePerServing, setBasePerServing] = useState<{
     calories_kcal: number;
@@ -670,6 +672,41 @@ export const AddEntry: React.FC = () => {
               </div>
             )}
 
+            {/* Collapsible 2-Line Health Benefits / Caution Dropdown */}
+            {(() => {
+              const info = getHealthInsight(detectedDishId);
+              const isLimit = info.rating === 'limit';
+              return (
+                <div
+                  className={`rounded-xl border transition-all ${
+                    isLimit
+                      ? 'bg-amber-50/90 border-amber-300 text-amber-900'
+                      : 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setShowHealthInsight((prev) => !prev)}
+                    className="w-full px-3 py-2 flex items-center justify-between text-left text-[11px] font-bold"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span>{isLimit ? '⚠️ Health Advisory: Take in Small Portions' : '🌿 Health Benefits & Nutrition Insight'}</span>
+                    </span>
+                    {showHealthInsight ? (
+                      <ChevronUp className="w-3.5 h-3.5 shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5 shrink-0" />
+                    )}
+                  </button>
+                  {showHealthInsight && (
+                    <div className="px-3 pb-2.5 pt-0.5 text-[11px] leading-relaxed font-medium whitespace-pre-line border-t border-black/5">
+                      {info.insight}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             {/* Piece / Serving Count Stepper */}
             <div className="bg-white/95 border border-emerald-100 rounded-xl p-2.5 flex items-center justify-between">
               <div>
@@ -756,7 +793,7 @@ export const AddEntry: React.FC = () => {
                     type="text"
                     value={dishSearchQuery}
                     onChange={(e) => setDishSearchQuery(e.target.value)}
-                    placeholder="Search 20+ Indian & global dishes (e.g. Idli, Dosa, Biryani, Roti, Eggs)..."
+                    placeholder="Search 29+ dishes, fruits & snacks (e.g. Apple, Banana, Boiled Egg, Chips, Idli, Biryani)..."
                     className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500"
                   />
                 </div>
@@ -1053,6 +1090,32 @@ export const AddEntry: React.FC = () => {
                 <p className="text-slate-600 leading-snug">{packetIngredients}</p>
               </div>
             )}
+
+            {/* Collapsible 2-Line Health Benefits Dropdown for Packet Items */}
+            {(() => {
+              const info = getHealthInsight(selectedPacketPresetId);
+              return (
+                <div className="rounded-xl border bg-emerald-50/70 border-emerald-200 text-emerald-900 transition-all">
+                  <button
+                    type="button"
+                    onClick={() => setShowHealthInsight((prev) => !prev)}
+                    className="w-full px-3 py-2 flex items-center justify-between text-left text-[11px] font-bold"
+                  >
+                    <span>🌿 Health Benefits & Nutrition Insight</span>
+                    {showHealthInsight ? (
+                      <ChevronUp className="w-3.5 h-3.5 shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5 shrink-0" />
+                    )}
+                  </button>
+                  {showHealthInsight && (
+                    <div className="px-3 pb-2.5 pt-0.5 text-[11px] leading-relaxed font-medium whitespace-pre-line border-t border-black/5">
+                      {info.insight}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         )}
 
