@@ -714,3 +714,6 @@ Food-calories-tracker-app-detailed-analysis/
 - **MobileNetV3-Small Baseline (Untrained ImageNet-1K)**: `6.0%` (`30 / 500` correct; `470` mismatches quarantined to `Backend/dataset/mismatches/`).
 - **MobileNetV3-Small Fine-Tuned (15 Epochs)**: **`92.40%`** training accuracy (peaked at **`93.00%`** at Epoch 12).
 - **Gemma 3n LoRA Manifest**: **`1,440`** training samples generated in `Backend/dataset/gemma_lora_train.jsonl` (weighting the `470` quarantined mismatches 2×).
+- **ONNX Export & 1,000-Food Catalog**:
+  - Exported `Frontend/public/models/food_classifier.onnx` and `Frontend/public/models/class_map.json` (`90.80%` peak / `89.40%` final accuracy).
+  - Added `Backend/build_food_1000_catalog.py` & `Backend/food_nutrition_1000.json` (**1,000 food classes**).
