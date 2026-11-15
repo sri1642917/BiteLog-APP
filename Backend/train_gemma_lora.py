@@ -14,6 +14,17 @@ from pathlib import Path
 
 
 def build_training_manifest():
+    """
+    Task: Build a JSONL LoRA training manifest for Gemma 3n from train + mismatch images.
+    input_params:
+        None
+    output_params:
+        samples (int): Number of training samples written to gemma_lora_train.jsonl.
+    returns:
+        int: Total number of training samples generated.
+    raises:
+        FileNotFoundError: If food_nutrition_100.json is missing.
+    """
     base = Path(__file__).parent
     catalog_path = base / "food_nutrition_100.json"
     mismatch_dir = base / "dataset" / "mismatches"
@@ -57,6 +68,17 @@ def build_training_manifest():
 
 
 def main():
+    """
+    Task: Parse CLI arguments, generate the Gemma 3n LoRA manifest, and prepare fine-tuning.
+    input_params:
+        None (reads CLI flags --model, --epochs, --batch-size, --manifest-only)
+    output_params:
+        None
+    returns:
+        None
+    raises:
+        SystemExit: If invalid CLI arguments are provided.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="google/gemma-3n-E2B-it")
     parser.add_argument("--epochs", type=int, default=3)

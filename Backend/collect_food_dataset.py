@@ -14,6 +14,18 @@ USER_AGENT = "BiteLogDatasetCollector/1.0 (https://github.com/sri1642917/BiteLog
 
 
 def fetch_wikimedia_images(query: str, limit: int = 8):
+    """
+    Task: Search Wikimedia Commons for food image URLs matching a dish query.
+    input_params:
+        query (str): Search term for the food item.
+        limit (int): Maximum number of image results to fetch.
+    output_params:
+        urls (list[str]): List of direct image/thumbnail URLs.
+    returns:
+        list[str]: Filtered list of JPEG/PNG/WebP image URLs.
+    raises:
+        urllib.error.URLError: If the Wikimedia API request fails.
+    """
     encoded = urllib.parse.quote(query)
     url = (
         f"https://commons.wikimedia.org/w/api.php?"
@@ -36,6 +48,18 @@ def fetch_wikimedia_images(query: str, limit: int = 8):
 
 
 def download_and_validate(url: str, out_path: Path) -> bool:
+    """
+    Task: Download an image URL, validate dimensions, resize to 224x224, and save as JPEG.
+    input_params:
+        url (str): Source image URL.
+        out_path (Path): Destination file path for the processed JPEG.
+    output_params:
+        saved (bool): Whether the image passed validation and was saved.
+    returns:
+        bool: True if saved successfully, False if image is too small.
+    raises:
+        Exception: If network download or PIL image decoding fails.
+    """
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=15) as resp:
         raw = resp.read()
@@ -48,6 +72,17 @@ def download_and_validate(url: str, out_path: Path) -> bool:
 
 
 def main():
+    """
+    Task: Populate Backend/dataset/train/<dish_id>/ with images for all 100 food classes.
+    input_params:
+        None
+    output_params:
+        None
+    returns:
+        None
+    raises:
+        FileNotFoundError: If food_nutrition_100.json does not exist.
+    """
     with open(CATALOG_PATH, "r", encoding="utf-8") as f:
         catalog = json.load(f)
 

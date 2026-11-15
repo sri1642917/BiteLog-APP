@@ -13,6 +13,17 @@ REPORT_PATH = Path(__file__).parent / "benchmark_report.json"
 
 
 def run_benchmark():
+    """
+    Task: Benchmark MobileNetV3-Small on all 100 food classes and quarantine mismatches.
+    input_params:
+        None
+    output_params:
+        report (dict): Accuracy metrics and mismatch count written to benchmark_report.json.
+    returns:
+        None
+    raises:
+        FileNotFoundError: If food_nutrition_100.json or dataset/train is missing.
+    """
     with open(CATALOG_PATH, "r", encoding="utf-8") as f:
         catalog = json.load(f)
 
