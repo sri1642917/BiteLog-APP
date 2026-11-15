@@ -826,38 +826,101 @@ export const LocalFoodVision = {
   },
 
   /**
-   * Analyzes protein bar, whey powder, or packaged food nutrition label with preset + quantity scaling.
+   * Visually detects whether an uploaded packet photo is a Protein Powder Tub (scoop) or Protein Bar (default).
    */
-  analyzePacketLabel(
+  async detectPacketPresetFromImage(file: File | null): Promise<string> {
+    const fileLower = (file?.name || '').toLowerCase();
+    if (fileLower.includes('whey') || fileLower.includes('scoop') || fileLower.includes('powder')) {
+      return 'whey_scoop_32g';
+    } else if (fileLower.includes('oat') || fileLower.includes('muesli')) {
+      return 'protein_oats_50g';
+    } else if (fileLower.includes('yogurt') || fileLower.includes('curd')) {
+      return 'greek_yogurt_100g';
+    } else if (fileLower.includes('peanut') || fileLower.includes('butter')) {
+      return 'peanut_butter_32g';
+    } else if (fileLower.includes('cookie') || fileLower.includes('biscuit')) {
+      return 'protein_cookie_50g';
+    } else if (fileLower.includes('bar')) {
+      return 'protein_bar_60g';
+    }
+
+    if (file) {
+      try {
+        const bitmap = await createImageBitmap(file);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const size = 120;
+          canvas.width = size;
+          canvas.height = size;
+          ctx.drawImage(bitmap, 0, 0, size, size);
+          const data = ctx.getImageData(0, 0, size, size).data;
+
+          // Inspect central 50% for dark/metallic protein powder tub silhouette
+          let centerPixels = 0;
+          let darkPixels = 0;
+          for (let y = 30; y < 90; y++) {
+            for (let x = 30; x < 90; x++) {
+              const idx = (y * size + x) * 4;
+              const luma = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+              centerPixels++;
+              if (luma < 72) darkPixels++;
+            }
+          }
+          const darkRatio = centerPixels > 0 ? darkPixels / centerPixels : 0;
+          const aspect = bitmap.width / Math.max(1, bitmap.height);
+          if (darkRatio > 0.22 && aspect <= 1.25) {
+            return 'whey_scoop_32g';
+          }
+        }
+      } catch {
+        // Fallback to default Protein Bar
+      }
+    }
+    return 'protein_bar_60g';
+  },
+
+  /**
+   * Analyzes protein bar, whey powder, or packaged food nutrition label with preset + quantity + liquid mixer scaling.
+   */
+  async analyzePacketLabel(
     file: File | null,
     quantity: number = 1.0,
-    presetId?: string
-  ): PacketNutritionResult {
+    presetId?: string,
+    liquidType: 'water' | 'toned_milk' | 'skim_milk' = 'water',
+    liquidMl: number = 200
+  ): Promise<PacketNutritionResult> {
     const qty = Math.max(0.25, quantity);
-    const fileLower = (file?.name || '').toLowerCase();
-
-    let preset = PACKET_PRESET_CATALOG[0];
-    if (presetId) {
-      preset = PACKET_PRESET_CATALOG.find(p => p.id === presetId) || preset;
-    } else if (fileLower.includes('whey') || fileLower.includes('scoop') || fileLower.includes('powder')) {
-      preset = PACKET_PRESET_CATALOG[1];
-    } else if (fileLower.includes('oat') || fileLower.includes('muesli')) {
-      preset = PACKET_PRESET_CATALOG[2];
-    } else if (fileLower.includes('yogurt') || fileLower.includes('curd')) {
-      preset = PACKET_PRESET_CATALOG[3];
-    } else if (fileLower.includes('peanut') || fileLower.includes('butter')) {
-      preset = PACKET_PRESET_CATALOG[4];
-    } else if (fileLower.includes('cookie') || fileLower.includes('biscuit')) {
-      preset = PACKET_PRESET_CATALOG[5];
-    }
+    const resolvedId = presetId || (await this.detectPacketPresetFromImage(file));
+    const preset = PACKET_PRESET_CATALOG.find(p => p.id === resolvedId) || PACKET_PRESET_CATALOG[0];
 
     const { protein_g: baseP, carbs_g: baseC, fats_g: baseF, fiber_g: baseFib } = preset.base_per_serving;
     const baseCal = Math.round(4.0 * (baseP + baseC) + 9.0 * baseF);
 
-    const scaledP = Math.round(baseP * qty * 10) / 10;
-    const scaledC = Math.round(baseC * qty * 10) / 10;
-    const scaledF = Math.round(baseF * qty * 10) / 10;
-    const scaledFib = Math.round(baseFib * qty * 10) / 10;
+    // Liquid mixer nutrition per 100ml (ICMR-NIN)
+    let liqP = 0, liqC = 0, liqF = 0;
+    let liqLabel = '';
+    if (preset.serving_unit === 'scoop' && liquidType !== 'water' && liquidMl > 0) {
+      const factor = liquidMl / 100.0;
+      if (liquidType === 'toned_milk') {
+        liqP = 3.2 * factor;
+        liqC = 4.8 * factor;
+        liqF = 3.3 * factor;
+        liqLabel = ` + ${liquidMl}ml Milk`;
+      } else if (liquidType === 'skim_milk') {
+        liqP = 3.4 * factor;
+        liqC = 5.0 * factor;
+        liqF = 0.2 * factor;
+        liqLabel = ` + ${liquidMl}ml Skim Milk`;
+      }
+    } else if (preset.serving_unit === 'scoop') {
+      liqLabel = ` + ${liquidMl}ml Water`;
+    }
+
+    const scaledP = Math.round((baseP * qty + liqP) * 10) / 10;
+    const scaledC = Math.round((baseC * qty + liqC) * 10) / 10;
+    const scaledF = Math.round((baseF * qty + liqF) * 10) / 10;
+    const scaledFib = Math.round((baseFib * qty) * 10) / 10;
     const scaledCal = Math.round(4.0 * (scaledP + scaledC) + 9.0 * scaledF);
 
     const minCal = Math.round((scaledCal * 0.95) / 5) * 5;
@@ -899,7 +962,7 @@ export const LocalFoodVision = {
       fiber_range_str: `~${Math.round(scaledFib * 0.95 * 10) / 10} – ${Math.round(scaledFib * 1.05 * 10) / 10} g`,
       ingredients: preset.ingredients,
       confidence_level: `Verified • 96% Nutrition Label Match (${preset.product_name})`,
-      portion_notes: `Scaled for ${qty} ${preset.serving_unit}${qty !== 1 ? 's' : ''} (${preset.serving_size})`,
+      portion_notes: `Scaled for ${qty} ${preset.serving_unit}${qty !== 1 ? 's' : ''}${liqLabel} (${preset.serving_size})`,
       model_used: 'Offline Nutrition Facts OCR & Quantity Engine',
       disclaimer: 'Extracted from nutrition facts table and scaled by serving quantity.'
     };

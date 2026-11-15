@@ -144,10 +144,12 @@ For packaged sports nutrition, supplements, and health snacks, BiteLog includes 
    * **Ingredients Profiling**: Automatically detects and surfaces primary ingredients (e.g., *Whey Protein Isolate, Cocoa Butter, Almonds, Stevia*).
    * **Tight Manufacturing Tolerance Range**: Formulates an accurate packaging tolerance range ($\pm 5–8\%$) and pre-populates the exact midpoint average.
 
-2. **Interactive Quantity Stepper & Dynamic Live Scaling**:
+2. **Interactive Quantity Stepper, Scoop Detection & Liquid Mixer (`200 ml` / `300 ml`)**:
+   * **Auto-Detection (Bar vs. Powder)**: Automatically defaults to **Protein Bar (`1 bar • 60g`)** for bars/wrappers, and switches to **Whey Protein Powder (`1 scoop • 32g`)** when a protein powder tub is uploaded.
    * **Quantity Multiplier**: Quick preset pills (`0.5x`, `1.0x`, `1.5x`, `2.0x`) and interactive increment/decrement stepper (`[-] 1.0 [+]`).
-   * **Live Dynamic Recalculation**: Adjusting quantity instantly recalculates all 5 macros using linear scaling:
-     $$\text{Macro Intake} = \text{Label Macro per Serving} \times \text{Selected Quantity}$$
+   * **Milk / Water Mixer Calculator**: When **Protein Powder (`scoop`)** is active, choose **Water (`+0 kcal`)**, **Milk (`200 ml` / `300 ml`)**, or **Skim Milk (`200 ml` / `300 ml`)** to automatically add the liquid's calories, protein, carbs, and fats to the total.
+   * **Live Dynamic Recalculation**: Adjusting quantity or liquid volume instantly recalculates all 5 macros:
+     $$\text{Macro Intake} = (\text{Label Macro per Serving} \times \text{Quantity}) + \text{Liquid Mixer Macros}$$
    * **Strict Atwater Energy Validation**: Ensures calories scale consistently with macros adhering to $\text{kcal} = 4 \times (\text{Protein} + \text{Carbs}) + 9 \times \text{Fats}$.
    * **Direct SQLite Logging**: Save with one tap into your daily dashboard with full history tracking.
 

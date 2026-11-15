@@ -105,6 +105,8 @@ export const AddEntry: React.FC = () => {
   const [packetProductName, setPacketProductName] = useState<string | null>(null);
   const [packetServingSize, setPacketServingSize] = useState<string | null>(null);
   const [packetServingUnit, setPacketServingUnit] = useState<string>('bar');
+  const [liquidType, setLiquidType] = useState<'water' | 'toned_milk' | 'skim_milk'>('water');
+  const [liquidMl, setLiquidMl] = useState<number>(200);
   const [packetIngredients, setPacketIngredients] = useState<string | null>(null);
   const [basePerServing, setBasePerServing] = useState<{
     calories_kcal: number;
@@ -217,7 +219,7 @@ export const AddEntry: React.FC = () => {
     try {
       const res = file
         ? await api.parsePacketLabel(file, qty, presetId)
-        : LocalFoodVision.analyzePacketLabel(null, qty, presetId);
+        : await LocalFoodVision.analyzePacketLabel(null, qty, presetId, liquidType, liquidMl);
       setSource('Image');
       if (res.packet_id) setSelectedPacketPresetId(res.packet_id);
       setPacketProductName(res.product_name);
@@ -228,18 +230,22 @@ export const AddEntry: React.FC = () => {
       setPacketIngredients(res.ingredients);
       setBasePerServing(res.base_per_serving);
 
-      setCalories(res.calories_kcal.toString());
-      setProtein(res.protein_g.toString());
-      setCarbs(res.carbs_g.toString());
-      setFats(res.fats_g.toString());
-      setFiber(res.fiber_g.toString());
+      if (res.serving_unit === 'scoop' && liquidType !== 'water') {
+        recalculatePacketTotals(qty, res.serving_unit, liquidType, liquidMl, res.base_per_serving);
+      } else {
+        setCalories(res.calories_kcal.toString());
+        setProtein(res.protein_g.toString());
+        setCarbs(res.carbs_g.toString());
+        setFats(res.fats_g.toString());
+        setFiber(res.fiber_g.toString());
 
-      setCalorieRange(res.calorie_range_str);
-      setAvgCalories(res.calories_kcal);
-      setProteinRange(res.protein_range_str);
-      setCarbsRange(res.carbs_range_str);
-      setFatsRange(res.fats_range_str);
-      setFiberRange(res.fiber_range_str);
+        setCalorieRange(res.calorie_range_str);
+        setAvgCalories(res.calories_kcal);
+        setProteinRange(res.protein_range_str);
+        setCarbsRange(res.carbs_range_str);
+        setFatsRange(res.fats_range_str);
+        setFiberRange(res.fiber_range_str);
+      }
       setConfidenceBadge(res.confidence_level);
       setLastSavedEntry(null);
     } catch (err: any) {
@@ -249,29 +255,52 @@ export const AddEntry: React.FC = () => {
     }
   };
 
+  const recalculatePacketTotals = (
+    qty: number,
+    unit: string,
+    lType: 'water' | 'toned_milk' | 'skim_milk',
+    lMl: number,
+    base = basePerServing
+  ) => {
+    if (!base) return;
+    let liqP = 0, liqC = 0, liqF = 0;
+    if (unit === 'scoop' && lType !== 'water' && lMl > 0) {
+      const factor = lMl / 100.0;
+      if (lType === 'toned_milk') {
+        liqP = 3.2 * factor;
+        liqC = 4.8 * factor;
+        liqF = 3.3 * factor;
+      } else if (lType === 'skim_milk') {
+        liqP = 3.4 * factor;
+        liqC = 5.0 * factor;
+        liqF = 0.2 * factor;
+      }
+    }
+    const p = Math.round((base.protein_g * qty + liqP) * 10) / 10;
+    const c = Math.round((base.carbs_g * qty + liqC) * 10) / 10;
+    const f = Math.round((base.fats_g * qty + liqF) * 10) / 10;
+    const fib = Math.round(base.fiber_g * qty * 10) / 10;
+    const cal = Math.round(4.0 * (p + c) + 9.0 * f);
+
+    setProtein(p.toString());
+    setCarbs(c.toString());
+    setFats(f.toString());
+    setFiber(fib.toString());
+    setCalories(cal.toString());
+
+    const minCal = Math.round((cal * 0.95) / 5) * 5;
+    const maxCal = Math.round((cal * 1.05) / 5) * 5;
+    setCalorieRange(`~${minCal} – ${maxCal} kcal`);
+    setAvgCalories(cal);
+    setProteinRange(`~${Math.round(p * 0.95 * 10) / 10} – ${Math.round(p * 1.05 * 10) / 10} g`);
+    setCarbsRange(`~${Math.round(c * 0.95 * 10) / 10} – ${Math.round(c * 1.05 * 10) / 10} g`);
+    setFatsRange(`~${Math.round(f * 0.94 * 10) / 10} – ${Math.round(f * 1.06 * 10) / 10} g`);
+    setFiberRange(`~${Math.round(fib * 0.95 * 10) / 10} – ${Math.round(fib * 1.05 * 10) / 10} g`);
+  };
+
   const handleQuantityChange = (newQty: number) => {
     setPacketQuantity(newQty);
-    if (basePerServing) {
-      const p = Math.round(basePerServing.protein_g * newQty * 10) / 10;
-      const c = Math.round(basePerServing.carbs_g * newQty * 10) / 10;
-      const f = Math.round(basePerServing.fats_g * newQty * 10) / 10;
-      const fib = Math.round(basePerServing.fiber_g * newQty * 10) / 10;
-      const cal = Math.round(4.0 * (p + c) + 9.0 * f);
-
-      setProtein(p.toString());
-      setCarbs(c.toString());
-      setFats(f.toString());
-      setFiber(fib.toString());
-      setCalories(cal.toString());
-
-      const minCal = Math.round((cal * 0.95) / 5) * 5;
-      const maxCal = Math.round((cal * 1.05) / 5) * 5;
-      setCalorieRange(`~${minCal} – ${maxCal} kcal`);
-      setProteinRange(`~${Math.round(p * 0.95 * 10) / 10} – ${Math.round(p * 1.05 * 10) / 10} g`);
-      setCarbsRange(`~${Math.round(c * 0.95 * 10) / 10} – ${Math.round(c * 1.05 * 10) / 10} g`);
-      setFatsRange(`~${Math.round(f * 0.94 * 10) / 10} – ${Math.round(f * 1.06 * 10) / 10} g`);
-      setFiberRange(`~${Math.round(fib * 0.95 * 10) / 10} – ${Math.round(fib * 1.05 * 10) / 10} g`);
-    }
+    recalculatePacketTotals(newQty, packetServingUnit, liquidType, liquidMl);
   };
 
   const processIncomingFile = async (file: File) => {
@@ -955,6 +984,64 @@ export const AddEntry: React.FC = () => {
                 ))}
               </div>
             </div>
+
+            {/* Liquid Mixer Selector for Protein Powder (Scoop) */}
+            {packetServingUnit === 'scoop' && (
+              <div className="bg-white rounded-xl p-3.5 border border-blue-200 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[12px] font-bold text-slate-800">Mixed With (Liquid):</span>
+                  <span className="text-[10.5px] font-semibold text-blue-600">
+                    {liquidType === 'water'
+                      ? 'Water (+0 kcal)'
+                      : `${liquidMl}ml ${liquidType === 'toned_milk' ? 'Milk' : 'Skim Milk'} included`}
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {[
+                    { id: 'water' as const, label: '💧 Water' },
+                    { id: 'toned_milk' as const, label: '🥛 Milk' },
+                    { id: 'skim_milk' as const, label: '🥛 Skim Milk' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        setLiquidType(opt.id);
+                        recalculatePacketTotals(packetQuantity, packetServingUnit, opt.id, liquidMl);
+                      }}
+                      className={`pill-tactile py-1.5 px-2 rounded-lg text-[11px] font-semibold border transition-all ${
+                        liquidType === opt.id
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-300'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                {liquidType !== 'water' && (
+                  <div className="grid grid-cols-2 gap-1.5 pt-0.5">
+                    {[200, 300].map((ml) => (
+                      <button
+                        key={ml}
+                        type="button"
+                        onClick={() => {
+                          setLiquidMl(ml);
+                          recalculatePacketTotals(packetQuantity, packetServingUnit, liquidType, ml);
+                        }}
+                        className={`pill-tactile py-1.5 rounded-lg text-[11px] font-bold border transition-all ${
+                          liquidMl === ml
+                            ? 'bg-blue-50 text-blue-700 border-blue-400'
+                            : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300'
+                        }`}
+                      >
+                        {ml} ml
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Extracted Ingredients Chip */}
             {packetIngredients && (
