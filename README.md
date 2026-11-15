@@ -37,7 +37,8 @@ Anyone can install and run **BiteLog** directly on Android without building from
   - [3.9 Meet the Creator Screen (Design Specification 4)](#39-meet-the-creator-screen-design-specification-4)
   - [3.10 Zero-Knowledge Encrypted Authentication & Password Recovery (Designs 4 & 5)](#310-zero-knowledge-encrypted-authentication--password-recovery-designs-4--5)
   - [3.11 Edge-to-Edge Responsive Mobile Display Engine](#311-edge-to-edge-responsive-mobile-display-engine)
-- [4. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)](#4-ui--ux-architecture-design-specifications-1-2-3-4--5)
+- [4. End-to-End Backend Logic & System Architecture](#4-end-to-end-backend-logic--system-architecture)
+- [5. UI & UX Architecture (Design Specifications 1, 2, 3, 4 & 5)](#4-ui--ux-architecture-design-specifications-1-2-3-4--5)
 - [5. Calculation & Nutrition Analytics](#5-calculation--nutrition-analytics)
 - [6. Ultra-Lightweight Mobile Architecture (< 25 MB APK)](#6-ultra-lightweight-mobile-architecture--25-mb-apk)
 - [7. Technology Stack](#7-technology-stack)
@@ -293,6 +294,80 @@ BiteLog dynamically adapts to any smartphone form factor without clipping, lette
   * Protects bottom navigation with `pb-[max(env(safe-area-inset-bottom,0px),0.5rem)]` against Android system gesture bars.
 * **Locked Header & Footer with Momentum Body Scrolling**:
   * Top header and bottom bar remain firmly anchored while content scrolls smoothly with native touch momentum (`overscroll-contain`).
+
+---
+
+---
+
+## 4. End-to-End Backend Logic & System Architecture
+
+BiteLog uses a **Dual-Mode 100% Offline Architecture**:
+1. **Desktop / Local Server Mode**: React/Vite UI communicates with the **FastAPI** backend (`Backend/app/main.py`) and **SQLite** (`nutritrack.db`).
+2. **Standalone Android APK Mode**: Capacitor WebView runs **100% on-device** with zero network calls, mirroring the exact same vision & storage logic via `localFoodVision.ts` (HTML5 Canvas) and `localStorageAdapter.ts`.
+
+### System Architecture Diagram
+
+```mermaid
+flowchart TB
+    subgraph Client["📱 Client Layer (React + Vite + Capacitor Android APK)"]
+        UI["UI Pages: Dashboard, AddEntry, Calendar, Reports, WeightGoals, Auth"]
+        CAM["CameraCaptureModal (WebRTC Rear Camera + Native Fallback)"]
+        ROUTER["api.ts (Auto-routes Desktop API vs. Offline Android Mode)"]
+        LOCAL_VIS["localFoodVision.ts (On-Device Multi-Zone Canvas + ICMR-NIN/USDA)"]
+        LOCAL_DB["localStorageAdapter.ts (Offline LocalStorage Persistence)"]
+    end
+
+    subgraph API["⚡ FastAPI Backend (Backend/app/api/)"]
+        A_PARSE["/api/parse (food-photo, packet-label, image, text)"]
+        A_ENT["/api/entries (CRUD, dashboard-summary, 409 Duplicate Shield)"]
+        A_CAL["/api/calendar (month summary, day-details)"]
+        A_REP["/api/reports (6 intervals + CSV export)"]
+        A_WT["/api/weight (logs, BMI, TDEE, projections)"]
+        A_SET["/api/settings (targets, preferences)"]
+        A_AUTH["/api/auth (register, login, forgot-password)"]
+        A_BKP["/api/backup (JSON export, restore, purge)"]
+    end
+
+    subgraph Services["🧠 Core Services (Backend/app/services/)"]
+        S_VIS["food_vision_service.py (220x220 Multi-Zone HSV + 23-Dish Catalog)"]
+        S_PKT["packet_nutrition_service.py (OCR Label + Quantity Scaling)"]
+        S_OCR["ocr_service.py & text_parser.py (Tesseract + Regex)"]
+        S_NUT["nutrition_service.py (Atwater 4P+4C+9F + Daily Targets)"]
+        S_REP["report_service.py (Day/Week/Month/Quarter/6M/Year + CSV)"]
+        S_WT["weight_service.py (BMR, TDEE, Deficit & Goal ETA)"]
+        S_AUTH["auth_service.py (Salted PBKDF2-SHA256 + Recovery)"]
+    end
+
+    subgraph DB["🗄️ Local SQLite Database (nutritrack.db)"]
+        T_ENT[("entries (id, date, meal_type, food_name, food_items, 5 macros)")]
+        T_WT[("weights (id, date, weight_kg)")]
+        T_SET[("user_settings (targets, height, age, gender, activity)")]
+        T_USR[("users (username, email, password_hash, recovery_key)")]
+    end
+
+    UI --> CAM --> ROUTER
+    ROUTER -- "Android / Offline" --> LOCAL_VIS --> LOCAL_DB
+    ROUTER -- "Local FastAPI" --> API
+    A_PARSE --> S_VIS & S_PKT & S_OCR
+    A_ENT --> S_NUT --> T_ENT
+    A_CAL --> S_NUT
+    A_REP --> S_REP --> T_ENT
+    A_WT --> S_WT --> T_WT
+    A_SET --> T_SET
+    A_AUTH --> S_AUTH --> T_USR
+    A_BKP --> T_ENT & T_WT & T_SET
+```
+
+### End-to-End Backend Logic Breakdown
+
+| Layer | Module | End-to-End Responsibility |
+| :--- | :--- | :--- |
+| **Food Vision** | `food_vision_service.py` / `localFoodVision.ts` | Resizes image in RAM (`220×220`), crops central `80%`, extracts 8 multi-zone HSV & texture features (including center `36%` zone), scores against **23 ICMR-NIN / USDA dishes**, and returns `detected_dish`, `items_detected`, `piece_count`, `top_matches`, and 5 macros calibrated by `plate_size` (`0.65x / 1.0x / 1.4x`) and `cooking_style` (`+0g / +11g / +24g` fat). |
+| **Packet & OCR** | `packet_nutrition_service.py`, `ocr_service.py`, `text_parser.py` | Extracts per-serving nutrition facts and ingredients from packaged food labels, scales all 5 macros linearly by serving quantity (`0.25x–4x`), and parses pasted nutrition text. |
+| **Entries & Shield** | `entries.py`, `nutrition_service.py` | Logs meals with `food_name` and `food_items`, enforces the **15-second HTTP 409 Duplicate Submission Shield**, and computes real-time Dashboard totals & remaining macro budgets. |
+| **Reports & Calendar** | `reports.py`, `report_service.py`, `calendar.py` | Aggregates daily, weekly, monthly, quarterly, 6-month, and yearly trends, generates CSV exports, and powers monthly calendar heatmaps with day drill-downs. |
+| **Weight & Clinical** | `weight.py`, `weight_service.py` | Tracks weight history and computes **BMI, BMR (Mifflin-St Jeor), TDEE**, daily calorie deficit/surplus, and projected goal completion date. |
+| **Auth & Backup** | `auth.py`, `auth_service.py`, `backup.py` | Offline salted `PBKDF2-SHA256` authentication with local recovery keys, plus full JSON backup/restore and selective data purge. |
 
 ---
 
