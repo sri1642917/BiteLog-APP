@@ -7,12 +7,14 @@ import {
   BarChart3,
   MoreHorizontal
 } from 'lucide-react';
+import { useLanguage } from '../utils/i18n';
 
 interface MobileBottomNavProps {
   onOpenMore?: () => void;
 }
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMore }) => {
+  const { t } = useLanguage();
   return (
     <nav className="fixed sm:absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 pt-1.5 pb-[max(env(safe-area-inset-bottom,0px),0.5rem)] flex justify-around items-center z-30 shadow-lg shrink-0">
       <NavLink
@@ -24,7 +26,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMore }) 
         }
       >
         <LayoutDashboard className="w-5 h-5 stroke-[2]" />
-        <span>Dashboard</span>
+        <span>{t('nav_dashboard')}</span>
       </NavLink>
 
       <NavLink
@@ -36,7 +38,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMore }) 
         }
       >
         <PlusSquare className="w-5 h-5 stroke-[2]" />
-        <span>Add Entry</span>
+        <span>{t('nav_add_entry')}</span>
       </NavLink>
 
       <NavLink

@@ -16,6 +16,7 @@ import { Register } from './pages/Register';
 import { Login } from './pages/Login';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { authService } from './services/authService';
+import { LanguageProvider } from './utils/i18n';
 import { Scale, History as HistoryIcon, Database, Settings as SettingsIcon, User, X } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -27,7 +28,8 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <Router>
+    <LanguageProvider>
+      <Router>
       {/* Background canvas styling: on mobile fills 100% screen edge-to-edge; on desktop centers a phone frame */}
       <div className="w-full h-[100dvh] min-h-screen bg-[#f8fafc] sm:bg-slate-100 flex items-center justify-center sm:p-4 overflow-hidden">
         {/* ================= RESPONSIVE MOBILE APP VIEWPORT ================= */}
@@ -130,5 +132,6 @@ export const App: React.FC = () => {
         </div>
       </div>
     </Router>
+    </LanguageProvider>
   );
 };

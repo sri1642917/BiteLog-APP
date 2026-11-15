@@ -335,8 +335,8 @@ flowchart LR
    - Saves meal entries (`food_name`, `food_items`, 5 macros) to SQLite, blocks accidental double-taps within 15s (`HTTP 409`), and computes real-time Dashboard totals & remaining targets.
 4. **Calendar & Reports (`calendar.py`, `reports.py` → `report_service.py`)**:
    - Aggregates **Day, Weekly, Monthly, Quarterly, 6-Month, and Yearly** nutrition trends, powers monthly calendar heatmaps, and exports CSV reports.
-5. **Weight, Auth & Backup (`weight.py`, `auth.py`, `backup.py`)**:
-   - Computes **BMI, BMR (Mifflin-St Jeor), TDEE**, and goal ETA (`weight_service.py`), handles offline salted `PBKDF2-SHA256` auth (`auth_service.py`), and provides full JSON backup/restore/purge.
+5. **Weight, Auth, Backup & Offline Multi-Language (`weight.py`, `auth.py`, `backup.py`, `i18n.ts`)**:
+   - Computes **BMI, BMR (Mifflin-St Jeor), TDEE**, and goal ETA (`weight_service.py`), handles offline salted `PBKDF2-SHA256` auth (`auth_service.py`), provides full JSON backup/restore/purge, and supports **100% offline English, Telugu (`తెలుగు`), and Hindi (`हिन्दी`)** UI switching via `EN | తె | हि`.
 
 ---
 

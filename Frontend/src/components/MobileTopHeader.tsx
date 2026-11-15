@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, Bell, ChevronLeft, Sprout, User as UserIcon, LogOut } from 'lucide-react';
 import { authService, User } from '../services/authService';
+import { useLanguage, LANGUAGE_LABELS, LanguageCode } from '../utils/i18n';
 
 interface MobileTopHeaderProps {
   onOpenMenu: () => void;
@@ -10,6 +11,7 @@ interface MobileTopHeaderProps {
 export const MobileTopHeader: React.FC<MobileTopHeaderProps> = ({ onOpenMenu }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { lang, setLang, t } = useLanguage();
 
   const [currentUser, setCurrentUser] = useState<User | null>(authService.getCurrentUser());
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -61,14 +63,31 @@ export const MobileTopHeader: React.FC<MobileTopHeaderProps> = ({ onOpenMenu }) 
                 BiteLog
               </h1>
               <p className="text-[8.5px] text-emerald-700 font-bold mt-0.5 tracking-tight leading-tight truncate max-w-[150px]">
-                Log every bite. Stay on track.
+                {t('app_tagline')}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Right side: Bell icon + Sign In / User profile pill (Matching signin-feature-icon-ui-design-5.png) */}
+        {/* Right side: Offline Language Toggle (EN | తె | हि) + Bell icon + Sign In */}
         <div className="flex items-center gap-1.5">
+          <div className="flex items-center bg-slate-100 rounded-full p-0.5 border border-slate-200/80">
+            {(['en', 'te', 'hi'] as LanguageCode[]).map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLang(code)}
+                className={`px-1.5 py-0.5 rounded-full text-[9.5px] font-extrabold transition-all ${
+                  lang === code
+                    ? 'bg-emerald-600 text-white shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+                title={LANGUAGE_LABELS[code].native}
+              >
+                {LANGUAGE_LABELS[code].short}
+              </button>
+            ))}
+          </div>
           <button
             type="button"
             onClick={() => navigate('/settings')}
