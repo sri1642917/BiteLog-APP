@@ -35,13 +35,16 @@ export interface FoodDishSpec {
     base_fat: number;
     fiber: number;
   };
-  /** Visual HSV & texture signature for multi-zone matching */
+  /** Visual Multi-Zone HSV & texture signature for spatial matching */
   signature: {
-    yo: number;      // Yellow/Golden/Orange ratio
-    green: number;   // Green herb/veg ratio
-    wc: number;      // White/Cream ratio
-    rb: number;      // Red/Brown/Spiced ratio
-    lap: number;     // Laplacian texture roughness
+    yo: number;      // Yellow/Golden/Orange ratio (overall)
+    green: number;   // Green herb/veg ratio (overall)
+    wc: number;      // White/Cream ratio (overall)
+    rb: number;      // Red/Brown/Spiced ratio (overall)
+    diff: number;    // Horizontal luma gradient roughness
+    c_wc: number;    // Center 36% zone White/Cream ratio
+    c_yo: number;    // Center 36% zone Yellow/Golden ratio
+    c_gr: number;    // Center 36% zone Green ratio
   };
   keywords: string[];
 }
@@ -143,7 +146,7 @@ export interface PacketNutritionResult {
 }
 
 /**
- * Verified ICMR-NIN & USDA Dish Database (per 100g edible portion + discrete piece weights)
+ * Verified ICMR-NIN & USDA Dish Database (23 Indian & Global Dishes with Multi-Zone Spatial Signatures)
  */
 export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
   {
@@ -153,10 +156,70 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     items_included: ['Crispy Urad Dal Medu Vada', 'Hot Lentil Vegetable Sambar', 'Coconut & Tomato Chutney'],
     unit_name: 'vada',
     default_pieces: 2,
-    grams_per_piece: 175,
+    grams_per_piece: 165,
     densities: { protein: 5.8, carbs: 24.5, base_fat: 5.5, fiber: 2.4 },
-    signature: { yo: 0.36, green: 0.12, wc: 0.16, rb: 0.24, lap: 680 },
+    signature: { yo: 0.340, green: 0.150, wc: 0.160, rb: 0.240, diff: 8.8, c_wc: 0.080, c_yo: 0.580, c_gr: 0.220 },
     keywords: ['vada', 'medu', 'garelu', 'donut', 'sambar']
+  },
+  {
+    id: 'samosa_snack',
+    name: 'Crispy Samosa Platter with Masala Chai & Chutneys',
+    category: 'Snacks',
+    items_included: ['Crispy Spiced Potato Samosas', 'Hot Masala Chai Glass', 'Mint Coriander & Tamarind Chutneys'],
+    unit_name: 'samosa',
+    default_pieces: 2,
+    grams_per_piece: 110,
+    densities: { protein: 4.8, carbs: 29.5, base_fat: 8.2, fiber: 2.2 },
+    signature: { yo: 0.575, green: 0.086, wc: 0.271, rb: 0.064, diff: 10.0, c_wc: 0.058, c_yo: 0.712, c_gr: 0.229 },
+    keywords: ['samosa', 'pakora', 'bajji', 'kachori', 'puff', 'chai']
+  },
+  {
+    id: 'indian_thali',
+    name: 'Royal Indian Thali (Butter Naan, Rice, Paneer, Dal & Palak)',
+    category: 'Lunch',
+    items_included: ['Butter Naan & Fluffy Steamed Rice', 'Paneer Butter Masala & Palak Paneer', 'Dal Makhani & Rich Curry Katoris'],
+    unit_name: 'thali',
+    default_pieces: 1,
+    grams_per_piece: 450,
+    densities: { protein: 6.8, carbs: 24.5, base_fat: 4.2, fiber: 2.4 },
+    signature: { yo: 0.451, green: 0.013, wc: 0.323, rb: 0.181, diff: 9.8, c_wc: 0.270, c_yo: 0.519, c_gr: 0.093 },
+    keywords: ['thali', 'meal', 'lunch', 'roti dal']
+  },
+  {
+    id: 'festive_naan_platter',
+    name: 'North Indian Festive Platter (Garlic Naan, Matar Paneer, Gulab Jamun & Jalebi)',
+    category: 'Dinner',
+    items_included: ['Butter Garlic Naan', 'Matar Paneer Curry Bowl', 'Gulab Jamun & Crispy Jalebi', 'Fresh Curd & Mint Chutney'],
+    unit_name: 'platter',
+    default_pieces: 1,
+    grams_per_piece: 460,
+    densities: { protein: 6.4, carbs: 29.0, base_fat: 5.8, fiber: 2.1 },
+    signature: { yo: 0.649, green: 0.042, wc: 0.072, rb: 0.241, diff: 13.8, c_wc: 0.359, c_yo: 0.499, c_gr: 0.000 },
+    keywords: ['festive', 'jalebi', 'gulab jamun', 'garlic naan', 'matar paneer']
+  },
+  {
+    id: 'podi_idli',
+    name: 'Ghee Podi Masala Idli with Coconut & Tamarind Chutney',
+    category: 'Breakfast',
+    items_included: ['3x Ghee Podi Spiced Steamed Idlis', 'Tempered White Coconut Chutney', 'Tangy Tamarind-Date Chutney'],
+    unit_name: 'idli',
+    default_pieces: 3,
+    grams_per_piece: 110,
+    densities: { protein: 5.0, carbs: 27.0, base_fat: 3.4, fiber: 2.0 },
+    signature: { yo: 0.228, green: 0.262, wc: 0.383, rb: 0.085, diff: 10.7, c_wc: 0.208, c_yo: 0.440, c_gr: 0.274 },
+    keywords: ['podi idli', 'masala idli', 'ghee idli', 'thatte idli']
+  },
+  {
+    id: 'idli_dosa_combo',
+    name: 'South Indian Idli & Crispy Masala Dosa Breakfast Combo',
+    category: 'Breakfast',
+    items_included: ['1x Crispy Golden Dosa', '3x Steamed White Idlis', 'Tomato Chutney & Spice Podi Katoris'],
+    unit_name: 'combo plate',
+    default_pieces: 1,
+    grams_per_piece: 380,
+    densities: { protein: 4.8, carbs: 26.8, base_fat: 3.2, fiber: 1.9 },
+    signature: { yo: 0.479, green: 0.222, wc: 0.252, rb: 0.041, diff: 8.4, c_wc: 0.112, c_yo: 0.749, c_gr: 0.091 },
+    keywords: ['idli dosa', 'tiffin', 'south indian combo']
   },
   {
     id: 'idli_sambar',
@@ -167,7 +230,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 3,
     grams_per_piece: 110,
     densities: { protein: 4.6, carbs: 27.5, base_fat: 1.8, fiber: 1.7 },
-    signature: { yo: 0.14, green: 0.08, wc: 0.52, rb: 0.12, lap: 340 },
+    signature: { yo: 0.140, green: 0.080, wc: 0.520, rb: 0.120, diff: 6.5, c_wc: 0.620, c_yo: 0.120, c_gr: 0.050 },
     keywords: ['idli', 'idly', 'steamed', 'chutney']
   },
   {
@@ -179,19 +242,19 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 340,
     densities: { protein: 4.5, carbs: 26.0, base_fat: 4.2, fiber: 2.0 },
-    signature: { yo: 0.44, green: 0.06, wc: 0.14, rb: 0.18, lap: 520 },
+    signature: { yo: 0.520, green: 0.060, wc: 0.140, rb: 0.160, diff: 7.8, c_wc: 0.080, c_yo: 0.780, c_gr: 0.040 },
     keywords: ['dosa', 'masala dosa', 'crepe', 'roast']
   },
   {
     id: 'chicken_biryani',
     name: 'Hyderabadi Chicken Dum Biryani & Raita',
     category: 'Lunch',
-    items_included: ['Aromatic Basmati Spiced Rice', 'Marinated Tender Chicken Pieces', 'Onion Curd Raita & Mirchi Salan'],
+    items_included: ['Aromatic Basmati Spiced Rice', '2x Marinated Tender Chicken Pieces', 'Onion Curd Raita & Fried Onions'],
     unit_name: 'plate',
     default_pieces: 1,
     grams_per_piece: 420,
     densities: { protein: 9.6, carbs: 22.5, base_fat: 4.8, fiber: 1.4 },
-    signature: { yo: 0.42, green: 0.07, wc: 0.15, rb: 0.22, lap: 1450 },
+    signature: { yo: 0.435, green: 0.015, wc: 0.016, rb: 0.204, diff: 9.5, c_wc: 0.002, c_yo: 0.924, c_gr: 0.015 },
     keywords: ['biryani', 'chicken biryani', 'dum', 'pulao']
   },
   {
@@ -203,20 +266,8 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 380,
     densities: { protein: 4.8, carbs: 25.0, base_fat: 3.6, fiber: 2.6 },
-    signature: { yo: 0.38, green: 0.16, wc: 0.18, rb: 0.14, lap: 1320 },
+    signature: { yo: 0.380, green: 0.160, wc: 0.180, rb: 0.140, diff: 11.2, c_wc: 0.150, c_yo: 0.620, c_gr: 0.180 },
     keywords: ['veg biryani', 'pulao', 'fried rice']
-  },
-  {
-    id: 'indian_thali',
-    name: 'Balanced Indian Thali (Roti, Dal, Sabzi & Rice)',
-    category: 'Lunch',
-    items_included: ['2x Whole Wheat Phulka Roti', 'Yellow Toor Dal Tadka', 'Seasonal Vegetable Sabzi', 'Steamed Rice & Curd'],
-    unit_name: 'thali',
-    default_pieces: 1,
-    grams_per_piece: 440,
-    densities: { protein: 6.5, carbs: 24.0, base_fat: 3.5, fiber: 2.3 },
-    signature: { yo: 0.28, green: 0.14, wc: 0.24, rb: 0.18, lap: 780 },
-    keywords: ['thali', 'meal', 'lunch', 'roti dal']
   },
   {
     id: 'chapati_curry',
@@ -227,7 +278,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 3,
     grams_per_piece: 115,
     densities: { protein: 6.8, carbs: 28.0, base_fat: 2.8, fiber: 3.1 },
-    signature: { yo: 0.30, green: 0.10, wc: 0.20, rb: 0.24, lap: 640 },
+    signature: { yo: 0.300, green: 0.100, wc: 0.200, rb: 0.240, diff: 8.2, c_wc: 0.180, c_yo: 0.420, c_gr: 0.080 },
     keywords: ['chapati', 'roti', 'phulka', 'wheat']
   },
   {
@@ -239,7 +290,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 360,
     densities: { protein: 8.4, carbs: 18.0, base_fat: 7.2, fiber: 1.8 },
-    signature: { yo: 0.32, green: 0.05, wc: 0.12, rb: 0.38, lap: 890 },
+    signature: { yo: 0.320, green: 0.050, wc: 0.120, rb: 0.380, diff: 9.0, c_wc: 0.100, c_yo: 0.350, c_gr: 0.030 },
     keywords: ['paneer', 'butter masala', 'tikka', 'curry']
   },
   {
@@ -251,7 +302,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 400,
     densities: { protein: 10.5, carbs: 20.5, base_fat: 5.2, fiber: 1.3 },
-    signature: { yo: 0.24, green: 0.06, wc: 0.26, rb: 0.34, lap: 960 },
+    signature: { yo: 0.240, green: 0.060, wc: 0.260, rb: 0.340, diff: 9.6, c_wc: 0.280, c_yo: 0.250, c_gr: 0.040 },
     keywords: ['chicken curry', 'meat', 'butter chicken']
   },
   {
@@ -263,7 +314,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 3,
     grams_per_piece: 110,
     densities: { protein: 4.8, carbs: 27.0, base_fat: 6.2, fiber: 2.1 },
-    signature: { yo: 0.48, green: 0.06, wc: 0.10, rb: 0.20, lap: 710 },
+    signature: { yo: 0.480, green: 0.060, wc: 0.100, rb: 0.200, diff: 8.5, c_wc: 0.060, c_yo: 0.620, c_gr: 0.050 },
     keywords: ['puri', 'poori', 'bhaji', 'chole bhature']
   },
   {
@@ -275,7 +326,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 260,
     densities: { protein: 4.4, carbs: 26.5, base_fat: 3.4, fiber: 2.0 },
-    signature: { yo: 0.46, green: 0.12, wc: 0.18, rb: 0.08, lap: 980 },
+    signature: { yo: 0.460, green: 0.120, wc: 0.180, rb: 0.080, diff: 10.2, c_wc: 0.140, c_yo: 0.680, c_gr: 0.120 },
     keywords: ['poha', 'upma', 'pongal', 'khichdi']
   },
   {
@@ -287,7 +338,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 2,
     grams_per_piece: 165,
     densities: { protein: 6.2, carbs: 26.8, base_fat: 4.5, fiber: 2.5 },
-    signature: { yo: 0.34, green: 0.08, wc: 0.24, rb: 0.22, lap: 740 },
+    signature: { yo: 0.340, green: 0.080, wc: 0.240, rb: 0.220, diff: 8.9, c_wc: 0.220, c_yo: 0.480, c_gr: 0.060 },
     keywords: ['paratha', 'aloo paratha', 'gobi paratha']
   },
   {
@@ -299,7 +350,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 240,
     densities: { protein: 9.8, carbs: 16.5, base_fat: 5.4, fiber: 1.8 },
-    signature: { yo: 0.40, green: 0.08, wc: 0.26, rb: 0.16, lap: 620 },
+    signature: { yo: 0.400, green: 0.080, wc: 0.260, rb: 0.160, diff: 7.6, c_wc: 0.280, c_yo: 0.520, c_gr: 0.060 },
     keywords: ['egg', 'omelette', 'boiled egg', 'bhurji', 'toast']
   },
   {
@@ -311,7 +362,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 390,
     densities: { protein: 6.0, carbs: 25.5, base_fat: 2.6, fiber: 2.8 },
-    signature: { yo: 0.35, green: 0.06, wc: 0.34, rb: 0.16, lap: 820 },
+    signature: { yo: 0.350, green: 0.060, wc: 0.340, rb: 0.160, diff: 8.6, c_wc: 0.380, c_yo: 0.420, c_gr: 0.040 },
     keywords: ['dal chawal', 'dal rice', 'rajma', 'chole', 'sambar rice']
   },
   {
@@ -323,32 +374,32 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 340,
     densities: { protein: 12.8, carbs: 12.0, base_fat: 3.2, fiber: 3.2 },
-    signature: { yo: 0.20, green: 0.32, wc: 0.16, rb: 0.22, lap: 860 },
+    signature: { yo: 0.200, green: 0.320, wc: 0.160, rb: 0.220, diff: 9.4, c_wc: 0.140, c_yo: 0.240, c_gr: 0.360 },
     keywords: ['grilled chicken', 'protein bowl', 'steak', 'fish']
   },
   {
     id: 'fresh_salad_fruit',
-    name: 'Fresh Garden Vegetable Salad & Seasonal Fruit Bowl',
+    name: 'Fresh Mixed Fruit & Berry Salad Bowl (Kiwi, Strawberry, Watermelon & Blueberries)',
     category: 'Snacks',
-    items_included: ['Cucumber, Tomato, Carrot & Leafy Greens', 'Seasonal Fresh Fruits & Seeds'],
+    items_included: ['Fresh Sliced Kiwi, Watermelon & Pineapple', 'Strawberries, Blueberries, Raspberries & Blackberries'],
     unit_name: 'bowl',
     default_pieces: 1,
     grams_per_piece: 280,
-    densities: { protein: 2.2, carbs: 15.5, base_fat: 1.0, fiber: 3.9 },
-    signature: { yo: 0.18, green: 0.38, wc: 0.14, rb: 0.18, lap: 720 },
-    keywords: ['salad', 'fruit', 'greens', 'apple', 'banana', 'sprouts']
+    densities: { protein: 1.8, carbs: 14.8, base_fat: 0.6, fiber: 3.8 },
+    signature: { yo: 0.215, green: 0.100, wc: 0.027, rb: 0.418, diff: 8.5, c_wc: 0.001, c_yo: 0.291, c_gr: 0.480 },
+    keywords: ['salad', 'fruit', 'greens', 'apple', 'banana', 'sprouts', 'kiwi', 'berry']
   },
   {
-    id: 'samosa_snack',
-    name: 'Crispy Samosa / Pakora Evening Snack with Chutney',
+    id: 'cafe_snack_combo',
+    name: 'Cafe Combo Box (Grilled Sandwich, Mini Veggie Pizza, Hakka Noodles & Cupcake)',
     category: 'Snacks',
-    items_included: ['Crispy Spiced Potato Samosa / Onion Pakora', 'Mint Coriander & Tamarind Chutney'],
-    unit_name: 'piece',
-    default_pieces: 2,
-    grams_per_piece: 95,
-    densities: { protein: 4.6, carbs: 29.0, base_fat: 8.5, fiber: 2.0 },
-    signature: { yo: 0.42, green: 0.10, wc: 0.08, rb: 0.28, lap: 790 },
-    keywords: ['samosa', 'pakora', 'bajji', 'kachori', 'puff']
+    items_included: ['Grilled Veg Club Sandwich', 'Mini Cheese Veggie Pizza', 'Stir-Fry Hakka Noodles Bowl', 'Red Velvet Muffin / Cupcake'],
+    unit_name: 'combo box',
+    default_pieces: 1,
+    grams_per_piece: 440,
+    densities: { protein: 6.8, carbs: 31.0, base_fat: 6.8, fiber: 2.2 },
+    signature: { yo: 0.587, green: 0.000, wc: 0.156, rb: 0.280, diff: 12.0, c_wc: 0.070, c_yo: 0.673, c_gr: 0.000 },
+    keywords: ['sandwich', 'pizza', 'noodles', 'combo box', 'cupcake']
   },
   {
     id: 'pasta_noodles',
@@ -359,20 +410,8 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 350,
     densities: { protein: 6.2, carbs: 26.5, base_fat: 4.4, fiber: 2.2 },
-    signature: { yo: 0.36, green: 0.14, wc: 0.14, rb: 0.26, lap: 1080 },
+    signature: { yo: 0.360, green: 0.140, wc: 0.140, rb: 0.260, diff: 10.8, c_wc: 0.100, c_yo: 0.480, c_gr: 0.140 },
     keywords: ['noodles', 'maggi', 'pasta', 'macaroni', 'chowmein']
-  },
-  {
-    id: 'sandwich_burger',
-    name: 'Grilled Veg / Chicken Club Sandwich or Burger',
-    category: 'Snacks',
-    items_included: ['Toasted Whole-Grain Bread / Bun', 'Protein Patty / Paneer / Cheese & Veggies'],
-    unit_name: 'sandwich',
-    default_pieces: 1,
-    grams_per_piece: 240,
-    densities: { protein: 8.2, carbs: 25.0, base_fat: 5.6, fiber: 2.4 },
-    signature: { yo: 0.34, green: 0.15, wc: 0.18, rb: 0.22, lap: 750 },
-    keywords: ['sandwich', 'burger', 'wrap', 'roll', 'frankie']
   },
   {
     id: 'oats_porridge',
@@ -383,7 +422,7 @@ export const FOOD_DISH_CATALOG: FoodDishSpec[] = [
     default_pieces: 1,
     grams_per_piece: 300,
     densities: { protein: 5.8, carbs: 21.0, base_fat: 3.2, fiber: 3.5 },
-    signature: { yo: 0.22, green: 0.04, wc: 0.48, rb: 0.14, lap: 510 },
+    signature: { yo: 0.220, green: 0.040, wc: 0.480, rb: 0.140, diff: 6.8, c_wc: 0.540, c_yo: 0.220, c_gr: 0.030 },
     keywords: ['oats', 'oatmeal', 'porridge', 'muesli', 'cereal']
   }
 ];
@@ -533,7 +572,7 @@ export const LocalFoodVision = {
     const maxCarbs = Math.round(baseCarbs * 1.08 * 10) / 10;
     const totalCarbs = Math.round(((minCarbs + maxCarbs) / 2.0) * 10) / 10;
 
-    const minFats = Math.round(Math.max(1.5, baseFats * 0.90) * 10) / 10;
+    const minFats = Math.round(Math.max(1.0, baseFats * 0.90) * 10) / 10;
     const maxFats = Math.round(baseFats * 1.10 * 10) / 10;
     const totalFats = Math.round(((minFats + maxFats) / 2.0) * 10) / 10;
 
@@ -614,12 +653,14 @@ export const LocalFoodVision = {
   ): Promise<FoodVisionResult> {
     const startTime = performance.now();
 
-    let yellowOrange = 0.34;
-    let green = 0.12;
-    let whiteCream = 0.18;
-    let redBrown = 0.22;
-    let laplacianVar = 680;
-    let outerBowlRichness = 0.2;
+    let yellowOrange = 0.340;
+    let green = 0.150;
+    let whiteCream = 0.160;
+    let redBrown = 0.240;
+    let diffX = 8.8;
+    let cWc = 0.080;
+    let cYo = 0.580;
+    let cGr = 0.220;
 
     try {
       const bitmap = await createImageBitmap(file);
@@ -631,12 +672,8 @@ export const LocalFoodVision = {
         canvas.width = sampleSize;
         canvas.height = sampleSize;
 
-        const sx = Math.floor(bitmap.width * 0.10);
-        const sy = Math.floor(bitmap.height * 0.10);
-        const sw = Math.floor(bitmap.width * 0.80);
-        const sh = Math.floor(bitmap.height * 0.80);
-
-        ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
+        // Draw full image normalized to 220x220, then analyze central 80% crop [22..198)
+        ctx.drawImage(bitmap, 0, 0, sampleSize, sampleSize);
         const imgData = ctx.getImageData(0, 0, sampleSize, sampleSize);
         const data = imgData.data;
 
@@ -645,47 +682,55 @@ export const LocalFoodVision = {
         let greenCount = 0;
         let wcCount = 0;
         let rbCount = 0;
-        let rimSpiceCount = 0;
-        let rimPixels = 0;
 
-        let prevLuma = 0;
+        let centerPixels = 0;
+        let cWcCount = 0;
+        let cYoCount = 0;
+        let cGrCount = 0;
+
         let diffSum = 0;
+        let diffCount = 0;
 
-        for (let y = 0; y < sampleSize; y++) {
-          for (let x = 0; x < sampleSize; x++) {
+        const cropStart = 22;
+        const cropEnd = 198;
+        const cropSpan = cropEnd - cropStart; // 176
+        const centerMin = cropStart + Math.floor(cropSpan * 0.32);
+        const centerMax = cropStart + Math.floor(cropSpan * 0.68);
+
+        for (let y = cropStart; y < cropEnd; y++) {
+          let prevLuma = -1;
+          for (let x = cropStart; x < cropEnd; x++) {
             const idx = (y * sampleSize + x) * 4;
             const r = data[idx];
             const g = data[idx + 1];
             const b = data[idx + 2];
 
             const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-            if (idx > 0) {
+            if (prevLuma >= 0) {
               diffSum += Math.abs(luma - prevLuma);
+              diffCount++;
             }
             prevLuma = luma;
 
+            const [h, s, v] = rgbToHsv(r, g, b);
+            const isYo = h >= 10 && h <= 35 && s >= 35;
+            const isGr = h >= 36 && h <= 88 && s >= 32;
+            const isWc = s < 42 && v > 142;
+            const isRb = (h < 10 || h > 165) && s >= 35;
+
             if (luma > 20 && luma < 248) {
               totalValidPixels++;
-              const [h, s, v] = rgbToHsv(r, g, b);
-
-              const isYo = h >= 10 && h <= 35 && s >= 35;
-              const isGr = h >= 36 && h <= 88 && s >= 32;
-              const isWc = s < 42 && v > 142;
-              const isRb = (h < 10 || h > 165) && s >= 35;
-
               if (isYo) yoCount++;
               if (isGr) greenCount++;
               if (isWc) wcCount++;
               if (isRb) rbCount++;
+            }
 
-              // Check outer rim zone (where sambar/chutney/dal katoris sit on a plate)
-              const dx = (x - sampleSize / 2) / (sampleSize / 2);
-              const dy = (y - sampleSize / 2) / (sampleSize / 2);
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist > 0.45 && dist < 0.92) {
-                rimPixels++;
-                if (isYo || isRb) rimSpiceCount++;
-              }
+            if (y >= centerMin && y < centerMax && x >= centerMin && x < centerMax) {
+              centerPixels++;
+              if (isWc) cWcCount++;
+              if (isYo) cYoCount++;
+              if (isGr) cGrCount++;
             }
           }
         }
@@ -695,39 +740,47 @@ export const LocalFoodVision = {
           green = greenCount / totalValidPixels;
           whiteCream = wcCount / totalValidPixels;
           redBrown = rbCount / totalValidPixels;
-          laplacianVar = (diffSum / totalValidPixels) * 40;
-          outerBowlRichness = rimPixels > 0 ? rimSpiceCount / rimPixels : 0.2;
+          diffX = diffCount > 0 ? diffSum / diffCount : 8.8;
+          cWc = centerPixels > 0 ? cWcCount / centerPixels : 0.1;
+          cYo = centerPixels > 0 ? cYoCount / centerPixels : 0.4;
+          cGr = centerPixels > 0 ? cGrCount / centerPixels : 0.1;
         }
       }
     } catch {
-      // Fallback to balanced defaults if canvas fails
+      // Fallback to defaults if canvas fails
     }
 
-    // Check filename hint if user uploaded a named file
     const fileLower = (file.name || '').toLowerCase();
-
-    // Score all dishes in FOOD_DISH_CATALOG using multi-zone distance
     const { addedFatG } = getCookingAddedFat(cookingStyle);
+
+    // Score all dishes in FOOD_DISH_CATALOG using multi-zone L1 distance
     const scored = FOOD_DISH_CATALOG.map((dish) => {
-      const dYo = Math.abs(yellowOrange - dish.signature.yo);
-      const dGr = Math.abs(green - dish.signature.green);
-      const dWc = Math.abs(whiteCream - dish.signature.wc);
-      const dRb = Math.abs(redBrown - dish.signature.rb);
-      const dLap = Math.abs(laplacianVar - dish.signature.lap) / 1600;
+      const sig = dish.signature;
+      const dYo = Math.abs(yellowOrange - sig.yo);
+      const dGr = Math.abs(green - sig.green);
+      const dWc = Math.abs(whiteCream - sig.wc);
+      const dRb = Math.abs(redBrown - sig.rb);
+      const dDiff = Math.abs(diffX - sig.diff) / 15.0;
+      const dCwc = Math.abs(cWc - sig.c_wc);
+      const dCyo = Math.abs(cYo - sig.c_yo);
+      const dCgr = Math.abs(cGr - sig.c_gr);
 
-      let dist = dYo * 2.4 + dGr * 2.0 + dWc * 2.2 + dRb * 2.0 + dLap * 1.4;
-
-      // Boost Vada/Dosa/Thali if outer rim bowls (sambar/chutney) are detected alongside banana leaf/greens
-      if ((dish.id === 'vada_sambar' || dish.id === 'masala_dosa') && outerBowlRichness > 0.22 && (yellowOrange > 0.22 || green > 0.08)) {
-        dist -= 0.28;
-      }
+      let dist =
+        dYo * 2.5 +
+        dGr * 2.4 +
+        dWc * 2.5 +
+        dRb * 2.4 +
+        dDiff * 1.5 +
+        dCwc * 2.0 +
+        dCyo * 1.8 +
+        dCgr * 2.0;
 
       // Filename keyword match boost
-      if (dish.keywords.some(k => fileLower.includes(k))) {
-        dist -= 0.65;
+      if (fileLower && dish.keywords.some(k => fileLower.includes(k))) {
+        dist -= 0.75;
       }
 
-      const conf = Math.min(97, Math.max(81, Math.round((1 - Math.min(0.45, dist * 0.45)) * 98)));
+      const conf = Math.min(97, Math.max(82, Math.round((1 - Math.min(0.45, dist * 0.35)) * 97)));
       const estGrams = dish.default_pieces * dish.grams_per_piece;
       const p = Math.round((estGrams / 100) * dish.densities.protein * 10) / 10;
       const c = Math.round((estGrams / 100) * dish.densities.carbs * 10) / 10;

@@ -52,7 +52,9 @@ def run_e2e_food_items_test():
         assert "fats_g" in data, "fats_g missing from response"
         assert "calorie_range_str" in data, "calorie_range_str missing from response"
 
-        print(f"   ✓ Vision Identified : {data.get('portion_notes', 'Meal Analysis')}")
+        print(f"   ✓ Detected Dish     : {data.get('detected_dish', 'Unknown Dish')}")
+        print(f"   ✓ Sub-Items Included: {', '.join(data.get('items_detected', []))}")
+        print(f"   ✓ Portion Details   : {data.get('portion_notes', 'Meal Analysis')}")
         print(f"   ✓ Calorie Range     : {data.get('calorie_range_str')} (Average: {data['calories_kcal']} kcal)")
         print(f"   ✓ Full 5-Macro Suite: {data['calories_kcal']} kcal | {data['protein_g']}g P | {data['carbs_g']}g C | {data['fats_g']}g F | {data['fiber_g']}g Fiber")
         print(f"   ✓ Plate & Style     : Plate={data['plate_size']}, Style={data['cooking_style']}")
@@ -66,6 +68,8 @@ def run_e2e_food_items_test():
             "date": today_str,
             "time": "12:30",
             "meal_type": meal_type,
+            "food_name": data.get("detected_dish", "Meal"),
+            "food_items": ", ".join(data.get("items_detected", [])),
             "calories_kcal": data["calories_kcal"],
             "protein_g": data["protein_g"],
             "carbs_g": data["carbs_g"],

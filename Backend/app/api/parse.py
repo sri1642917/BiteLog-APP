@@ -46,19 +46,21 @@ async def parse_food_photo(
         image_bytes = await file.read()
         validate_image_bytes(image_bytes)
 
-        # Calculate portion modifier
+        # Only apply portion_modifier if portion_size differs from plate_size
         modifier = 1.0
-        if portion_size.lower() == "small":
-            modifier = 0.75
-        elif portion_size.lower() == "large":
-            modifier = 1.35
+        if portion_size.lower() != plate_size.lower():
+            if portion_size.lower() == "small":
+                modifier = 0.75
+            elif portion_size.lower() == "large":
+                modifier = 1.25
 
         result = FoodVisionService.estimate_plate_nutrition(
             image_bytes=image_bytes,
             model_tier=model_tier,
             portion_modifier=modifier,
             cooking_style=cooking_style,
-            plate_size=plate_size
+            plate_size=plate_size,
+            filename=file.filename or ""
         )
         return result
     except HTTPException:
