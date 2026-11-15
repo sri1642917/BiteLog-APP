@@ -709,3 +709,8 @@ Food-calories-tracker-app-detailed-analysis/
   - `Backend/benchmark_and_collect_mismatches.py`: Benchmarks predictions and quarantines misclassified images into `Backend/dataset/mismatches/<dish_id>/`.
   - `Backend/train_food_model.py`: Fine-tunes MobileNetV3-Small and exports quantized `food_classifier.onnx`.
   - `Backend/train_gemma_lora.py`: Generates the LoRA fine-tuning manifest (`gemma_lora_train.jsonl`) and trains Gemma 3n on quarantined mismatches.
+
+### Benchmark & Training Results (100 Food Classes, 500 Images)
+- **MobileNetV3-Small Baseline (Untrained ImageNet-1K)**: `6.0%` (`30 / 500` correct; `470` mismatches quarantined to `Backend/dataset/mismatches/`).
+- **MobileNetV3-Small Fine-Tuned (15 Epochs)**: **`92.40%`** training accuracy (peaked at **`93.00%`** at Epoch 12).
+- **Gemma 3n LoRA Manifest**: **`1,440`** training samples generated in `Backend/dataset/gemma_lora_train.jsonl` (weighting the `470` quarantined mismatches 2×).
