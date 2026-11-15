@@ -22,6 +22,7 @@ import {
 import { api } from '../services/api';
 import { Entry } from '../types';
 import { getLocalDateString } from '../utils/dateUtils';
+import { useLanguage } from '../utils/i18n';
 import {
   LocalFoodVision,
   DishCandidate,
@@ -59,6 +60,7 @@ const getAutoMealCategory = (): MealCategory => {
 
 export const AddEntry: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);

@@ -18,6 +18,7 @@ import {
 import { api } from '../services/api';
 import { DashboardSummary } from '../types';
 import { getLocalDateString } from '../utils/dateUtils';
+import { useLanguage } from '../utils/i18n';
 import { CameraCaptureModal } from '../components/CameraCaptureModal';
 
 // Zero initial state: completely clean, no mock or random data
@@ -51,6 +52,7 @@ const ZERO_SUMMARY: DashboardSummary = {
 
 export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [summary, setSummary] = useState<DashboardSummary>(ZERO_SUMMARY);
   const [showAddChoice, setShowAddChoice] = useState(false);
   const [showLiveCamera, setShowLiveCamera] = useState(false);
@@ -257,7 +259,7 @@ export const Dashboard: React.FC = () => {
           <div className="w-11 h-11 rounded-xl bg-purple-50/70 group-hover:bg-purple-100/80 flex items-center justify-center text-purple-600 border border-purple-100 shadow-2xs transition-colors">
             <Scale className="w-5 h-5 stroke-[2]" />
           </div>
-          <span className="text-xs font-semibold text-slate-800">Weight & Goals</span>
+          <span className="text-xs font-semibold text-slate-800">{t('nav_weight')}</span>
         </Link>
       </div>
 
